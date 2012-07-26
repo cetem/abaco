@@ -15,10 +15,10 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: x0y0_development
+  database: abaco_development
   pool: 5
-  username: x0y0
-  password: x0y0
+  username: abaco
+  password: abaco
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -41,15 +41,15 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: x0y0_test
+  database: abaco_test
   pool: 5
-  username: x0y0
-  password: x0y0
+  username: abaco
+  password: abaco
 
 production:
   adapter: postgresql
   encoding: unicode
-  database: x0y0_production
+  database: abaco_production
   pool: 5
-  username: x0y0
-  password: x0y0
+  username: abaco
+  password: abaco

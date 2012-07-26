@@ -1,9 +1,6 @@
-=== X0Y0
+=== Abaco
 
-Skeleton project, empty but with all the stuff I need to begin with =)
-
-All you have to do for start using it is change all the X0Y0 (and x0y0) strings
-with the name of your application...
+Web application to manage finances
 
 === (The MIT License)
 
