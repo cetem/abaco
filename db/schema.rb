@@ -11,7 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120306131941) do
+ActiveRecord::Schema.define(:version => 20120726220815) do
+
+  create_table "outflows", :force => true do |t|
+    t.string   "kind",         :limit => 1,                                                 :null => false
+    t.text     "comment"
+    t.decimal  "amount",                    :precision => 15, :scale => 2, :default => 0.0, :null => false
+    t.integer  "user_id",                                                                   :null => false
+    t.integer  "operator_id"
+    t.integer  "lock_version",                                             :default => 0,   :null => false
+    t.datetime "created_at",                                                                :null => false
+    t.datetime "updated_at",                                                                :null => false
+  end
+
+  add_index "outflows", ["operator_id"], :name => "index_outflows_on_operator_id"
+  add_index "outflows", ["user_id"], :name => "index_outflows_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "name",                                   :null => false

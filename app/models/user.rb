@@ -22,6 +22,9 @@ class User < ActiveRecord::Base
   validates :name, :lastname, :email, length: { maximum: 255 }, allow_nil: true,
     allow_blank: true
   
+  # Relaciones
+  has_many :outflows
+  
   def initialize(attributes = nil, options = {})
     super(attributes, options)
     

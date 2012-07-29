@@ -1,4 +1,6 @@
 Abaco::Application.routes.draw do
+  resources :outflows
+
   devise_for :users
   
   resources :users do

@@ -1,0 +1,27 @@
+<div class="readonly-data">
+  <h2><%= show_outflow_kind @outflow %></h2>
+
+  <p>
+    <strong><%= Outflow.human_attribute_name 'user_id' %></strong>:
+    <%= @outflow.user %>
+  </p>
+  <p>
+    <strong><%= Outflow.human_attribute_name 'comment' %></strong>:
+    <blockquote><%= simple_format @outflow.comment %></blockquote>
+  </p>
+  <p>
+    <strong><%= Outflow.human_attribute_name 'amount' %></strong>:
+    <%= number_to_currency @outflow.amount %>
+  </p>
+  <% if @outflow.operator_id %>
+    <p>
+      <strong><%= Outflow.human_attribute_name 'operator_id' %></strong>:
+      <%= @outflow.operator_id %>
+    </p>
+  <% end %>
+  
+</div>
+<div class="form-actions">
+  <%= link_to t('label.edit'), edit_outflow_path(@outflow) if can? :update, @outflow %> |
+  <%= link_to t('label.list'), outflows_path %>
+</div>
