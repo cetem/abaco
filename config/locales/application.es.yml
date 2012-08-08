@@ -1,5 +1,5 @@
 'es':
-  app_name: 'Abaco'
+  app_name: 'Ábaco'
   
   attributes:
     created_at: 'Creación'
@@ -10,6 +10,9 @@
       user:
         one: 'Usuario'
         other: 'Usuarios'
+      outflow:
+        one: 'Salida'
+        other: 'Salidas'
       
     attributes:
       user:
@@ -22,6 +25,12 @@
           one: 'Perfil'
           other: 'Perfiles'
         remember_me: 'Recordarme'
+      outflow:
+        kind: 'Tipo de salida'
+        comment: 'Comentario'
+        amount: 'Cantidad'
+        operator_id: 'Operador'
+        user_id: 'Usuario'
         
   errors:
     title: 'Error'
@@ -72,3 +81,19 @@
       roles:
         admin: 'Administrador'
         regular: 'Normal'
+    outflows:
+      index_title: 'Listado de egresos'
+      show_title: 'Detalle de egreso'
+      new_title: 'Nuevo egreso'
+      edit_title: 'Modificar egreso'
+      correctly_created: 'Egreso agregado correctamente.'
+      correctly_updated: 'Egreso actualizado correctamente.'
+      stale_object_error: 'El egreso no pudo ser actualizado, intente nuevamente.'
+      index:
+        html: 'No se ha creado ningún egreso hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo egreso</span>'
+      update_outflow: 'Actualizar egreso'
+      kind:
+        withdraw: 'Retiro'
+        upfront: 'Adelanto'
+        maintenance: 'Mantenimiento'
+        other: 'Otro'
