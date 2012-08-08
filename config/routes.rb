@@ -1,5 +1,10 @@
 Abaco::Application.routes.draw do
-  resources :outflows
+  
+  resources :outflows do
+    collection do
+      get :autocomplete_for_operator
+    end
+  end
 
   devise_for :users
   

@@ -6,8 +6,15 @@
     <%= f.input :comment, input_html: { rows: 5 } %>
     <%= f.input :amount, as: :string %>
     <%= f.label :operator_id %>
-    <%= f.input :auto_operator_name, label: false %>
-    <%= f.input :operator_id, as: :hidden %>
+    <%= f.input :auto_operator_name, label: false, input_html: {
+      value: @outflow.operator_id, class: 'autocomplete-field',
+      data: {
+        'autocomplete-id-target' => '#outflow_operator_id',
+        'autocomplete-url' => autocomplete_for_operator_outflows_path(format: :json)
+      }
+    } %>
+    <%= f.input :operator_id, as: :hidden,
+      input_html: { class: 'autocomplete-id' } %>
   </div>
 
   <div class="form-actions">

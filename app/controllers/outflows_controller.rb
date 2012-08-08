@@ -91,4 +91,14 @@ class OutflowsController < ApplicationController
       format.json { head :ok }
     end
   end
+  
+  def autocomplete_for_operator
+    @operators = Operator.find(
+      :all, from: '/users/autocomplete_for_user_name', params: { q: params[:q] }
+    )
+    
+    respond_to do |format|
+      format.json { render json: @operators }
+    end
+  end
 end
