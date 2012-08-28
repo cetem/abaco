@@ -92,13 +92,55 @@ class OutflowsController < ApplicationController
     end
   end
   
+  # GET /PRINT_HUB_APP/users/autocomplete_for_user_name
   def autocomplete_for_operator
-    @operators = Operator.find(
-      :all, from: '/users/autocomplete_for_user_name', params: { q: params[:q] }
-    )
-    
+    @operators = Operator.get(:autocomplete_for_user_name, q: params[:q])
+
     respond_to do |format|
       format.json { render json: @operators }
+    end
+  end
+
+  # GET /outflows/show_pay_pending_shifts
+  def show_pay_pending_shifts
+    @title = t('view.outflows.shifts.title')
+    
+    if params[:interval]
+      interval = params[:interval]
+      values = parameterize_to_date_format(interval)
+      from, to = values[:from], values[:to]
+      operator_id, admin = interval[:operator_id], interval[:operator_admin]
+
+      if operator_id.present? && from.present? && to.present?
+        @operator_shifts = Outflow.operator_pay_pending_shifts_between(
+          operator_id: operator_id, 
+          start: from, 
+          finish: to, 
+          admin: admin
+        )
+
+        @operator_upfronts = Outflow.upfronts.where(operator_id: operator_id)
+      end
+    end
+    
+    respond_to do |format|
+      format.html # index.html.erb
+    end
+  end
+  
+  # PUT /outflows/pay_shifts
+  def pay_shifts
+    @paid = Outflow.pay_operator_shifts_and_upfronts(
+      operator_id: params[:id], 
+      start: params[:from], 
+      finish: params[:to]
+    )
+    
+    if @paid
+      redirect_to outflows_path, notice: t('view.outflows.shifts.paid_notice')
+    else
+      format.html { render action: 'show_pay_pending_shifts' }
+      format.json { render json: @paid.errors, status: :unprocessable_entity }
     end
   end
 end

@@ -3,6 +3,10 @@ require 'test_helper'
 class OutflowTest < ActiveSupport::TestCase
   setup do
     @outflow = Fabricate(:outflow)
+
+    ['pay_per_administrator_hour', 'pay_per_operator_hour'].each do |setting|
+      Setting.create!(title: setting, var: setting, value: rand(100))
+    end
   end
   
   test 'create' do
@@ -72,7 +76,67 @@ class OutflowTest < ActiveSupport::TestCase
     
     assert @outflow.invalid?
     assert_equal 1, @outflow.errors.size
-    assert_equal [error_message_from_model(@outflow, :amount, :greater_than,
-        count: 0)], @outflow.errors[:amount]
+    assert_equal [error_message_from_model(
+      @outflow, :amount, :greater_than, count: 0
+    )], @outflow.errors[:amount]
+  end
+
+  test 'refund upfronts' do
+    outflow = Fabricate(:outflow, kind: 'u')
+
+    assert_difference('Outflow.upfronts.count', -1) { assert outflow.refund! }
+  end
+
+  test 'upfronts has to have operator' do
+    @outflow.kind = 'u'
+    @outflow.operator_id = ''
+
+    assert @outflow.invalid?
+    assert_equal 1, @outflow.errors.size
+    assert_equal [error_message_from_model(@outflow, :operator_id, :blank)],
+      @outflow.errors[:operator_id]
+  end
+
+  test 'other has to have comment' do 
+    @outflow.kind = 'o'
+    @outflow.comment = ''
+
+    assert @outflow.invalid?
+    assert_equal 1, @outflow.errors.size
+    assert_equal [error_message_from_model(@outflow, :comment, :blank)],
+      @outflow.errors[:comment]
+  end
+
+  test 'pay shifts and upfronts' do
+    @outflow = Fabricate(:outflow, kind: 'u', operator_id: 1)
+    
+    assert_difference 'Outflow.upfronts.count', -1 do
+      Outflow.pay_operator_shifts_and_upfronts(
+        operator_id: @outflow.operator_id, 
+        start: 1.month.ago.to_date, 
+        finish: Date.today
+      )
+    end
+  end
+
+  test 'get pay pending shifts between 2 dates' do
+    @outflow = Fabricate(:outflow, operator_id: 1)
+
+    Outflow.operator_pay_pending_shifts_between(
+      operator_id: @outflow.operator_id,
+      start: 1.month.ago.to_date,
+      finish: Date.today,
+      admin: true
+    )
+  end
+
+  test 'calculate worked hours' do
+    shifts = []
+    @operator_shifts.each do |shift|
+      shifts << OpenStruct.new(shift)
+    end
+
+    worked_hours = Outflow.worked_hours(shifts)
+    assert_equal 15, worked_hours
   end
 end

@@ -32,4 +32,17 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource_or_scope)
     new_user_session_path
   end
+
+  def parameterize_to_date_format(parameters = nil)
+    if parameters
+      from = Timeliness::Parser.parse(
+        parameters[:from], :date, zone: :local
+      ).to_date
+      to = Timeliness::Parser.parse(
+        parameters[:to], :date, zone: :local
+      ).to_date
+      
+      { from: from, to: to }
+    end
+  end
 end

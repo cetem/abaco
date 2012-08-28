@@ -10,6 +10,6 @@ smtp:
 public_host: 'public.domain.com'
 
 print_hub_data:
-  site: 'http://print_hub_page/'
+  site: 'print_hub_page'
   user: '<username>'
   password: '<password>'

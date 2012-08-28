@@ -32,4 +32,5 @@ group :test do
   gem 'database_cleaner' # For Capybara
   gem 'fabrication'
   gem 'faker'
+  gem 'webmock', require: 'webmock/test_unit'
 end
