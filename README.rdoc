@@ -2,6 +2,11 @@
 
 Web application to manage finances
 
+=== Build Status {<img src="https://secure.travis-ci.org/Shelvak/abaco.png"/>}[http://travis-ci.org/Shelvak/abaco]
+  
+=== Dependency Status {<img src="https://gemnasium.com/Shelvak/abaco.png?travis"/>}[https://gemnasium.com/Shelvak/abaco]
+
+
 === (The MIT License)
 
 Copyright (c) 2012 Franco Catena

@@ -13,6 +13,7 @@ gem 'paper_trail'
 gem 'magick_columns'
 gem 'validates_timeliness'
 gem 'capistrano'
+gem 'test-unit'
 
 group :assets do
   gem 'sass-rails'
