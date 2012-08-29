@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  after_filter :add_pjax_headers, if: :pjax_request?
   after_filter -> { expires_now if user_signed_in? }
   
   rescue_from Exception do |exception|
@@ -44,5 +45,12 @@ class ApplicationController < ActionController::Base
       
       { from: from, to: to }
     end
+  end
+
+  def add_pjax_headers
+    response.headers['X-PJAX-Searchable'] = 'true' if @searchable
+    response.headers['X-PJAX-Controller'] = controller_name
+    response.headers['X-PJAX-Action']     = action_name
+    response.headers['X-PJAX-Title']      = @title || ''
   end
 end

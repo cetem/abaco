@@ -6,8 +6,7 @@ Web application to manage finances
   
 === Dependency Status {<img src="https://gemnasium.com/Shelvak/abaco.png?travis"/>}[https://gemnasium.com/Shelvak/abaco]
 
-
-=== (The MIT License)
+== (The MIT License)
 
 Copyright (c) 2012 Franco Catena
 

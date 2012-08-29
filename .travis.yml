@@ -3,7 +3,6 @@ rvm:
   - 1.9.3
 before_install:
   - sudo apt-get update -qq
-  - sudo gem update --system
 before_script:
   - 'sed -e "s/<username>/probe/ig ; s/<password>/probe/ig" config/app_config.example.yml > config/app_config.yml'
   - "psql -c 'create database abaco_test;' -U postgres"
