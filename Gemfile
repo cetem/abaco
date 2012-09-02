@@ -15,7 +15,6 @@ gem 'magick_columns'
 gem 'validates_timeliness'
 gem 'sidekiq'
 gem 'capistrano'
-gem 'test-unit' # For Travis errors
 
 group :assets do
   gem 'sass-rails'
@@ -36,4 +35,8 @@ group :test do
   gem 'fabrication'
   gem 'faker'
   gem 'webmock', require: 'webmock/test_unit'
+end
+
+if ENV['TRAVIS']
+  gem 'test-unit' # For Travis errors
 end
