@@ -1,0 +1,92 @@
+<% interval = params[:interval] || {} %>
+
+<div class="form-inputs">
+  <%= simple_form_for :interval, html: { method: :get } do |f| %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= t('view.outflows.shifts.begin') %></th>
+          <th><%= t('view.outflows.shifts.finish') %></th>
+          <th><%= Outflow.human_attribute_name 'operator_id' %></th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td><%= f.input :from, as: :date_picker, label: false, input_html: {
+            value: interval[:from]
+          } %></td>
+          <td><%= f.input :to, as: :date_picker, label: false, input_html: { 
+            value: interval[:to]
+          } %></td>
+          <td>
+            <%= f.input :auto_operator_name, label: false, input_html: {
+              class: 'autocomplete-field',
+              value: interval[:auto_operator_name], data: {
+                'autocomplete-admin-target' => '#interval_operator_admin',
+                'autocomplete-id-target' => '#interval_operator_id',
+                'autocomplete-url' => autocomplete_for_operator_outflows_path(
+                  format: :json
+                )
+              }
+            } %>
+            <%= f.input :operator_id, as: :hidden,
+              input_html: { class: 'autocomplete-id' } %>
+            <%= f.input :operator_admin, as: :hidden,
+              input_html: { class: 'autocomplete-admin' } %>
+          </td>
+          <td><%= f.button :submit, t('view.outflows.shifts.search') %></td>
+        </tr>
+      </tbody>
+    </table> 
+  <% end %>
+</div>
+
+<% if @operator_shifts && @operator_shifts.size > 0 %>
+  <div class="readonly-data">
+    <h2>
+      <%= t('view.outflows.shifts.shifts_for', 
+        operator: interval[:auto_operator_name]) %>
+    </h2>
+    <% @operator_shifts.tap do |o_s| %>
+      <h4><%= convert_dates_to_interval(o_s[:start], o_s[:finish]) %></h4>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th><%= t('view.outflows.shifts.count') %></th>
+            <th><%= t('view.outflows.shifts.hours') %></th>
+            <th><%= t('view.outflows.shifts.earnings') %></th>
+            <th><%= t('view.outflows.upfronts') %></th>
+            <th><%= t('view.outflows.shifts.total_to_pay') %></th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><%= o_s[:count]  %></td>
+            <td><%= hours_in_words(o_s[:hours]) %></td>
+            <td>
+              <%= number_to_currency(o_s[:earns]) %>
+            </td>
+            <td>
+              <%= number_to_currency(upfronts = get_operator_upfronts) %>
+            </td>
+            <td><%= number_to_currency(@total = o_s[:earns] - upfronts) %></td>
+            <td>
+              <%= show_pay_shifts_link(
+                interval[:operator_id], o_s[:start], o_s[:finish]
+              ) %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="form-actions">
+  <%= link_to t('view.outflows.index_title'), 
+    outflows_path, class: 'btn btn-primary' %>
+</div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120726220815) do
+ActiveRecord::Schema.define(:version => 20120808031842) do
 
   create_table "outflows", :force => true do |t|
     t.string   "kind",         :limit => 1,                                                 :null => false
@@ -26,6 +26,17 @@ ActiveRecord::Schema.define(:version => 20120726220815) do
 
   add_index "outflows", ["operator_id"], :name => "index_outflows_on_operator_id"
   add_index "outflows", ["user_id"], :name => "index_outflows_on_user_id"
+
+  create_table "settings", :force => true do |t|
+    t.string   "title",                       :null => false
+    t.string   "var",                         :null => false
+    t.text     "value"
+    t.integer  "lock_version", :default => 0
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+  end
+
+  add_index "settings", ["var"], :name => "index_settings_on_var", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "name",                                   :null => false

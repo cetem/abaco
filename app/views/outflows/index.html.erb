@@ -24,7 +24,11 @@
               <td><%= number_to_currency outflow.amount %></td>
               <td><%= outflow.operator_id if outflow.operator_id %></td>
               <td><%= link_to_show outflow %></td>
-              <td><%= link_to_edit edit_outflow_path(outflow) if can? :update, outflow %></td>
+              <td>
+                <%= link_to_edit(
+                  edit_outflow_path(outflow)
+                ) if can? :update, outflow %>
+              </td>
               <td><%= link_to_destroy outflow if can? :destroy, outflow %></td>
             </tr>
           <% end %>
@@ -37,7 +41,12 @@
 <% end %>
 
 <div class="form-actions">
+  <div class="pull-right">
+    <%= link_to t('view.outflows.shifts.pay_shifts'),
+      show_pay_pending_shifts_outflows_path, class: 'btn btn-primary' %>
+  </div>
   <%= link_to(
     t('view.outflows.new', default: :'label.new'),
-    new_outflow_path, class: 'btn btn-primary') if can? :create, Outflow %>
+    new_outflow_path, class: 'btn btn-primary'
+  ) if can? :create, Outflow %>
 </div>

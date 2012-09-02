@@ -8,3 +8,8 @@ smtp:
   enable_starttls_auto: true
   
 public_host: 'public.domain.com'
+
+print_hub_data:
+  site: 'www.print-hub-page.com'
+  user: '<username>'
+  password: '<password>'

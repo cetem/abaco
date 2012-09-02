@@ -1,0 +1,18 @@
+
+<div class="readonly-data">
+  <h2><%= @setting %></h2>
+
+  <p>
+    <strong><%= Setting.human_attribute_name 'title' %></strong>:
+    <%= @setting.title %>
+  </p>
+  <p>
+    <strong><%= Setting.human_attribute_name 'value' %></strong>:
+    <%= @setting.value %>
+  </p>
+  
+</div>
+<div class="form-actions">
+  <%= link_to t('label.edit'), edit_setting_path(@setting) if can? :update, @setting %> |
+  <%= link_to t('label.list'), settings_path %>
+</div>

@@ -1,4 +1,4 @@
-<div class="navbar navbar-fixed-top">
+<div class="navbar navbar-inverse navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
       <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -18,6 +18,10 @@
               :li, link_to(t('menu.outflows'), outflows_path),
               class: ('active' if controller_name == 'outflows')
             ) if can? :read, Outflow %>
+            <%= content_tag(
+              :li, link_to(t('menu.settings'), settings_path),
+              class: ('active' if controller_name == 'settings')
+            ) if can? :read, Setting %>
           </ul>
           <%= render partial: 'shared/nav_search' if @searchable %>
           <ul class="nav pull-right">

@@ -2,9 +2,14 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'capybara/rails'
+require 'sidekiq/testing/inline'
 
 class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
+  
+  setup do
+    instance_eval(File.read(Rails.root.join('test/lib/stub_requests.rb')))
+  end
   
   def error_message_from_model(model, attribute, message, extra = {})
     ::ActiveModel::Errors.new(model).generate_message(attribute, message, extra)
@@ -28,6 +33,7 @@ class ActionDispatch::IntegrationTest
   self.use_transactional_fixtures = false
   
   setup do
+    WebMock.disable!
     Capybara.default_driver = :selenium
   end
 

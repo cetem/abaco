@@ -1,9 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.6'
+gem 'rails', '3.2.8'
 
 gem 'pg'
 gem 'jquery-rails'
+gem 'pjax_rails'
 gem 'will_paginate'
 gem 'simple_form'
 gem 'devise'
@@ -12,6 +13,7 @@ gem 'role_model'
 gem 'paper_trail'
 gem 'magick_columns'
 gem 'validates_timeliness'
+gem 'sidekiq'
 gem 'capistrano'
 
 group :assets do
@@ -32,4 +34,9 @@ group :test do
   gem 'database_cleaner' # For Capybara
   gem 'fabrication'
   gem 'faker'
+  gem 'webmock', require: 'webmock/test_unit'
+end
+
+if ENV['TRAVIS']
+  gem 'test-unit' # For Travis errors
 end

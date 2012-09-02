@@ -1,0 +1,37 @@
+<% if @settings.empty? %>
+  <%= render 'shared/empty_index' %>
+<% else %>
+  <div class="row">
+    <div class="span12">
+      <table class="table resource-list">
+        <thead>
+          <tr>
+            <th><%= Setting.human_attribute_name 'title' %></th>
+            <th><%= Setting.human_attribute_name 'value' %></th>
+            <th colspan="2"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @settings.each do |setting| %>
+            <tr>
+              <td><%= setting.title %></td>
+              <td><%= setting.value %></td>
+              <td><%= link_to_show setting %></td>
+              <td><%= link_to_edit edit_setting_path(setting) if can? :update, setting %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <%= pagination_links(@setting) %>
+<% end %>
+
+<div class="form-actions">
+  <%= link_to(
+    t('view.setting.new', default: :'label.new'),
+    new_setting_path, class: 'btn btn-primary'
+  ) if can? :create, Setting %>
+</div>

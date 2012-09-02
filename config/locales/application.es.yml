@@ -1,10 +1,10 @@
 'es':
   app_name: 'Ábaco'
-  
+
   attributes:
     created_at: 'Creación'
     updated_at: 'Actualización'
-    
+
   activerecord:
     models:
       user:
@@ -13,7 +13,10 @@
       outflow:
         one: 'Salida'
         other: 'Salidas'
-      
+      setting:
+        one: 'Configuración'
+        other: 'Configuraciones'
+
     attributes:
       user:
         name: 'Nombre'
@@ -31,11 +34,14 @@
         amount: 'Cantidad'
         operator_id: 'Operador'
         user_id: 'Usuario'
-        
+      setting:
+        title: 'Título'
+        value: 'Valor'
+
   errors:
     title: 'Error'
     access_denied: 'No tiene permisos para acceder al contenido'
-        
+
   label:
     'yes': 'Si'
     'no': 'No'
@@ -47,15 +53,19 @@
     new: 'Nuevo'
     search: 'Buscar'
     show: 'Ver'
-    
+
   menu:
     actions:
       logout: 'Salir de la aplicación'
     users: 'Usuarios'
-    
+    outflows: 'Egresos'
+    settings: 'Configuración'
+
   messages:
     confirmation: '¿Está seguro?'
-    
+
+  related_hours: '%{hours} Horas y %{minutes} minutos'
+
   view:
     generic:
       empty_index:
@@ -92,8 +102,38 @@
       index:
         html: 'No se ha creado ningún egreso hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo egreso</span>'
       update_outflow: 'Actualizar egreso'
+      upfronts: 'Adelantos'
       kind:
-        withdraw: 'Retiro'
         upfront: 'Adelanto'
+        refunded: 'Adelanto devuelto'
         maintenance: 'Mantenimiento'
+        purchase: 'Compras'
         other: 'Otro'
+      shifts:
+        title: 'Turnos pendientes de pago'
+        pay_shifts: 'Pagar sueldos'
+        count: 'Cantidad'
+        hours: 'Horas trabajadas'
+        earnings: 'Ganancias'
+        total_to_pay: 'Total a pagar'
+        pay: 'Pagar'
+        search: 'Buscar turnos'
+        begin: 'Inicio'
+        finish: 'Fin'
+        confirm: 'El operario quedará debiendo, recuerde agregarlo NUEVAMENTE como adelanto.'
+        shifts_for: 'Turnos de %{operator}'
+        paid_notice: 'Los turnos han sido pagados, y los adelantos cancelados.'
+    settings:
+      index_title: 'Listado de Configuraciones'
+      show_title: 'Detalle de Configuración'
+      new_title: 'Nueva Configuración'
+      edit_title: 'Modificar Configuración'
+      correctly_created: 'Configuración agregada correctamente.'
+      correctly_updated: 'Configuración actualizada correctamente.'
+      stale_object_error: 'La configuración no pudo ser actualizada, intente nuevamente.'
+      empty_index:
+        html: 'No se ha creado ninguna configuración hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nueva configuración</span>'
+      new: 'Nueva configuración'
+      update_setting: 'Actualizar configuración'
+      setting_correctly_updated: 'Actualizaste la configuración correctamente.'
+
