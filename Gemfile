@@ -15,7 +15,7 @@ gem 'magick_columns'
 gem 'validates_timeliness'
 gem 'sidekiq'
 gem 'capistrano'
-gem 'test-unit'
+gem 'test-unit' # For Travis errors
 
 group :assets do
   gem 'sass-rails'
