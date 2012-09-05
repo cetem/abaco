@@ -63,4 +63,9 @@ module OutflowsHelper
       )])
     end
   end
+
+  def change_operator_field_errors(obj)
+    obj.errors.add(:auto_operator_name, obj.errors[:operator_id].join(', '))
+    obj.errors[:operator_id].clear
+  end
 end

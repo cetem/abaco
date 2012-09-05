@@ -34,6 +34,7 @@
         amount: 'Cantidad'
         operator_id: 'Operador'
         user_id: 'Usuario'
+        bill: 'Factura'
       setting:
         title: 'Título'
         value: 'Valor'

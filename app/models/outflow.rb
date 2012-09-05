@@ -14,7 +14,7 @@ class Outflow < ActiveRecord::Base
   
   # Atributos permitidos
   attr_accessible :amount, :comment, :kind, :lock_version, :operator_id,
-    :auto_operator_name, :user_id
+    :auto_operator_name, :user_id, :bill
   
   # Attributos no persistentes
   attr_accessor :auto_operator_name

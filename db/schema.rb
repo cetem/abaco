@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120808031842) do
+ActiveRecord::Schema.define(:version => 20120905013415) do
 
   create_table "outflows", :force => true do |t|
     t.string   "kind",         :limit => 1,                                                 :null => false
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20120808031842) do
     t.integer  "lock_version",                                             :default => 0,   :null => false
     t.datetime "created_at",                                                                :null => false
     t.datetime "updated_at",                                                                :null => false
+    t.string   "bill"
   end
 
   add_index "outflows", ["operator_id"], :name => "index_outflows_on_operator_id"

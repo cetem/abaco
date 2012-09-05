@@ -5,6 +5,14 @@
     <strong><%= Outflow.human_attribute_name 'user_id' %></strong>:
     <%= @outflow.user %>
   </p>
+
+  <% if @outflow.bill %>
+    <p>
+      <strong><%= Outflow.human_attribute_name 'bill'  %></strong>:
+      <%= @outflow.bill %>
+    </p>
+  <% end %>
+
   <p>
     <strong><%= Outflow.human_attribute_name 'comment' %></strong>:
     <blockquote><%= simple_format @outflow.comment %></blockquote>
