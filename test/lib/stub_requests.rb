@@ -51,9 +51,9 @@ stub_request(
 
 stub_request(
   :get, /#{site}\/shifts.json\?
-    user_pay_pending_shifts_between\[finish\]=#{date_regexp}&
-    user_pay_pending_shifts_between\[start\]=#{date_regexp}&
-    user_pay_pending_shifts_between\[user\]=1/x
+    pay_pending_shifts_for_user_between\[finish\]=#{date_regexp}&
+    pay_pending_shifts_for_user_between\[start\]=#{date_regexp}&
+    pay_pending_shifts_for_user_between\[user\]=1/x
 ).with(
   headers: { 'Accept' => 'application/json' }
 ).to_return(
