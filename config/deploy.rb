@@ -1,7 +1,7 @@
 require 'bundler/capistrano'
 
 set :application, 'abaco'
-set :repository,  'https://github.com/Shelvak/abaco.git'
+set :repository,  'https://github.com/cetem/abaco.git'
 set :deploy_to, '/var/rails/abaco'
 set :user, 'deployer'
 set :group_writable, false
