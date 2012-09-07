@@ -114,20 +114,20 @@ class OutflowTest < ActiveSupport::TestCase
       Outflow.pay_operator_shifts_and_upfronts(
         operator_id: @outflow.operator_id, 
         start: 1.month.ago.to_date, 
-        finish: Date.today
+        finish: Time.zone.today
       )
     end
   end
 
-  test 'get pay pending shifts between 2 dates' do
-    @outflow = Fabricate(:outflow, operator_id: 1)
-
-    Outflow.operator_pay_pending_shifts_between(
-      operator_id: @outflow.operator_id,
+  test 'get pay pending shifts between dates' do
+    shifts = Outflow.operator_pay_pending_shifts_between(
+      operator_id: rand(99),
       start: 1.month.ago.to_date,
-      finish: Date.today,
+      finish: Time.zone.today,
       admin: true
     )
+    
+    assert_equal 15, shifts[:hours]
   end
 
   test 'calculate worked hours' do

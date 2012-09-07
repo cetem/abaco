@@ -41,7 +41,7 @@ class Outflow < ActiveRecord::Base
   def self.operator_pay_pending_shifts_between(options = {})
     shifts = OperatorShifts.find(:all, params: { 
       pay_pending_shifts_for_user_between: {
-        user: options[:operator_id],
+        user_id: options[:operator_id],
         start: options[:start],
         finish: options[:finish]
       }

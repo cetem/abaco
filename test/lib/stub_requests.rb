@@ -25,7 +25,7 @@ id = 1
 end
 
 stub_request(
-  :get, "#{site}/users/1.json"
+  :get, /#{site}\/users\/\d+.json/
 ).with(
   headers: { 'Accept'=>'application/json' }
 ).to_return(
@@ -41,7 +41,7 @@ stub_request(
 )
 
 stub_request(
-  :put, /#{site}\/users\/1\/pay_shifts_between.json\?
+  :put, /#{site}\/users\/\d+\/pay_shifts_between.json\?
     finish=#{date_regexp}&start=#{date_regexp}/x
 ).with(
   headers: { 'Content-Type'=>'application/json' }
@@ -53,7 +53,7 @@ stub_request(
   :get, /#{site}\/shifts.json\?
     pay_pending_shifts_for_user_between\[finish\]=#{date_regexp}&
     pay_pending_shifts_for_user_between\[start\]=#{date_regexp}&
-    pay_pending_shifts_for_user_between\[user\]=1/x
+    pay_pending_shifts_for_user_between\[user_id\]=\d+/x
 ).with(
   headers: { 'Accept' => 'application/json' }
 ).to_return(
