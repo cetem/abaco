@@ -2,9 +2,9 @@
 
 Web application to manage finances
 
-=== Build Status {<img src="https://secure.travis-ci.org/Shelvak/abaco.png"/>}[http://travis-ci.org/Shelvak/abaco]
+=== Build Status {<img src="https://secure.travis-ci.org/cetem/abaco.png"/>}[http://travis-ci.org/cetem/abaco]
   
-=== Dependency Status {<img src="https://gemnasium.com/Shelvak/abaco.png?travis"/>}[https://gemnasium.com/Shelvak/abaco]
+=== Dependency Status {<img src="https://gemnasium.com/cetem/abaco.png?travis"/>}[https://gemnasium.com/cetem/abaco]
 
 == (The MIT License)
 
