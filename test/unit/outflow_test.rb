@@ -11,7 +11,9 @@ class OutflowTest < ActiveSupport::TestCase
   
   test 'create' do
     assert_difference ['Outflow.count', 'Version.count'] do
-      @outflow = Outflow.create(Fabricate.attributes_for(:outflow))
+      assert Outflow.create(
+        Fabricate.attributes_for(:outflow, user_id: @outflow.user_id)
+      )
     end
   end
   
