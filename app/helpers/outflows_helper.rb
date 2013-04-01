@@ -46,11 +46,11 @@ module OutflowsHelper
     t('related_hours', hours: hours.to_i, minutes: minutes.to_i) 
   end
     
-  def show_pay_shifts_link(id, start, finish)
+  def show_pay_shifts_link(id, start, finish, amount)
     link_args = [
       t('view.outflows.shifts.pay'),
       pay_shifts_outflows_path(
-        id: id, from: start.to_date, to: finish.to_date
+        id: id, from: start.to_date, to: finish.to_date, total_to_pay: amount
       )
     ]
     link_options = { method: :put, class: 'btn btn-primary' }

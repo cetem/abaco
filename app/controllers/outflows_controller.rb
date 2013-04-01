@@ -5,7 +5,7 @@ class OutflowsController < ApplicationController
   # GET /outflows.json
   def index
     @title = t('view.outflows.index_title')
-    @outflows = Outflow.page(params[:page])
+    @outflows = Outflow.order('id DESC').page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -133,7 +133,9 @@ class OutflowsController < ApplicationController
     @paid = Outflow.pay_operator_shifts_and_upfronts(
       operator_id: params[:id], 
       start: params[:from], 
-      finish: params[:to]
+      finish: params[:to],
+      amount: params[:total_to_pay],
+      user_id: current_user.id
     )
     
     if @paid

@@ -114,12 +114,16 @@ class OutflowTest < ActiveSupport::TestCase
   test 'pay shifts and upfronts' do
     @outflow = Fabricate(:outflow, kind: 'u', operator_id: 1)
     
-    assert_difference 'Outflow.upfronts.count', -1 do
-      Outflow.pay_operator_shifts_and_upfronts(
-        operator_id: @outflow.operator_id, 
-        start: 1.month.ago.to_date, 
-        finish: Time.zone.today
-      )
+    assert_difference 'Outflow.count' do
+      assert_difference 'Outflow.upfronts.count', -1 do
+        Outflow.pay_operator_shifts_and_upfronts(
+          operator_id: @outflow.operator_id, 
+          start: 1.month.ago.to_date.to_s, 
+          finish: Time.zone.today.to_s,
+          user_id: Fabricate(:user).id,
+          amount: 300
+        )
+      end
     end
   end
 

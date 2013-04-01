@@ -109,6 +109,7 @@
         refunded: 'Adelanto devuelto'
         maintenance: 'Mantenimiento'
         purchase: 'Compras'
+        payoff: 'Pago'
         other: 'Otro'
       shifts:
         title: 'Turnos pendientes de pago'

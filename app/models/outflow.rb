@@ -7,6 +7,7 @@ class Outflow < ActiveRecord::Base
     refunded: 'r',
     maintenance: 'm',
     purchase: 'p',
+    payoff: 'x',
     other: 'o'
   }.with_indifferent_access.freeze
   
@@ -74,6 +75,17 @@ class Outflow < ActiveRecord::Base
     )
     
     upfronts.where(operator_id: options[:operator_id]).all?(&:refund!)
+
+    Outflow.create!(
+      kind: KIND[:payoff],
+      comment: [
+        I18n.l(Date.parse(options[:start]), format: :long),
+        I18n.l(Date.parse(options[:finish]), format: :long)
+      ].join(' -> '),
+      amount: options[:amount],
+      user_id: options[:user_id],
+      operator_id: options[:operator_id]
+    )
   end
 
   def self.calculate_how_much_money_have_to_pay(hours, admin)

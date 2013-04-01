@@ -31,10 +31,16 @@
                 )
               }
             } %>
-            <%= f.input :operator_id, as: :hidden,
-              input_html: { class: 'autocomplete-id' } %>
-            <%= f.input :operator_admin, as: :hidden,
-              input_html: { class: 'autocomplete-admin' } %>
+            <% operator_id = params[:interval] ? 
+              params[:interval][:operator_id] : ''%>
+            <% operator_admin = params[:interval] ? 
+              params[:interval][:operator_admin] : ''%>
+            <%= f.input :operator_id, as: :hidden, input_html: { 
+              class: 'autocomplete-id', value: operator_id
+            } %>
+            <%= f.input :operator_admin, as: :hidden, input_html: {
+              class: 'autocomplete-admin', value: operator_admin
+            } %>
           </td>
           <td><%= f.button :submit, t('view.outflows.shifts.search') %></td>
         </tr>
@@ -76,7 +82,7 @@
             <td><%= number_to_currency(@total = o_s[:earns] - upfronts) %></td>
             <td>
               <%= show_pay_shifts_link(
-                interval[:operator_id], o_s[:start], o_s[:finish]
+                interval[:operator_id], o_s[:start], o_s[:finish], @total
               ) %>
             </td>
           </tr>
