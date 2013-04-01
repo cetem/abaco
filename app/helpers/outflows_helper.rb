@@ -40,7 +40,7 @@ module OutflowsHelper
   
   def hours_in_words(hours)
     seconds = hours * 3600
-    hours = seconds_to_rounded_time(seconds, 15.minutes) / 3600
+    hours = seconds_to_rounded_time(seconds, 1.minute) / 3600
     minutes = (hours - hours.to_i) * 60
     
     t('related_hours', hours: hours.to_i, minutes: minutes.to_i) 
