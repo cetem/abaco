@@ -92,4 +92,8 @@ class Outflow < ActiveRecord::Base
 
     hours / 3600
   end
+
+  def operator_name
+    Operator.find(self.operator_id).try(:label)
+  end
 end

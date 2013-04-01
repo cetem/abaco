@@ -15,7 +15,7 @@
         <tbody>
           <% @settings.each do |setting| %>
             <tr>
-              <td><%= setting.title %></td>
+              <td><%= t("view.settings.#{setting.var}") %></td>
               <td><%= setting.value %></td>
               <td><%= link_to_show setting %></td>
               <td><%= link_to_edit edit_setting_path(setting) if can? :update, setting %></td>

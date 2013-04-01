@@ -137,4 +137,6 @@
       new: 'Nueva configuración'
       update_setting: 'Actualizar configuración'
       setting_correctly_updated: 'Actualizaste la configuración correctamente.'
+      pay_per_administrator_hour: 'Pago por hora de Encargado'
+      pay_per_operator_hour: 'Pago por hora de Operador'
 

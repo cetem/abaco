@@ -19,4 +19,10 @@ class OperatorTest < ActiveSupport::TestCase
       :pay_shifts_between, start: 1.month.ago.to_date, finish: Date.today
     )
   end
+
+  test 'show operator label' do
+    outflow = Fabricate(:outflow, operator_id: @generic_operator[:id])
+
+    assert_equal @generic_operator[:label], outflow.operator_name
+  end
 end
