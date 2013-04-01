@@ -22,7 +22,7 @@ class Outflow < ActiveRecord::Base
   
   # Validaciones
   validates :amount, :kind, :user_id, presence: true
-  validates :amount, numericality: { greater_than: 0 }
+  validates :amount, numericality: { allow_nil: true, allow_blank: true }
   validates :operator_id, presence: true, if: :kind_is_upfront?
   validates :comment, presence: true, if: :kind_is_other?
   
