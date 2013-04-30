@@ -32,7 +32,7 @@ group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'database_cleaner' # For Capybara
-  gem 'fabrication', github: 'raphaelmolesim/fabrication', branch: 'activerecord4'
+  gem 'fabrication'
   gem 'faker'
   gem 'webmock'
 end

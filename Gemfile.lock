@@ -26,13 +26,6 @@ GIT
       railties (~> 4.0.0.beta)
       warden (~> 1.2.1)
 
-GIT
-  remote: git://github.com/raphaelmolesim/fabrication.git
-  revision: b16ee28cfe1ac6d9897978514fbf7aba8959b638
-  branch: activerecord4
-  specs:
-    fabrication (2.5.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -102,6 +95,7 @@ GEM
     eventmachine (1.0.3)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    fabrication (2.6.5)
     faker (1.1.2)
       i18n (~> 0.5)
     ffi (1.8.1)
@@ -226,7 +220,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0.rc1)
   database_cleaner
   devise!
-  fabrication!
+  fabrication
   faker
   jquery-rails
   magick_columns!
