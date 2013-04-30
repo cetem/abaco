@@ -3,9 +3,9 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'capybara/rails'
 require 'sidekiq/testing/inline'
+require 'webmock/test_unit'
 
 class ActiveSupport::TestCase
-  require 'webmock/test_unit'
   include WebMock::API
   # Add more helper methods to be used by all tests here...
   

@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.0.0.rc1'
-gem 'activerecord', '4.0.0.rc1'
 
 gem 'pg'
 gem 'jquery-rails'
@@ -17,7 +16,6 @@ gem 'validates_timeliness'
 gem 'sidekiq'
 gem 'capistrano'
 gem 'activeresource', '4.0.0.beta1', require: 'active_resource'
-#gem 'strong_parameters'
 
 # Assets Group =)
 gem 'sass-rails', '~> 4.0.0.rc1'
@@ -36,7 +34,7 @@ group :test do
   gem 'database_cleaner' # For Capybara
   gem 'fabrication', github: 'raphaelmolesim/fabrication', branch: 'activerecord4'
   gem 'faker'
-  gem 'webmock', require: 'webmock/test_unit'
+  gem 'webmock'
 end
 
 if ENV['TRAVIS']
