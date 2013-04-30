@@ -1,37 +1,40 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.12'
+gem 'rails', '4.0.0.rc1'
+gem 'activerecord', '4.0.0.rc1'
 
 gem 'pg'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'will_paginate'
-gem 'simple_form'
-gem 'devise'
+gem 'simple_form', '~> 3.0.0.beta1'
+gem 'devise', github: 'plataformatec/devise', branch: 'rails4'
 gem 'cancan'
 gem 'role_model'
-gem 'paper_trail'
-gem 'magick_columns'
+gem 'paper_trail', github: 'airblade/paper_trail', branch: 'rails4'
+gem 'magick_columns', github: 'kainlite/magick_columns'
 gem 'validates_timeliness'
 gem 'sidekiq'
 gem 'capistrano'
+gem 'activeresource', '4.0.0.beta1', require: 'active_resource'
+#gem 'strong_parameters'
 
-group :assets do
-  gem 'sass-rails'
-  gem 'coffee-rails'
-  gem 'uglifier'
-end
+# Assets Group =)
+gem 'sass-rails', '~> 4.0.0.rc1'
+gem 'coffee-rails', '~> 4.0.0.rc1'
+gem 'uglifier', '>= 1.0.30'
 
 group :development do
   gem 'thin'
 end
 
 group :test do
-  gem 'turn', require: false
-  gem 'minitest', require: false
-  gem 'capybara', require: false
+  gem 'turn'
+  gem 'minitest'
+  gem 'capybara'
+  gem 'selenium-webdriver'
   gem 'database_cleaner' # For Capybara
-  gem 'fabrication'
+  gem 'fabrication', github: 'raphaelmolesim/fabrication', branch: 'activerecord4'
   gem 'faker'
   gem 'webmock', require: 'webmock/test_unit'
 end

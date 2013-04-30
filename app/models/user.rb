@@ -10,12 +10,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :recoverable, :rememberable, :trackable,
     :validatable
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :lastname, :email, :password, :password_confirmation,
-    :role, :remember_me, :lock_version
-  
   # Defaul order
-  default_scope order('lastname ASC')
+  default_scope -> { order('lastname ASC') }
   
   # Validations
   validates :name, presence: true
@@ -26,7 +22,7 @@ class User < ActiveRecord::Base
   has_many :outflows
   
   def initialize(attributes = nil, options = {})
-    super(attributes, options)
+    super(attributes)
     
     self.role ||= :regular
   end
@@ -44,6 +40,6 @@ class User < ActiveRecord::Base
   end
   
   def self.filtered_list(query)
-    query.present? ? magick_search(query) : scoped
+    query.present? ? magick_search(query) : all
   end
 end

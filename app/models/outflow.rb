@@ -11,11 +11,8 @@ class Outflow < ActiveRecord::Base
     other: 'o'
   }.with_indifferent_access.freeze
   
-  scope :upfronts, where(kind: KIND[:upfront])
-  
-  # Atributos permitidos
-  attr_accessible :amount, :comment, :kind, :lock_version, :operator_id,
-    :auto_operator_name, :user_id, :bill
+  # Scopes
+  scope :upfronts, -> { where(kind: KIND[:upfront]) }
   
   # Attributos no persistentes
   attr_accessor :auto_operator_name

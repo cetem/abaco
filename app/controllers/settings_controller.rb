@@ -46,7 +46,7 @@ class SettingsController < ApplicationController
   # POST /settings.json
   def create
     @title = t('view.settings.new_title')
-    @setting = Setting.new(params[:setting])
+    @setting = Setting.new(setting_params)
 
     respond_to do |format|
       if @setting.save
@@ -66,7 +66,7 @@ class SettingsController < ApplicationController
     @setting = Setting.find(params[:id])
 
     respond_to do |format|
-      if @setting.update_attributes(params[:setting])
+      if @setting.update_attributes(setting_params)
         format.html { redirect_to @setting, notice: t('view.settings.correctly_updated') }
         format.json { head :ok }
       else
@@ -76,5 +76,11 @@ class SettingsController < ApplicationController
     end
   rescue ActiveRecord::StaleObjectError
     redirect_to edit_setting_url(@setting), alert: t('view.settings.stale_object_error')
+  end
+
+  private
+
+  def setting_params
+    params.require(:setting).permit(:lock_version, :value, :var, :title)
   end
 end

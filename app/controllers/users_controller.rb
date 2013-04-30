@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!
   before_filter :load_current_user, only: [:edit_profile, :update_profile]
+  before_filter :user_params, only: :create
   
   check_authorization
   load_and_authorize_resource
@@ -65,11 +66,11 @@ class UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.json
   def update
-    authorize! :assign_roles, @user if params[:user] && params[:user][:roles]
+    authorize! :assign_roles, @user if user_params && user_params[:roles]
     @title = t 'view.users.edit_title'
 
     respond_to do |format|
-      if @user.update_attributes(params[:user])
+      if @user.update_attributes(user_params)
         format.html { redirect_to @user, notice: t('view.users.correctly_updated') }
         format.json { head :no_content }
       else
@@ -89,17 +90,17 @@ class UsersController < ApplicationController
   end
   
   # PUT /users/1/update_profile
-  # PUT /users/1/update_profile.xml
+  # PUT /users/1/update_profile.json
   def update_profile
     @title = t('view.users.edit_profile')
     
     respond_to do |format|
-      if @user.update_attributes(params[:user])
+      if @user.update_attributes(user_profile_params)
         format.html { redirect_to(edit_profile_user_url(@user), notice: t('view.users.profile_correctly_updated')) }
-        format.xml  { head :ok }
+        #format.json  { head :ok }
       else
         format.html { render action: 'edit_profile' }
-        format.xml  { render xml: @user.errors, status: :unprocessable_entity }
+        format.json  { render json: @user.errors, status: :unprocessable_entity }
       end
     end
 
@@ -123,5 +124,20 @@ class UsersController < ApplicationController
   
   def load_current_user
     @user = current_user
+  end
+
+  def user_params
+    params.require(:user).permit!
+    # Por una extraña razón explota con los atributos explicitos
+    #(
+    #  :name, :lastname, :email, :password, :password_confirmation,
+    #  :role, :lock_version
+    #)
+  end
+
+  def user_profile_params
+    params.require(:user).permit(
+      :name, :lastname, :email, :password, :password_confirmation
+    )
   end
 end

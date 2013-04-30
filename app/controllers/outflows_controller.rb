@@ -47,7 +47,7 @@ class OutflowsController < ApplicationController
   # POST /outflows.json
   def create
     @title = t('view.outflows.new_title')
-    @outflow = Outflow.new(params[:outflow])
+    @outflow = Outflow.new(outflow_params)
     @outflow.user_id = current_user.id
 
     respond_to do |format|
@@ -68,7 +68,7 @@ class OutflowsController < ApplicationController
     @outflow = Outflow.find(params[:id])
 
     respond_to do |format|
-      if @outflow.update_attributes(params[:outflow])
+      if @outflow.update_attributes(outflow_params)
         format.html { redirect_to @outflow, notice: t('view.outflows.correctly_updated') }
         format.json { head :ok }
       else
@@ -145,4 +145,13 @@ class OutflowsController < ApplicationController
       format.json { render json: @paid.errors, status: :unprocessable_entity }
     end
   end
+
+  private
+
+    def outflow_params
+      params.require(:outflow).permit(
+        :amount, :comment, :kind, :lock_version, :operator_id,
+        :auto_operator_name, :user_id, :bill
+      )
+    end
 end

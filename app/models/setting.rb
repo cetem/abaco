@@ -1,9 +1,6 @@
 class Setting < ActiveRecord::Base
   has_paper_trail
 
-  # Atributos accesibles
-  attr_accessible :lock_version, :value, :var, :title
-
   # Callbacks
   before_save :assign_var_from_title
   
