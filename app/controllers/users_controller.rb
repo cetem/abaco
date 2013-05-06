@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :load_current_user, only: [:edit_profile, :update_profile]
-  before_filter :user_params, only: :create
+  before_action :authenticate_user!
+  before_action :load_current_user, only: [:edit_profile, :update_profile]
+  before_action :user_params, only: :create
   
   check_authorization
   load_and_authorize_resource

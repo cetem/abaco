@@ -20,7 +20,7 @@ gem 'activeresource', '4.0.0.beta1', require: 'active_resource'
 # Assets Group =)
 gem 'sass-rails', '~> 4.0.0.rc1'
 gem 'coffee-rails', '~> 4.0.0.rc1'
-gem 'uglifier', '>= 1.0.30'
+gem 'uglifier', '>= 1.3.0'
 
 group :development do
   gem 'thin'
