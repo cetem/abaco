@@ -60,3 +60,26 @@ stub_request(
   body: @operator_shifts.to_json
 )
 
+stub_request(
+  :get, /#{site}\/shifts\/paginate.json/
+).with(
+  headers: { 'Accept' => 'application/json' }
+).to_return(
+  body: @operator_shifts.to_json
+)
+
+stub_request(
+  :get, /#{site}\/users\/current_workers.json/
+).with(
+  headers: { 'Accept' => 'application/json' }
+).to_return(
+  body: [
+    @generic_operator,
+    {
+      id: '2',
+      label: 'Yoda Master',
+      informal: 'Yoda',
+      admin: 'true'
+    }
+  ].to_json
+)

@@ -18,16 +18,6 @@
         other: 'Configuraciones'
 
     attributes:
-      user:
-        name: 'Nombre'
-        lastname: 'Apellido'
-        email: 'Correo'
-        password: 'Contraseña'
-        password_confirmation: 'Confirmación'
-        roles:
-          one: 'Perfil'
-          other: 'Perfiles'
-        remember_me: 'Recordarme'
       outflow:
         kind: 'Tipo de salida'
         comment: 'Comentario'
@@ -38,6 +28,16 @@
       setting:
         title: 'Título'
         value: 'Valor'
+      user:
+        name: 'Nombre'
+        lastname: 'Apellido'
+        email: 'Correo'
+        password: 'Contraseña'
+        password_confirmation: 'Confirmación'
+        roles:
+          one: 'Perfil'
+          other: 'Perfiles'
+        remember_me: 'Recordarme'
 
   errors:
     title: 'Error'
@@ -58,6 +58,7 @@
   menu:
     actions:
       logout: 'Salir de la aplicación'
+    operators: 'Operadores'
     users: 'Usuarios'
     outflows: 'Egresos'
     settings: 'Configuración'
@@ -67,6 +68,10 @@
 
   related_hours: '%{hours} Horas y %{minutes} minutos'
 
+  shared:
+    day: 'Día'
+    quantity: 'Cantidad'
+
   view:
     generic:
       empty_index:
@@ -74,6 +79,14 @@
       empty_search:
         title:
           html: 'La búsqueda de <span class="label label-inverse">%{search}</span> no obtuvo ningún resultado.'
+    operators:
+      index_title: 'Listado de Operarios'
+      show_title: 'Detalle de operario'
+      full_name: 'Nombre y apellido'
+      charge: 'Cargo'
+      operator: 'Operador'
+      administrator: 'Encargado'
+      without_upfronts: 'Sin adelantos.'
     users:
       index_title: 'Listado de usuarios'
       show_title: 'Detalle de usuario'
@@ -125,6 +138,7 @@
         confirm: 'El operario quedará debiendo, recuerde agregarlo NUEVAMENTE como adelanto.'
         shifts_for: 'Turnos de %{operator}'
         paid_notice: 'Los turnos han sido pagados, y los adelantos cancelados.'
+        shifts: 'Turnos'
     settings:
       index_title: 'Listado de Configuraciones'
       show_title: 'Detalle de Configuración'

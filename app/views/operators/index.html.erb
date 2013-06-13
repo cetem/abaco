@@ -1,0 +1,28 @@
+<% if @operators.empty? %>
+  <%= render 'shared/empty_index' %>
+<% else %>
+
+  <div class="readonly-data">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= t('view.operators.full_name') %></th>
+          <th><%= t('view.operators.charge') %></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @operators.each do |o| %>
+          <tr>
+            <td><%= link_to o['label'], operator_path(o['id']) %></td>
+            <td><%= o['admin'] ? t('view.operators.administrator') : 
+              t('view.operators.operator') %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+
+<nav class="form-actions">
+</nav>

@@ -106,6 +106,10 @@ class Outflow < ActiveRecord::Base
   end
 
   def operator_name
-    Operator.find(self.operator_id).try(:label)
+    begin
+      Operator.find(self.operator_id).try(:label)
+    rescue
+      'Unknown'
+    end
   end
 end
