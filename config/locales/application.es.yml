@@ -117,9 +117,8 @@
         html: 'No se ha creado ningún egreso hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo egreso</span>'
       update_outflow: 'Actualizar egreso'
       upfronts: 'Adelantos'
-      current_credit: 'Crédito'
-      reajust_of:
-        html: "Reajuste de <a href='outflows/%{outflow_id}'>%{outflow_id}</a>"
+      current_credit: 'Saldo'
+      reajust_of: "Reajuste de <a href='outflows/%{outflow_id}'>%{outflow_id}</a>"
       kind:
         upfront: 'Adelanto'
         to_favor: 'A Favor'
@@ -142,6 +141,7 @@
         confirm: 'El operario quedará debiendo, recuerde agregarlo NUEVAMENTE como adelanto.'
         shifts_for: 'Turnos de %{operator}'
         paid_notice: 'Los turnos han sido pagados, y los adelantos cancelados.'
+        can_not_be_paid: 'No pudo completarse el pago'
         shifts: 'Turnos'
     settings:
       index_title: 'Listado de Configuraciones'

@@ -14,11 +14,18 @@ new Rule
         linkHref = payShiftsLink.attr('href')
         updatedUrl = linkHref
           .replace(/upfronts=-?\d+(\.\d{2})?/, "upfronts=#{futureUpfront}")
-          .replace(/total_to_pay=\d+(\.\d{2})?/, "total_to_pay=#{input_val}")
+          .replace(/total_to_pay=-?\d+(\.\d{2})?/, "total_to_pay=#{input_val}")
 
         payShiftsLink.attr('href', updatedUrl)
 
+    @map.sendPay ||= (e)->
+      if e.which == 13
+        e.preventDefault()
+        $('#pay_shifts_link').click()
+
+
     $(document).on 'change keyup', '#to_pay_total', @map.changeTotalAmount
+    $(document).on 'keydown', '#to_pay_total', @map.sendPay
 
   unload: ->
     $(document).off 'change keyup', '#to_pay_total', @map.changeTotalAmount

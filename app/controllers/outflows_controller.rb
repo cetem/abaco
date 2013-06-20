@@ -142,7 +142,7 @@ class OutflowsController < ApplicationController
     if @paid
       redirect_to outflows_path, notice: t('view.outflows.shifts.paid_notice')
     else
-      redirect_to :back, notice: 'No se pudo'
+      redirect_to :back, notice: t('view.outflows.shifts.can_not_be_paid')
     end
   end
 end

@@ -14,6 +14,7 @@ class Outflow < ActiveRecord::Base
   
   scope :upfronts, where(kind: KIND[:upfront])
   scope :to_favor, where(kind: KIND[:to_favor])
+  scope :credits, where(kind: [KIND[:upfront], KIND[:to_favor]])
   
   # Atributos permitidos
   attr_accessible :amount, :comment, :kind, :lock_version, :operator_id,
@@ -46,8 +47,8 @@ class Outflow < ActiveRecord::Base
 
   def self.operator_pay_pending_shifts_between(options = {})
     shifts = OperatorShifts.find(:all, params: { 
+      user_id: options[:operator_id],
       pay_pending_shifts_for_user_between: {
-        user_id: options[:operator_id],
         start: options[:start],
         finish: options[:finish]
       }
@@ -79,33 +80,31 @@ class Outflow < ActiveRecord::Base
       :pay_shifts_between, start: options[:start], finish: options[:finish]
     )
     
-    Outflow.upfronts.where(operator_id: options[:operator_id]).all?(&:refund!)
+    Outflow.credits.where(operator_id: options[:operator_id]).all?(&:refund!)
 
-    Outflow.transaction do
-      begin
-        pay = Outflow.create!(
-          kind: KIND[:payoff],
-          comment: [
-            I18n.l(Date.parse(options[:start]), format: :long),
-            I18n.l(Date.parse(options[:finish]), format: :long)
-          ].join(' -> '),
-          amount: options[:amount].to_f.abs,
-          user_id: options[:user_id],
-          operator_id: options[:operator_id]
-        )
+    pay = Outflow.create!(
+      kind: KIND[:payoff],
+      comment: [
+        I18n.l(Date.parse(options[:start]), format: :long),
+        I18n.l(Date.parse(options[:finish]), format: :long)
+      ].join(' -> '),
+      amount: options[:amount].to_f,
+      user_id: options[:user_id],
+      operator_id: options[:operator_id]
+    )
 
-        upfront = options[:upfronts].to_f
-        
-        Outflow.create!(
-          kind: (upfront < 0 ? KIND[:to_favor] : KIND[:upfront]),
-          amount: upfront.abs,
-          comment: I18n.t('view.outflows.reajust_of.html', outflow_id: pay.id),
-          user_id: options[:user_id],
-          operator_id: options[:operator_id]
-        ) if upfront != 0
-      rescue                                                                    
-        raise ActiveRecord::Rollback
-      end
+    upfront = options[:upfronts].to_f
+    
+    if upfront != 0
+      Outflow.create!(
+        kind: (upfront < 0 ? KIND[:to_favor] : KIND[:upfront]),
+        amount: upfront.abs,
+        comment: I18n.t('view.outflows.reajust_of', outflow_id: pay.id),
+        user_id: options[:user_id],
+        operator_id: options[:operator_id]
+      )
+    else
+      true
     end
   end
 
