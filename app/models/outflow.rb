@@ -4,6 +4,7 @@ class Outflow < ActiveRecord::Base
   # Constantes
   KIND = {
     upfront: 'u',
+    to_favor: 'f',
     refunded: 'r',
     maintenance: 'm',
     purchase: 'p',
@@ -12,6 +13,7 @@ class Outflow < ActiveRecord::Base
   }.with_indifferent_access.freeze
   
   scope :upfronts, where(kind: KIND[:upfront])
+  scope :to_favor, where(kind: KIND[:to_favor])
   
   # Atributos permitidos
   attr_accessible :amount, :comment, :kind, :lock_version, :operator_id,
@@ -22,17 +24,20 @@ class Outflow < ActiveRecord::Base
   
   # Validaciones
   validates :amount, :kind, :user_id, presence: true
-  validates :amount, numericality: { allow_nil: true, allow_blank: true }
-  validates :operator_id, presence: true, if: :kind_is_upfront?
+  validates :amount, numericality: { allow_nil: true, allow_blank: true, 
+    greater_than: 0.00 }
+  validates :operator_id, presence: true, if: :operator_needed?
   validates :comment, presence: true, if: :kind_is_other?
   
   # Relaciones
   belongs_to :user
 
-  ['upfront', 'other'].each do |kind|
-    define_method("kind_is_#{kind}?") do
-      self.kind == KIND[kind.to_sym]
-    end
+  KIND.each do |kind, value|
+    define_method("kind_is_#{kind}?") { self.kind == KIND[kind] }
+  end
+
+  def operator_needed?
+    self.kind_is_to_favor? || self.kind_is_upfront? || self.kind_is_payoff?
   end
   
   def kind_symbol
@@ -74,18 +79,34 @@ class Outflow < ActiveRecord::Base
       :pay_shifts_between, start: options[:start], finish: options[:finish]
     )
     
-    upfronts.where(operator_id: options[:operator_id]).all?(&:refund!)
+    Outflow.upfronts.where(operator_id: options[:operator_id]).all?(&:refund!)
 
-    Outflow.create!(
-      kind: KIND[:payoff],
-      comment: [
-        I18n.l(Date.parse(options[:start]), format: :long),
-        I18n.l(Date.parse(options[:finish]), format: :long)
-      ].join(' -> '),
-      amount: options[:amount],
-      user_id: options[:user_id],
-      operator_id: options[:operator_id]
-    )
+    Outflow.transaction do
+      begin
+        pay = Outflow.create!(
+          kind: KIND[:payoff],
+          comment: [
+            I18n.l(Date.parse(options[:start]), format: :long),
+            I18n.l(Date.parse(options[:finish]), format: :long)
+          ].join(' -> '),
+          amount: options[:amount].to_f.abs,
+          user_id: options[:user_id],
+          operator_id: options[:operator_id]
+        )
+
+        upfront = options[:upfronts].to_f
+        
+        Outflow.create!(
+          kind: (upfront < 0 ? KIND[:to_favor] : KIND[:upfront]),
+          amount: upfront.abs,
+          comment: I18n.t('view.outflows.reajust_of.html', outflow_id: pay.id),
+          user_id: options[:user_id],
+          operator_id: options[:operator_id]
+        ) if upfront != 0
+      rescue                                                                    
+        raise ActiveRecord::Rollback
+      end
+    end
   end
 
   def self.calculate_how_much_money_have_to_pay(hours, admin)
@@ -111,5 +132,14 @@ class Outflow < ActiveRecord::Base
     rescue
       'Unknown'
     end
+  end
+
+  def self.credit_for_operator(operator)
+    operator_outflows = Outflow.where(operator_id: operator)
+
+    (
+      operator_outflows.to_favor.sum(&:amount) -
+      operator_outflows.upfronts.sum(&:amount)
+    )
   end
 end

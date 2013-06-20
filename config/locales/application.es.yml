@@ -117,8 +117,12 @@
         html: 'No se ha creado ningún egreso hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo egreso</span>'
       update_outflow: 'Actualizar egreso'
       upfronts: 'Adelantos'
+      current_credit: 'Crédito'
+      reajust_of:
+        html: "Reajuste de <a href='outflows/%{outflow_id}'>%{outflow_id}</a>"
       kind:
         upfront: 'Adelanto'
+        to_favor: 'A Favor'
         refunded: 'Adelanto devuelto'
         maintenance: 'Mantenimiento'
         purchase: 'Compras'
