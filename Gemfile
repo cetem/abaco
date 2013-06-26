@@ -3,15 +3,13 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.0'
 
 gem 'pg'
-gem 'jquery-rails'
-gem 'turbolinks'
 gem 'will_paginate'
-gem 'simple_form', '~> 3.0.0.beta1'
-gem 'devise', github: 'plataformatec/devise', branch: 'rails4'
 gem 'cancan'
 gem 'role_model'
 gem 'paper_trail', github: 'airblade/paper_trail', branch: 'rails4'
 gem 'magick_columns', github: 'kainlite/magick_columns'
+gem 'simple_form', '~> 3.0.0.rc'
+gem 'devise', '~> 3.0.0.rc'
 gem 'validates_timeliness'
 gem 'sidekiq'
 gem 'capistrano'
@@ -23,15 +21,19 @@ gem 'coveralls', require: false
 gem 'sass-rails', '~> 4.0.0'
 gem 'coffee-rails'
 gem 'uglifier'
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
+gem 'turbolinks'
 
 group :development do
-  gem 'thin'
+  gem 'unicorn'
+  gem 'unicorn-rails'
 end
 
 group :test do
   gem 'turn'
-  gem 'capybara'
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', require: false
+  gem 'capybara', require: false
   gem 'database_cleaner' # For Capybara
   gem 'fabrication'
   gem 'faker'

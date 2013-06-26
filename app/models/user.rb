@@ -1,17 +1,14 @@
 class User < ActiveRecord::Base
-  include RoleModel
-  
-  roles :admin, :regular
+  include Users::MagickColumns
+  include Users::Roles
   
   has_paper_trail
-  
-  has_magick_columns name: :string, lastname: :string, email: :email
   
   devise :database_authenticatable, :recoverable, :rememberable, :trackable,
     :validatable
 
-  # Defaul order
-  default_scope -> { order('lastname ASC') }
+  # Default order
+  default_scope { order("#{table_name}.lastname ASC") }
   
   # Validations
   validates :name, presence: true
