@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.0.rc1'
+gem 'rails', '4.0.0'
 
 gem 'pg'
 gem 'jquery-rails'
@@ -15,12 +15,14 @@ gem 'magick_columns', github: 'kainlite/magick_columns'
 gem 'validates_timeliness'
 gem 'sidekiq'
 gem 'capistrano'
-gem 'activeresource', '4.0.0.beta1', require: 'active_resource'
+gem 'activeresource', '4.0.0', require: 'active_resource'
+
+gem 'coveralls', require: false
 
 # Assets Group =)
-gem 'sass-rails', '~> 4.0.0.rc1'
-gem 'coffee-rails', '~> 4.0.0.rc1'
-gem 'uglifier', '>= 1.3.0'
+gem 'sass-rails', '~> 4.0.0'
+gem 'coffee-rails'
+gem 'uglifier'
 
 group :development do
   gem 'thin'
@@ -28,7 +30,6 @@ end
 
 group :test do
   gem 'turn'
-  gem 'minitest'
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'database_cleaner' # For Capybara
