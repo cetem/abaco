@@ -1,4 +1,9 @@
-<% interval = params[:interval] || {} %>
+<% if params[:interval] %>
+  <% interval = params[:interval] %>
+<% else %>
+  <% today = I18n.l(Date.today) %>
+  <% interval = { from: today, to: today} %>
+<% end %>
 
 <div class="form-inputs">
   <%= simple_form_for :interval, html: { method: :get } do |f| %>
