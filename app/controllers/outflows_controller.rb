@@ -119,7 +119,7 @@ class OutflowsController < ApplicationController
           admin: admin
         )
 
-        @operator_upfronts = Outflow.upfronts.where(operator_id: operator_id)
+        @operator_current_credit = Outflow.credit_for_operator(operator_id)
       end
     end
     
@@ -135,14 +135,14 @@ class OutflowsController < ApplicationController
       start: params[:from], 
       finish: params[:to],
       amount: params[:total_to_pay],
+      upfronts: params[:upfronts].to_f,
       user_id: current_user.id
     )
     
     if @paid
       redirect_to outflows_path, notice: t('view.outflows.shifts.paid_notice')
     else
-      format.html { render action: 'show_pay_pending_shifts' }
-      format.json { render json: @paid.errors, status: :unprocessable_entity }
+      redirect_to :back, notice: t('view.outflows.shifts.can_not_be_paid')
     end
   end
 

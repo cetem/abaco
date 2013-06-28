@@ -14,7 +14,7 @@ gem 'validates_timeliness'
 gem 'sidekiq'
 gem 'capistrano'
 gem 'activeresource', '4.0.0', require: 'active_resource'
-
+gem 'newrelic_rpm'
 gem 'coveralls', require: false
 
 # Assets Group =)

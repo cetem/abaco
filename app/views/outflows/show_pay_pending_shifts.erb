@@ -55,20 +55,23 @@
 </div>
 
 <% if @operator_shifts && @operator_shifts.size > 0 %>
-  <div class="readonly-data">
+  <div class="readonly-data" id="shifts-data">
     <h2>
       <%= t('view.outflows.shifts.shifts_for', 
         operator: interval[:auto_operator_name]) %>
     </h2>
     <% @operator_shifts.tap do |o_s| %>
+      <% total_to_pay = (o_s[:earns] + @operator_current_credit).round(2) %>
+
       <h4><%= convert_dates_to_interval(o_s[:start], o_s[:finish]) %></h4>
+
       <table class="table table-striped">
         <thead>
           <tr>
             <th><%= t('view.outflows.shifts.count') %></th>
             <th><%= t('view.outflows.shifts.hours') %></th>
             <th><%= t('view.outflows.shifts.earnings') %></th>
-            <th><%= t('view.outflows.upfronts') %></th>
+            <th><%= t('view.outflows.current_credit') %></th>
             <th><%= t('view.outflows.shifts.total_to_pay') %></th>
             <th></th>
           </tr>
@@ -79,15 +82,18 @@
             <td><%= o_s[:count]  %></td>
             <td><%= hours_in_words(o_s[:hours]) %></td>
             <td>
-              <%= number_to_currency(o_s[:earns]) %>
+              <span data-earns="<%= o_s[:earns] %>">
+                <%= number_to_currency(o_s[:earns]) %>
+              </span>
             </td>
             <td>
-              <%= number_to_currency(upfronts = get_operator_upfronts) %>
+              <span data-upfronts="<%= @operator_current_credit%>">
+              <%= number_to_currency(@operator_current_credit) %>
             </td>
-            <td><%= number_to_currency(@total = o_s[:earns] - upfronts) %></td>
+            <td><%= text_field_tag :to_pay_total, total_to_pay %></td>
             <td>
               <%= show_pay_shifts_link(
-                interval[:operator_id], o_s[:start], o_s[:finish], @total
+                interval[:operator_id], o_s[:start], o_s[:finish], total_to_pay
               ) %>
             </td>
           </tr>

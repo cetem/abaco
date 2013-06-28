@@ -29,8 +29,8 @@ module ApplicationHelper
     end
   end
   
-  def pagination_links(objects, params = nil)
-    pagination_links = will_paginate objects,
+  def pagination_links(objects, param_name = 'page', params = nil)
+    result = will_paginate objects, param_name: param_name,
       inner_window: 1, outer_window: 1, params: params,
       renderer: BootstrapPaginationHelper::LinkRenderer,
       class: 'pagination pagination-right'
@@ -103,5 +103,29 @@ module ApplicationHelper
     options['data-confirm'] ||= t('messages.confirmation')
 
     iconic_link '&#xe05a;'.html_safe, *args, options
+  end
+
+  def prehistoric_pagination_links
+    current_page = params[:page].to_i.zero? ? 1 : params[:page].to_i
+
+    next_class = "next #{'disabled' if @paginate_size < 10}"
+    next_link = content_tag(:li, link_to(
+      raw(t('will_paginate.next_label')), 
+      "#{request.path}?page=#{current_page + 1}", 
+      class: next_class
+    ), class: next_class)
+
+    prev_page = (current_page > 1) ? (current_page - 1) : 1
+    prev_class = "previous_page #{'disabled' if current_page == 1}"
+    prev_link = content_tag(:li, link_to(
+      raw(t('will_paginate.previous_label')),
+      "#{request.path}?page=#{prev_page}", 
+      class: prev_class
+    ), class: prev_class)
+
+    ul = content_tag(:ul, prev_link + next_link)
+    div_pag = content_tag(:div, ul, class: 'pagination pagination-right')
+    
+    content_tag(:div, div_pag, class: 'pagination-container')
   end
 end

@@ -20,7 +20,7 @@
             <tr>
               <td><%= outflow.user %></td>
               <td><%= show_outflow_kind outflow %></td>
-              <td><%= outflow.comment %></td>
+              <td><%= truncate raw(outflow.comment), length: 50 %></td>
               <td><%= number_to_currency outflow.amount %></td>
               <td><%= outflow.operator_name if outflow.operator_id %></td>
               <td><%= link_to_show outflow %></td>

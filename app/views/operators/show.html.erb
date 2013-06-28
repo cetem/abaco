@@ -1,0 +1,67 @@
+<div class='readonly-data'>
+  <h2>
+    <%= @operator.label %>
+  </h2>
+
+  <div class='row-fluid'>
+    <div class='span6'>
+
+      <h3><%= t('view.outflows.shifts.shifts') %></h3>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Comienzo</th>
+            <th>Final</th>
+            <th>Pagado?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @shifts.each do |s| %>
+            <tr>
+              <td><%= l Time.parse(s['start']), format: :minimal %></td>
+              <td><%= l Time.parse(s['finish']), format: :minimal if s['finish'] %></td>
+              <td><%= s['paid'] ? t('label.yes') : t('label.no') %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <%= prehistoric_pagination_links %>
+    </div>
+
+    <div class="span6">
+      <h3><%= t('view.outflows.upfronts') %></h3>
+
+      <% if @upfronts.any? %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th><%= t('shared.day') %></th>
+              <th><%= t('shared.quantity') %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @upfronts.each do |u| %>
+              <tr>
+                <td><%= l u.created_at, format: :minimal %></td>
+                <td><%= number_to_currency u.amount %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <%= pagination_links(@upfronts, 'upfronts_page') %>
+      <% else %>
+        <div class="alert">
+          <%= t('view.operators.without_upfronts') %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="form-actions">
+</div>
+
+

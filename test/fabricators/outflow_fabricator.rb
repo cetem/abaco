@@ -4,5 +4,5 @@ Fabricator(:outflow) do
   comment       { Faker::Lorem.sentence }
   amount        { (100.0 * rand) }
   bill          { rand(999999999999) }
-  operator_id   { |attrs| Fabricate(:user).id if attrs[:kind] == Outflow::KIND[:upfront] }
+  operator_id   { |attrs| Fabricate(:user).id }
 end

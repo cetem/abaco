@@ -1,5 +1,7 @@
 Abaco::Application.routes.draw do
-  
+  get 'operators/:id' => 'operators#show', as: 'operator'
+  get 'operators' => 'operators#index', as: 'operators'
+
   resources :settings
 
   resources :outflows do

@@ -18,10 +18,6 @@ module OutflowsHelper
     output
   end
   
-  def get_operator_upfronts
-    @operator_upfronts ? @operator_upfronts.sum(&:amount) : 0
-  end
-
   def seconds_to_rounded_time(seconds, rounded_in_seconds)
     hours_part = 60 / (rounded_in_seconds.to_f / 60)
     worked_hours = seconds.to_f / 3600
@@ -50,18 +46,14 @@ module OutflowsHelper
     link_args = [
       t('view.outflows.shifts.pay'),
       pay_shifts_outflows_path(
-        id: id, from: start.to_date, to: finish.to_date, total_to_pay: amount
+        id: id, from: start.to_date, to: finish.to_date, 
+        total_to_pay: amount, upfronts: 0
       )
     ]
-    link_options = { method: :put, class: 'btn btn-primary' }
+    link_options = { method: :put, class: 'btn btn-primary',
+      id: 'pay_shifts_link' }
 
-    if @total >= 0
-      link_to *(link_args + [link_options])
-    else
-      link_to *(link_args + [link_options.merge(
-        data: { confirm: t('view.outflows.shifts.confirm') }
-      )])
-    end
+    link_to *(link_args + [link_options])
   end
 
   def change_operator_field_errors(obj)

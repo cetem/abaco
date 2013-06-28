@@ -53,10 +53,33 @@ stub_request(
   :get, /#{site}\/shifts.json\?
     pay_pending_shifts_for_user_between\[finish\]=#{date_regexp}&
     pay_pending_shifts_for_user_between\[start\]=#{date_regexp}&
-    pay_pending_shifts_for_user_between\[user_id\]=\d+/x
+    user_id=\d+/x
 ).with(
   headers: { 'Accept' => 'application/json' }
 ).to_return(
   body: @operator_shifts.to_json
 )
 
+stub_request(
+  :get, /#{site}\/shifts\/paginate.json/
+).with(
+  headers: { 'Accept' => 'application/json' }
+).to_return(
+  body: @operator_shifts.to_json
+)
+
+stub_request(
+  :get, /#{site}\/users\/current_workers.json/
+).with(
+  headers: { 'Accept' => 'application/json' }
+).to_return(
+  body: [
+    @generic_operator,
+    {
+      id: '2',
+      label: 'Yoda Master',
+      informal: 'Yoda',
+      admin: 'true'
+    }
+  ].to_json
+)
