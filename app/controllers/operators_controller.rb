@@ -12,7 +12,7 @@ class OperatorsController < ApplicationController
     @operator = Operator.find(params[:id])
     offset = params[:page] ? (params[:page].to_i - 1) * 10 : 0
 
-    @shifts = OperatorShifts.get(:paginate, 
+    @shifts = OperatorShifts.get(:json_paginate, 
       user_id: @operator.id, offset: offset, limit: 10
     )
     @paginate_size = @shifts.size

@@ -8,6 +8,10 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     visit users_path
 
+    p User.count
+
+    sleep 99
+
     row_count = all('tbody tr').size
 
     assert row_count < 101

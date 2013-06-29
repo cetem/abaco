@@ -13,7 +13,7 @@ class OperatorShiftsTest < ActiveSupport::TestCase
   end
 
   test 'should get operator shifts for paginate' do
-    shifts = OperatorShifts.get(:paginate, 
+    shifts = OperatorShifts.get(:json_paginate, 
       user_id: 1, offset: 0, limit: 10
     )
 
