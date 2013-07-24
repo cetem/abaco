@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(version: 20120905013415) do
     t.integer  "user_id",                                                       null: false
     t.integer  "operator_id"
     t.integer  "lock_version",                                    default: 0,   null: false
-    t.datetime "created_at",                                                    null: false
-    t.datetime "updated_at",                                                    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "bill"
   end
 
@@ -32,9 +32,9 @@ ActiveRecord::Schema.define(version: 20120905013415) do
     t.string   "title",                    null: false
     t.string   "var",                      null: false
     t.text     "value"
-    t.integer  "lock_version", default: 0
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.integer  "lock_version", default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "settings", ["var"], name: "index_settings_on_var", unique: true, using: :btree
@@ -54,8 +54,8 @@ ActiveRecord::Schema.define(version: 20120905013415) do
     t.string   "last_sign_in_ip"
     t.integer  "roles_mask",             default: 0,  null: false
     t.integer  "lock_version",           default: 0,  null: false
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

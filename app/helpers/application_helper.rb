@@ -30,7 +30,7 @@ module ApplicationHelper
   end
   
   def pagination_links(objects, param_name = 'page', params = nil)
-    result = will_paginate objects, param_name: param_name,
+    pagination_links = will_paginate objects, param_name: param_name,
       inner_window: 1, outer_window: 1, params: params,
       renderer: BootstrapPaginationHelper::LinkRenderer,
       class: 'pagination pagination-right'

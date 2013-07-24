@@ -16,6 +16,8 @@ class Outflow < ActiveRecord::Base
   scope :upfronts, -> { where(kind: KIND[:upfront]) }
   scope :to_favor, -> { where(kind: KIND[:to_favor]) }
   scope :credits, -> { where(kind: [KIND[:upfront], KIND[:to_favor]]) }
+  scope :of_operators, -> { not(where(operator_id: nil)) }
+  scope :for_operator, -> (operator) { where(operator_id: operator) }
   
   # Attributos no persistentes
   attr_accessor :auto_operator_name

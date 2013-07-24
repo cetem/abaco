@@ -79,14 +79,6 @@
       empty_search:
         title:
           html: 'La búsqueda de <span class="label label-inverse">%{search}</span> no obtuvo ningún resultado.'
-    operators:
-      index_title: 'Listado de Operarios'
-      show_title: 'Detalle de operario'
-      full_name: 'Nombre y apellido'
-      charge: 'Cargo'
-      operator: 'Operador'
-      administrator: 'Encargado'
-      without_upfronts: 'Sin adelantos.'
     users:
       index_title: 'Listado de usuarios'
       show_title: 'Detalle de usuario'
@@ -119,6 +111,7 @@
       upfronts: 'Adelantos'
       current_credit: 'Saldo'
       reajust_of: "Reajuste de <a href='outflows/%{outflow_id}'>%{outflow_id}</a>"
+      movement_kind: 'Tipo de movimiento'
       kind:
         upfront: 'Adelanto'
         to_favor: 'A Favor'
@@ -143,6 +136,21 @@
         paid_notice: 'Los turnos han sido pagados, y los adelantos cancelados.'
         can_not_be_paid: 'No pudo completarse el pago'
         shifts: 'Turnos'
+    operators:
+      index_title: 'Listado de Operarios'
+      show_title: 'Detalle de operario'
+      full_name: 'Nombre y apellido'
+      charge: 'Cargo'
+      operator: 'Operador'
+      administrator: 'Encargado'
+      without_upfronts: 'Sin adelantos.'
+      start: 'Comienzo'
+      finish: 'Final'
+      paid: 'Pagado?'
+      without_movements: 'No se ha registrado ningún movimiento hasta el momento'
+      movement_kind: 'Tipo Movimiento'
+      shifts: 'Turnos'
+      movements: 'Movimientos'
     settings:
       index_title: 'Listado de Configuraciones'
       show_title: 'Detalle de Configuración'

@@ -1,62 +1,77 @@
+<% movements_page = params[:movements_page] %>
 <div class='readonly-data'>
   <h2>
     <%= @operator.label %>
   </h2>
 
   <div class='row-fluid'>
-    <div class='span6'>
+    <div class="tabbable">
+      <ul class="nav nav-tabs">
+        <li class="<%= 'active' unless movements_page %>">
+          <%= link_to t('view.operators.shifts'), '#shifts', 
+            data: { toggle: 'tab' } %>
+        </li>
+        <li class="<%= 'active' if movements_page %>">
+          <%= link_to t('view.operators.movements'), '#movements',
+            data: { toggle: 'tab' } %>
+        </li>
+      </ul>
 
-      <h3><%= t('view.outflows.shifts.shifts') %></h3>
+      <div class="tab-content">
+        <div class="tab-pane <%= 'active' unless movements_page %>" id="shifts">
 
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Comienzo</th>
-            <th>Final</th>
-            <th>Pagado?</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @shifts.each do |s| %>
-            <tr>
-              <td><%= l Time.parse(s['start']), format: :minimal %></td>
-              <td><%= l Time.parse(s['finish']), format: :minimal if s['finish'] %></td>
-              <td><%= s['paid'] ? t('label.yes') : t('label.no') %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-
-      <%= prehistoric_pagination_links %>
-    </div>
-
-    <div class="span6">
-      <h3><%= t('view.outflows.upfronts') %></h3>
-
-      <% if @upfronts.any? %>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th><%= t('shared.day') %></th>
-              <th><%= t('shared.quantity') %></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @upfronts.each do |u| %>
+          <table class="table table-striped">
+            <thead>
               <tr>
-                <td><%= l u.created_at, format: :minimal %></td>
-                <td><%= number_to_currency u.amount %></td>
+                <th><%= t('view.operators.start') %></th>
+                <th><%= t('view.operators.finish') %></th>
+                <th><%= t('view.operators.paid') %></th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <% @shifts.each do |s| %>
+                <tr>
+                  <td><%= l Time.parse(s['start']), format: :minimal %></td>
+                  <td><%= l Time.parse(s['finish']), format: :minimal if s['finish'] %></td>
+                  <td><%= s['paid'] ? t('label.yes') : t('label.no') %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
 
-        <%= pagination_links(@upfronts, 'upfronts_page') %>
-      <% else %>
-        <div class="alert">
-          <%= t('view.operators.without_upfronts') %>
+          <%= prehistoric_pagination_links %>
         </div>
-      <% end %>
+
+        <div class="tab-pane <%= 'active' if movements_page %>" id="movements">
+
+          <% if @movements.any? %>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th><%= t('view.outflows.movement_kind') %></th>
+                  <th><%= t('shared.day') %></th>
+                  <th><%= t('shared.quantity') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @movements.each do |m| %>
+                  <tr>
+                    <td><%= show_outflow_kind(m)  %></td>
+                    <td><%= l m.created_at, format: :minimal %></td>
+                    <td><%= number_to_currency m.amount %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+
+            <%= pagination_links(@movements, 'movements_page') %>
+          <% else %>
+            <div class="alert">
+              <%= t('view.operators.without_movements') %>
+            </div>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

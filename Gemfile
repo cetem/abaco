@@ -9,16 +9,16 @@ gem 'role_model'
 gem 'paper_trail', github: 'airblade/paper_trail', branch: 'rails4'
 gem 'magick_columns', github: 'kainlite/magick_columns'
 gem 'simple_form', '~> 3.0.0.rc'
-gem 'devise', '~> 3.0.0.rc'
+gem 'devise'
 gem 'validates_timeliness'
 gem 'sidekiq'
 gem 'capistrano'
-gem 'activeresource', '4.0.0', require: 'active_resource'
+gem 'activeresource', require: 'active_resource'
 gem 'newrelic_rpm'
 gem 'coveralls', require: false
 
 # Assets Group =)
-gem 'sass-rails', '~> 4.0.0'
+gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
 gem 'jquery-rails'
@@ -26,8 +26,7 @@ gem 'jquery-ui-rails'
 gem 'turbolinks'
 
 group :development do
-  gem 'unicorn'
-  gem 'unicorn-rails'
+  gem 'thin'
 end
 
 group :test do

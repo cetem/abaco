@@ -61,7 +61,7 @@ stub_request(
 )
 
 stub_request(
-  :get, /#{site}\/shifts\/paginate.json/
+  :get, /#{site}\/shifts\/json_paginate.json/
 ).with(
   headers: { 'Accept' => 'application/json' }
 ).to_return(
