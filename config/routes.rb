@@ -1,6 +1,10 @@
 Abaco::Application.routes.draw do
   get 'operators/:id' => 'operators#show', as: 'operator'
   get 'operators' => 'operators#index', as: 'operators'
+  get 'operators/:id/new_shift' => 'operators#new_shift',
+    as: 'new_operator_shift'
+  post 'operators/:id/create_shift' => 'operators#create_shift',
+    as: 'create_operator_shift'
 
   resources :settings
 

@@ -28,4 +28,21 @@ class OperatorsControllerTest < ActionController::TestCase
     assert_select '#unexpected_error', false
     assert_template 'operators/show'
   end
+
+  test "should get new shift" do
+    get :new_shift, id: 1
+    assert_response :success
+    assert_not_nil assigns(:operator)
+    assert_not_nil assigns(:operator_shift)
+    assert_select '#unexpected_error', false
+    assert_template 'operators/new_shift'
+  end
+
+  test 'show create an operator shift' do
+    post :create_shift, id: 1, operator_shifts: {
+      start: 5.hours.ago, finish: 2.hours.ago
+    }
+
+    assert_redirected_to operator_url(1)
+  end
 end

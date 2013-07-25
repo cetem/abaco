@@ -1,8 +1,6 @@
 <% movements_page = params[:movements_page] %>
 <div class='readonly-data'>
-  <h2>
-    <%= @operator.label %>
-  </h2>
+  <h2><%= @operator.label %></h2>
 
   <div class='row-fluid'>
     <div class="tabbable">
@@ -25,15 +23,17 @@
               <tr>
                 <th><%= t('view.operators.start') %></th>
                 <th><%= t('view.operators.finish') %></th>
+                <th><%= t('view.operators.shift_duration') %></th>
                 <th><%= t('view.operators.paid') %></th>
               </tr>
             </thead>
             <tbody>
               <% @shifts.each do |s| %>
                 <tr>
-                  <td><%= l Time.parse(s['start']), format: :minimal %></td>
-                  <td><%= l Time.parse(s['finish']), format: :minimal if s['finish'] %></td>
-                  <td><%= s['paid'] ? t('label.yes') : t('label.no') %></td>
+                  <td><%= l s.start, format: :minimal %></td>
+                  <td><%= l s.finish, format: :minimal if s.finish %></td>
+                  <td><%= show_shift_duration s %></td>
+                  <td><%= s.paid ? t('label.yes') : t('label.no') %></td>
                 </tr>
               <% end %>
             </tbody>
@@ -77,6 +77,8 @@
 </div>
 
 <div class="form-actions">
+  <%= link_to t('view.operators.create_shift'), new_operator_shift_path(@operator),
+    class: 'btn btn-primary' %>
 </div>
 
 

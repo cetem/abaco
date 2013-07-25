@@ -1,6 +1,7 @@
 ph_data = APP_CONFIG['print_hub_data']
 site = "#{ph_data['user']}:#{ph_data['password']}@#{ph_data['site']}"
 date_regexp = '\d{4}\-\d{1,2}\-\d{1,2}'
+datetime_regexp = '\d{4}\-\d{1,2}\-\d{1,2} \d{1,2}:\d{2}:\d{2} -\d{4}'
 
 @generic_operator = {
   id: '1',
@@ -82,4 +83,12 @@ stub_request(
       admin: 'true'
     }
   ].to_json
+)
+
+stub_request(
+  :post, "http://#{site}/shifts.json"
+).with { |request| request.body.match(
+  /({\"start\":\"#{datetime_regexp}\",\"finish\":\"#{datetime_regexp}\",\"user_id\":\"1\"})/
+) }.to_return(
+  status: 200
 )

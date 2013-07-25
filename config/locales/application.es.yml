@@ -7,6 +7,7 @@
 
   activerecord:
     models:
+      operator_shifts: 'Turno'
       user:
         one: 'Usuario'
         other: 'Usuarios'
@@ -18,6 +19,9 @@
         other: 'Configuraciones'
 
     attributes:
+      operator_shifts:
+        start: 'Comienzo'
+        finish: 'Final'
       outflow:
         kind: 'Tipo de salida'
         comment: 'Comentario'
@@ -150,7 +154,11 @@
       without_movements: 'No se ha registrado ningún movimiento hasta el momento'
       movement_kind: 'Tipo Movimiento'
       shifts: 'Turnos'
+      create_shift: 'Crear Turno'
       movements: 'Movimientos'
+      shift_created: 'Turno creado correctamente.'
+      shift_can_not_be_created: 'No se pudo crear el turno, revise los campos'
+      shift_duration: 'Duración del turno'
     settings:
       index_title: 'Listado de Configuraciones'
       show_title: 'Detalle de Configuración'
