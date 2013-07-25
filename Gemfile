@@ -38,7 +38,3 @@ group :test do
   gem 'faker'
   gem 'webmock'
 end
-
-if ENV['TRAVIS']
-  gem 'test-unit' # For Travis errors
-end
