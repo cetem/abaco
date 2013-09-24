@@ -42,7 +42,7 @@ module OutflowsHelper
     t('related_hours', hours: hours.to_i, minutes: minutes.to_i) 
   end
     
-  def show_pay_shifts_link(id, start, finish, amount)
+  def show_pay_shifts_button(id, start, finish, amount)
     link_args = [
       t('view.outflows.shifts.pay'),
       pay_shifts_outflows_path(
@@ -50,8 +50,9 @@ module OutflowsHelper
         total_to_pay: amount, upfronts: 0
       )
     ]
-    link_options = { method: :put, class: 'btn btn-primary',
-      id: 'pay_shifts_link' }
+    link_options = { class: 'btn btn-primary',
+      data: { method: :patch, remote: true, pay_shifts_button: true,
+      disable_with: t('view.outflows.shifts.wait_paying') } }
 
     link_to *(link_args + [link_options])
   end

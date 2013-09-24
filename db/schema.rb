@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20120905013415) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "outflows", force: true do |t|
     t.string   "kind",         limit: 1,                                        null: false
     t.text     "comment"

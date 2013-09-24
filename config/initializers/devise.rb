@@ -7,7 +7,7 @@ Devise.setup do |config|
   config.mailer_sender = "please-change-me-at-config-initializers-devise@example.com"
 
   # Configure the class responsible to send e-mails.
-  config.mailer = 'DeviseBackgrounder'
+  # config.mailer = 'DeviseBackgrounder'
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
@@ -213,4 +213,6 @@ Devise.setup do |config|
   #   manager.intercept_401 = false
   #   manager.default_strategies(:scope => :user).unshift :some_external_strategy
   # end
+  #
+  config.secret_key = '10f65d4c31d9424ed77fc3758994e3da376f60c7a7f98e2e8fa27eae5afb1e2566cf1730fee2ab070218f585803591ed51f630e35ce871160314c3293945c7f7'
 end

@@ -1,0 +1,6 @@
+<% tr = "tr[data-operator-id=#{@operator.id}]" %>
+<% p @operator.id %>
+$('<%= tr %>').html(
+    '<td colspan=7><%= I18n.t('view.outflows.shifts.paid_notice_for', name: @operator.label) %></td>'
+);
+$('<%= tr %>').addClass('success');

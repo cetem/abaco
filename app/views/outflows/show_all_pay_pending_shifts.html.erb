@@ -1,0 +1,84 @@
+<% if params[:interval] %>
+  <% interval = params[:interval] %>
+<% else %>
+  <% today = I18n.l(Date.today) %>
+  <% interval = { from: today, to: today} %>
+<% end %>
+
+<div class="form-inputs">
+  <%= simple_form_for :interval, html: { method: :get } do |f| %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= t('view.outflows.shifts.begin') %></th>
+          <th><%= t('view.outflows.shifts.finish') %></th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td><%= f.input :from, as: :date_picker, label: false, input_html: {
+            value: interval[:from]
+          } %></td>
+          <td><%= f.input :to, as: :date_picker, label: false, input_html: { 
+            value: interval[:to]
+          } %></td>
+          <td><%= f.button :submit, t('view.outflows.shifts.search') %></td>
+        </tr>
+      </tbody>
+    </table> 
+  <% end %>
+</div>
+
+<% if @operator_shifts && @operator_shifts.size > 0 %>
+  <div class="readonly-data" id="shifts-data">
+    <h2>
+      <%= t('view.outflows.shifts.shifts_for', operator: t('label.all')) %>
+    </h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= t('view.operators.operator') %></th>
+          <th><%= t('view.outflows.shifts.count') %></th>
+          <th><%= t('view.outflows.shifts.hours') %></th>
+          <th><%= t('view.outflows.shifts.earnings') %></th>
+          <th><%= t('view.outflows.current_credit') %></th>
+          <th><%= t('view.outflows.shifts.total_to_pay') %></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @operator_shifts.each do |o_s| %>
+          <% s = o_s[:detail] %>
+          <% total_to_pay = (s[:earns] + o_s[:credit]).round(2) %>
+
+          <tr data-operator-id=<%= o_s[:id] %>>
+            <td><%= o_s[:label] %></td>
+            <td><%= s[:count]  %></td>
+            <td><%= hours_in_words(s[:hours]) %></td>
+            <td>
+              <span data-earns="<%= s[:earns] %>">
+                <%= number_to_currency(s[:earns]) %>
+              </span>
+            </td>
+            <td>
+              <span data-upfronts="<%= o_s[:credit] %>">
+              <%= number_to_currency(o_s[:credit]) %>
+            </td>
+            <td><%= text_field_tag :to_pay_total, total_to_pay, 
+              id: '', data: { to_pay_total: true } %></td>
+            <td>
+              <%= show_pay_shifts_button(o_s[:id], s[:start], s[:finish], total_to_pay) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+
+<div class="form-actions">
+  <%= link_to t('view.outflows.index_title'), 
+    outflows_path, class: 'btn btn-primary' %>
+</div>

@@ -58,6 +58,7 @@
     new: 'Nuevo'
     search: 'Buscar'
     show: 'Ver'
+    all: 'Todos'
 
   menu:
     actions:
@@ -126,6 +127,7 @@
         other: 'Otro'
       shifts:
         title: 'Turnos pendientes de pago'
+        pay_individual_shifts: 'Pagar sueldos individuales'
         pay_shifts: 'Pagar sueldos'
         count: 'Cantidad'
         hours: 'Horas trabajadas'
@@ -138,8 +140,10 @@
         confirm: 'El operario quedará debiendo, recuerde agregarlo NUEVAMENTE como adelanto.'
         shifts_for: 'Turnos de %{operator}'
         paid_notice: 'Los turnos han sido pagados, y los adelantos cancelados.'
+        paid_notice_for: "Los turnos de %{name} han sido pagados, y los adelantos cancelados."
         can_not_be_paid: 'No pudo completarse el pago'
         shifts: 'Turnos'
+        wait_paying: 'Pagando...'
     operators:
       index_title: 'Listado de Operarios'
       show_title: 'Detalle de operario'

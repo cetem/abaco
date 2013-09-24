@@ -1,5 +1,7 @@
 class OutflowsController < ApplicationController
   before_action :authenticate_user!
+
+  layout ->(c) { c.request.xhr? ? false : 'application' }
   
   # GET /outflows
   # GET /outflows.json
@@ -127,7 +129,40 @@ class OutflowsController < ApplicationController
       format.html # index.html.erb
     end
   end
-  
+
+  # GET /outflows/show_all_pay_pending_shifts
+  def show_all_pay_pending_shifts
+    @title = t('view.outflows.shifts.title')
+
+    if params[:interval]
+      interval = params[:interval]
+      values = parameterize_to_date_format(interval)
+      from, to = values[:from], values[:to]
+      @operator_shifts = []
+      operators = Operator.get(:current_workers)
+
+      if from.present? && to.present?
+        operators.each do |o|
+          detail = Outflow.operator_pay_pending_shifts_between(
+            operator_id: o['id'], 
+            start: from, 
+            finish: to, 
+            admin: o['admin']
+          )
+
+          @operator_shifts << { 
+            detail: detail, credit: Outflow.credit_for_operator(o['id']), 
+            id: o['id'], label: o['label']
+          } if detail
+        end
+      end
+    end
+
+    respond_to do |format|
+      format.html # index.html.erb
+    end
+  end 
+
   # PUT /outflows/pay_shifts
   def pay_shifts
     @paid = Outflow.pay_operator_shifts_and_upfronts(
@@ -140,7 +175,12 @@ class OutflowsController < ApplicationController
     )
     
     if @paid
-      redirect_to outflows_path, notice: t('view.outflows.shifts.paid_notice')
+      if request.xhr?
+        @operator = Operator.find(params[:id])
+        respond_to { |f| f.js }
+      else
+        redirect_to outflows_path, notice: t('view.outflows.shifts.paid_notice')
+      end
     else
       redirect_to :back, notice: t('view.outflows.shifts.can_not_be_paid')
     end

@@ -4,18 +4,21 @@ gem 'rails', '4.0.0'
 
 gem 'pg'
 gem 'will_paginate'
-gem 'cancan'
-gem 'role_model'
 gem 'paper_trail', github: 'airblade/paper_trail', branch: 'rails4'
 gem 'magick_columns', github: 'kainlite/magick_columns'
-gem 'simple_form', '~> 3.0.0.rc'
-gem 'devise'
+gem 'simple_form'
 gem 'validates_timeliness'
-gem 'sidekiq'
 gem 'capistrano'
 gem 'activeresource', require: 'active_resource'
 gem 'newrelic_rpm'
 gem 'coveralls', require: false
+
+# Auth & Mail
+gem 'devise'
+gem 'devise-async'
+gem 'sidekiq'
+gem 'cancan'
+gem 'role_model'
 
 # Assets Group =)
 gem 'sass-rails'

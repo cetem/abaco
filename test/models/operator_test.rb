@@ -15,7 +15,7 @@ class OperatorTest < ActiveSupport::TestCase
   end
 
   test 'should pay shift between dates' do
-    assert Operator.find(1).put(
+    assert Operator.find(1).patch(
       :pay_shifts_between, start: 1.month.ago.to_date, finish: Date.today
     )
   end

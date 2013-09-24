@@ -42,8 +42,10 @@
 
 <div class="form-actions">
   <div class="pull-right">
+    <%= link_to t('view.outflows.shifts.pay_individual_shifts'),
+      show_pay_pending_shifts_outflows_path, class: 'btn btn-primary' %> | 
     <%= link_to t('view.outflows.shifts.pay_shifts'),
-      show_pay_pending_shifts_outflows_path, class: 'btn btn-primary' %>
+      show_all_pay_pending_shifts_outflows_path, class: 'btn btn-primary' %>
   </div>
   <%= link_to(
     t('view.outflows.new', default: :'label.new'),

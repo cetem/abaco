@@ -42,7 +42,7 @@ stub_request(
 )
 
 stub_request(
-  :put, /#{site}\/users\/\d+\/pay_shifts_between.json\?
+  :patch, /#{site}\/users\/\d+\/pay_shifts_between.json\?
     finish=#{date_regexp}&start=#{date_regexp}/x
 ).with(
   headers: { 'Content-Type'=>'application/json' }

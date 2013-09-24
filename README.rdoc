@@ -1,6 +1,6 @@
 === Abaco
 
-Web application to manage finances
+Web application to manage finances with print_hub
 
 === Build Status {<img src="https://secure.travis-ci.org/cetem/abaco.png"/>}[http://travis-ci.org/cetem/abaco]
   
@@ -10,7 +10,11 @@ Web application to manage finances
 
 == (The MIT License)
 
-Copyright (c) 2012 Franco Catena
+Copyright (c) 2013 CETEM - FRM - UTN
+
+Contribuidores:
+- Franco Catena
+- Néstor Coppi
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

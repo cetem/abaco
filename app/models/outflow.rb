@@ -75,7 +75,7 @@ class Outflow < ActiveRecord::Base
   end
   
   def self.pay_operator_shifts_and_upfronts(options = {})
-    Operator.find(options[:operator_id]).put(
+    Operator.find(options[:operator_id]).patch(
       :pay_shifts_between, start: options[:start], finish: options[:finish]
     )
     

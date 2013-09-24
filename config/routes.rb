@@ -12,6 +12,7 @@ Abaco::Application.routes.draw do
     collection do
       get :autocomplete_for_operator
       get :show_pay_pending_shifts
+      get :show_all_pay_pending_shifts
       patch :pay_shifts
     end
   end
