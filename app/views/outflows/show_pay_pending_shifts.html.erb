@@ -92,7 +92,7 @@
             </td>
             <td><%= text_field_tag :to_pay_total, total_to_pay %></td>
             <td>
-              <%= show_pay_shifts_link(
+              <%= show_pay_shifts_button(
                 interval[:operator_id], o_s[:start], o_s[:finish], total_to_pay
               ) %>
             </td>
