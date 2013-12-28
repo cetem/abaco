@@ -6,31 +6,31 @@ class SettingTest < ActiveSupport::TestCase
   end
 
   test 'create' do
-    assert_difference ['Setting.count', 'Version.count'] do
-      @setting = Setting.create(Fabricate.attributes_for(:setting))
+    assert_difference ['Setting.count', 'PaperTrail::Version.count'] do
+      Setting.create! Fabricate.attributes_for(:setting)
     end
   end
-  
+
   test 'update' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Setting.count' do
         assert @setting.update_attributes(value: '101')
       end
     end
-    
+
     assert_equal '101', @setting.reload.value
   end
-  
+
   test 'destroy' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_difference('Setting.count', -1) { @setting.destroy }
     end
   end
-  
+
   test 'validates blank attributes' do
     @setting.title = ''
     @setting.value = ''
-      
+
     assert @setting.invalid?
     assert_equal 2, @setting.errors.size
     assert_equal [error_message_from_model(@setting, :title, :blank)],
@@ -38,7 +38,7 @@ class SettingTest < ActiveSupport::TestCase
     assert_equal [error_message_from_model(@setting, :value, :blank)],
       @setting.errors[:value]
   end
-  
+
   test 'validates unique attributes' do
     new_setting = Fabricate(:setting)
     @setting.var = new_setting.var

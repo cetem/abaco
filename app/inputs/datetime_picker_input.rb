@@ -5,7 +5,7 @@ class DatetimePickerInput < SimpleForm::Inputs::Base
         Time.parse(object.send(attribute_name).to_s), format: :minimal
       )
     end
-    
+
     @builder.text_field(
       attribute_name,
       input_html_options.reverse_merge(

@@ -3,10 +3,8 @@
 Web application to manage finances with print_hub
 
 === Build Status {<img src="https://secure.travis-ci.org/cetem/abaco.png"/>}[http://travis-ci.org/cetem/abaco]
-  
-=== Dependency Status {<img src="https://gemnasium.com/cetem/abaco.png?travis"/>}[https://gemnasium.com/cetem/abaco]
 
-=== Code Status {<img src="https://codeclimate.com/github/francocatena/x0y0.png"/>}[https://codeclimate.com/github/francocatena/x0y0]
+=== Dependency Status {<img src="https://gemnasium.com/cetem/abaco.png?travis"/>}[https://gemnasium.com/cetem/abaco]
 
 == (The MIT License)
 

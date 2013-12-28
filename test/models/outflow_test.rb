@@ -8,54 +8,54 @@ class OutflowTest < ActiveSupport::TestCase
       Setting.create!(title: setting, var: setting, value: rand(100))
     end
   end
-  
+
   test 'create' do
-    assert_difference ['Outflow.count', 'Version.count'] do
-      assert Outflow.create(
+    assert_difference ['Outflow.count', 'PaperTrail::Version.count'] do
+      Outflow.create!(
         Fabricate.attributes_for(
           :outflow, user_id: @outflow.user_id, operator_id: @outflow.user_id
         )
       )
     end
   end
-  
+
   test 'update' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Outflow.count' do
         assert @outflow.update_attributes(comment: 'Updated')
       end
     end
-    
+
     assert_equal 'Updated', @outflow.reload.comment
   end
-  
+
   test 'destroy' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_difference('Outflow.count', -1) { @outflow.destroy }
     end
   end
-  
+
   test 'validates blank attributes' do
     @outflow.kind = 'u'
     @outflow.operator_id = ''
-    
+
     assert @outflow.invalid?
     assert_equal 1, @outflow.errors.size
     assert_equal [error_message_from_model(@outflow, :operator_id, :blank)],
       @outflow.errors[:operator_id]
-    
+
     @outflow.kind = 'o'
     @outflow.comment = ''
-    
+
     assert @outflow.invalid?
     assert_equal 1, @outflow.errors.size
     assert_equal [error_message_from_model(@outflow, :comment, :blank)],
       @outflow.errors[:comment]
-    
+
     @outflow.amount = ''
     @outflow.kind = ''
     @outflow.user_id = ''
-    
+
     assert @outflow.invalid?
     assert_equal 3, @outflow.errors.size
     assert_equal [
@@ -66,10 +66,10 @@ class OutflowTest < ActiveSupport::TestCase
     assert_equal [error_message_from_model(@outflow, :user_id, :blank)],
       @outflow.errors[:user_id]
   end
-  
+
   test 'validates well formated attributes' do
     @outflow.amount = 'not number'
-    
+
     assert @outflow.invalid?
     assert_equal 1, @outflow.errors.size
     assert_equal [error_message_from_model(@outflow, :amount, :not_a_number)],
@@ -92,7 +92,7 @@ class OutflowTest < ActiveSupport::TestCase
       @outflow.errors[:operator_id]
   end
 
-  test 'other has to have comment' do 
+  test 'other has to have comment' do
     @outflow.kind = 'o'
     @outflow.comment = ''
 
@@ -104,12 +104,12 @@ class OutflowTest < ActiveSupport::TestCase
 
   test 'pay shifts and upfronts' do
     @outflow = Fabricate(:outflow, kind: 'u', operator_id: 1)
-    
+
     assert_difference 'Outflow.count' do
       assert_difference 'Outflow.upfronts.count', -1 do
         Outflow.pay_operator_shifts_and_upfronts(
-          operator_id: @outflow.operator_id, 
-          start: 1.month.ago.to_date.to_s, 
+          operator_id: @outflow.operator_id,
+          start: 1.month.ago.to_date.to_s,
           finish: Time.zone.today.to_s,
           user_id: Fabricate(:user).id,
           amount: 300
@@ -125,7 +125,7 @@ class OutflowTest < ActiveSupport::TestCase
       finish: Time.zone.today,
       admin: true
     )
-    
+
     assert_equal 15, shifts[:hours]
   end
 

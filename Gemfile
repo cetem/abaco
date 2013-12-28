@@ -1,26 +1,29 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.0'
+gem 'rails', '4.0.2'
 
 gem 'pg'
 gem 'will_paginate'
-gem 'paper_trail', github: 'airblade/paper_trail', branch: 'rails4'
+gem 'paper_trail'
 gem 'magick_columns', github: 'kainlite/magick_columns'
 gem 'simple_form'
 gem 'validates_timeliness'
-gem 'capistrano'
 gem 'activeresource', require: 'active_resource'
 gem 'newrelic_rpm'
-gem 'coveralls', require: false
 
-# Auth & Mail
+# Deploy gems
+gem 'capistrano'
+gem 'capistrano-rails'
+gem 'capistrano-bundler'
+
+# Auth & Mailing Gems
 gem 'devise'
 gem 'devise-async'
-gem 'sidekiq'
 gem 'cancan'
 gem 'role_model'
+gem 'sidekiq'
 
-# Assets Group =)
+# Old assets group
 gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
