@@ -5,4 +5,6 @@ Fabricator(:outflow) do
   amount        { (100.0 * rand) }
   bill          { rand(999999999999) }
   operator_id   { |attrs| Fabricate(:user).id }
+  provider      { 'Someone' }
+  bought_at     { Date.today }
 end

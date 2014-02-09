@@ -65,6 +65,15 @@ class OutflowTest < ActiveSupport::TestCase
       @outflow.errors[:kind]
     assert_equal [error_message_from_model(@outflow, :user_id, :blank)],
       @outflow.errors[:user_id]
+
+    @outflow.reload
+    @outflow.bill = '123123'
+    @outflow.provider = nil
+
+    assert @outflow.invalid?
+    assert_equal 1, @outflow.errors.size
+    assert_equal [error_message_from_model(@outflow, :provider, :blank)],
+      @outflow.errors[:provider]
   end
 
   test 'validates well formated attributes' do

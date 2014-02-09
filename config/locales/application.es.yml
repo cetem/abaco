@@ -29,6 +29,8 @@
         operator_id: 'Operador'
         user_id: 'Usuario'
         bill: 'Factura'
+        bought_at: 'Comprado el'
+        provider: 'Proveedor'
       setting:
         title: 'Título'
         value: 'Valor'

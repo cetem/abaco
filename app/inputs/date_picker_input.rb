@@ -8,12 +8,14 @@ class DatePickerInput < SimpleForm::Inputs::Base
   private
 
   def default_attributes
-    value = I18n.l(
-      object.send(attribute_name)
-    ) if object && object.send(attribute_name)
+    value = if object && object.send(attribute_name)
+              object.send(attribute_name)
+            else
+              Date.today
+            end
 
     {
-      value: value,
+      value: I18n.l(value),
       autocomplete: 'off',
       data: { date_picker: true }
     }

@@ -1,5 +1,6 @@
 <div class="readonly-data">
-  <h2><%= show_outflow_kind @outflow %></h2>
+  <% date = @outflow.bought_at ? l(@outflow.bought_at) : nil %>
+  <h2><%= [show_outflow_kind(@outflow), date].join(' - ') %></h2>
 
   <p>
     <strong><%= Outflow.human_attribute_name 'user_id' %></strong>:
@@ -14,9 +15,10 @@
   <% end %>
 
   <p>
-    <strong><%= Outflow.human_attribute_name 'comment' %></strong>:
-    <blockquote><%= simple_format @outflow.comment %></blockquote>
+    <strong><%= Outflow.human_attribute_name 'provider'  %></strong>:
+    <%= @outflow.provider %>
   </p>
+
   <p>
     <strong><%= Outflow.human_attribute_name 'amount' %></strong>:
     <%= number_to_currency @outflow.amount %>
@@ -27,7 +29,11 @@
       <%= @outflow.operator_name %>
     </p>
   <% end %>
-  
+
+  <p>
+    <strong><%= Outflow.human_attribute_name 'comment' %></strong>:
+    <blockquote><%= simple_format @outflow.comment %></blockquote>
+  </p>
 </div>
 <div class="form-actions">
   <%= link_to t('label.edit'), edit_outflow_path(@outflow) if can? :update, @outflow %> |

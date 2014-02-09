@@ -2,7 +2,7 @@ class OutflowsController < ApplicationController
   before_action :authenticate_user!
 
   layout ->(c) { c.request.xhr? ? false : 'application' }
-  
+
   # GET /outflows
   # GET /outflows.json
   def index
@@ -93,7 +93,7 @@ class OutflowsController < ApplicationController
       format.json { head :ok }
     end
   end
-  
+
   # GET /PRINT_HUB_APP/users/autocomplete_for_user_name
   def autocomplete_for_operator
     @operators = Operator.get(:autocomplete_for_user_name, q: params[:q])
@@ -106,7 +106,7 @@ class OutflowsController < ApplicationController
   # GET /outflows/show_pay_pending_shifts
   def show_pay_pending_shifts
     @title = t('view.outflows.shifts.title')
-    
+
     if params[:interval]
       interval = params[:interval]
       values = parameterize_to_date_format(interval)
@@ -115,16 +115,16 @@ class OutflowsController < ApplicationController
 
       if operator_id.present? && from.present? && to.present?
         @operator_shifts = Outflow.operator_pay_pending_shifts_between(
-          operator_id: operator_id, 
-          start: from, 
-          finish: to, 
+          operator_id: operator_id,
+          start: from,
+          finish: to,
           admin: admin
         )
 
         @operator_current_credit = Outflow.credit_for_operator(operator_id)
       end
     end
-    
+
     respond_to do |format|
       format.html # index.html.erb
     end
@@ -144,14 +144,14 @@ class OutflowsController < ApplicationController
       if from.present? && to.present?
         operators.each do |o|
           detail = Outflow.operator_pay_pending_shifts_between(
-            operator_id: o['id'], 
-            start: from, 
-            finish: to, 
+            operator_id: o['id'],
+            start: from,
+            finish: to,
             admin: o['admin']
           )
 
-          @operator_shifts << { 
-            detail: detail, credit: Outflow.credit_for_operator(o['id']), 
+          @operator_shifts << {
+            detail: detail, credit: Outflow.credit_for_operator(o['id']),
             id: o['id'], label: o['label']
           } if detail
         end
@@ -161,19 +161,19 @@ class OutflowsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
     end
-  end 
+  end
 
   # PUT /outflows/pay_shifts
   def pay_shifts
     @paid = Outflow.pay_operator_shifts_and_upfronts(
-      operator_id: params[:id], 
-      start: params[:from], 
+      operator_id: params[:id],
+      start: params[:from],
       finish: params[:to],
       amount: params[:total_to_pay],
       upfronts: params[:upfronts].to_f,
       user_id: current_user.id
     )
-    
+
     if @paid
       if request.xhr?
         @operator = Operator.find(params[:id])
@@ -191,7 +191,7 @@ class OutflowsController < ApplicationController
     def outflow_params
       params.require(:outflow).permit(
         :amount, :comment, :kind, :lock_version, :operator_id,
-        :auto_operator_name, :user_id, :bill
+        :auto_operator_name, :user_id, :bill, :provider, :bought_at
       )
     end
 end

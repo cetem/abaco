@@ -13,6 +13,9 @@
       <div class="span3">
         <%= f.input :bill %>
       </div>
+      <div class="span3">
+        <%= f.input :provider %>
+      </div>
     </div>
     <div class="row-fluid">
       <div class="span4">
@@ -29,6 +32,9 @@
         } %>
         <%= f.input :operator_id, as: :hidden,
           input_html: { class: 'autocomplete-id' } %>
+      </div>
+      <div class="span3">
+        <%= f.input :bought_at, as: :date_picker %>
       </div>
     </div>
     <%= f.input :comment, input_html: { rows: 5, class: 'span10'} %>
