@@ -171,7 +171,8 @@ class OutflowsController < ApplicationController
       finish: params[:to],
       amount: params[:total_to_pay],
       upfronts: params[:upfronts].to_f,
-      user_id: current_user.id
+      user_id: current_user.id,
+      with_incentive: params[:with_incentive].to_s.to_bool
     )
 
     if @paid
@@ -190,7 +191,7 @@ class OutflowsController < ApplicationController
 
     def outflow_params
       params.require(:outflow).permit(
-        :amount, :comment, :kind, :lock_version, :operator_id,
+        :amount, :comment, :kind, :lock_version, :operator_id, :with_incentive,
         :auto_operator_name, :user_id, :bill, :provider, :bought_at
       )
     end

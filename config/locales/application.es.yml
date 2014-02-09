@@ -146,6 +146,10 @@
         can_not_be_paid: 'No pudo completarse el pago'
         shifts: 'Turnos'
         wait_paying: 'Pagando...'
+      with_incentive:
+        to_s: 'Con incentivo?'
+        'true': 'Con incentivo'
+        'false': 'Sin incentivo'
     operators:
       index_title: 'Listado de Operarios'
       show_title: 'Detalle de operario'

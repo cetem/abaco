@@ -21,13 +21,13 @@
           <td><%= f.input :from, as: :date_picker, label: false, input_html: {
             value: interval[:from]
           } %></td>
-          <td><%= f.input :to, as: :date_picker, label: false, input_html: { 
+          <td><%= f.input :to, as: :date_picker, label: false, input_html: {
             value: interval[:to]
           } %></td>
           <td><%= f.button :submit, t('view.outflows.shifts.search') %></td>
         </tr>
       </tbody>
-    </table> 
+    </table>
   <% end %>
 </div>
 
@@ -45,6 +45,7 @@
           <th><%= t('view.outflows.shifts.earnings') %></th>
           <th><%= t('view.outflows.current_credit') %></th>
           <th><%= t('view.outflows.shifts.total_to_pay') %></th>
+          <th><%= t('view.outflows.with_incentive.to_s') %></th>
           <th></th>
         </tr>
       </thead>
@@ -66,8 +67,9 @@
               <span data-upfronts="<%= o_s[:credit] %>">
               <%= number_to_currency(o_s[:credit]) %>
             </td>
-            <td><%= text_field_tag :to_pay_total, total_to_pay, 
+            <td><%= text_field_tag :to_pay_total, total_to_pay,
               id: '', data: { to_pay_total: true } %></td>
+            <td><%= check_box_tag :with_incentive, nil, nil,  data: { with_incentive: true } %></td>
             <td>
               <%= show_pay_shifts_button(o_s[:id], s[:start], s[:finish], total_to_pay) %>
             </td>
@@ -79,6 +81,6 @@
 <% end %>
 
 <div class="form-actions">
-  <%= link_to t('view.outflows.index_title'), 
+  <%= link_to t('view.outflows.index_title'),
     outflows_path, class: 'btn btn-primary' %>
 </div>

@@ -2,6 +2,10 @@
   <% date = @outflow.bought_at ? l(@outflow.bought_at) : nil %>
   <h2><%= [show_outflow_kind(@outflow), date].join(' - ') %></h2>
 
+  <% if @outflow.with_incentive %>
+    <h4><%= I18n.t("view.outflows.with_incentive.true") %></h4>
+  <% end %>
+
   <p>
     <strong><%= Outflow.human_attribute_name 'user_id' %></strong>:
     <%= @outflow.user %>
@@ -14,16 +18,20 @@
     </p>
   <% end %>
 
-  <p>
-    <strong><%= Outflow.human_attribute_name 'provider'  %></strong>:
-    <%= @outflow.provider %>
-  </p>
+  <% if @outflow.provider %>
+    <p>
+      <strong><%= Outflow.human_attribute_name 'provider'  %></strong>:
+      <%= @outflow.provider %>
+    </p>
+  <% end %>
 
   <p>
     <strong><%= Outflow.human_attribute_name 'amount' %></strong>:
     <%= number_to_currency @outflow.amount %>
   </p>
   <% if @outflow.operator_id %>
+
+
     <p>
       <strong><%= Outflow.human_attribute_name 'operator_id' %></strong>:
       <%= @outflow.operator_name %>

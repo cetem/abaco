@@ -90,12 +90,14 @@ class Outflow < ActiveRecord::Base
       ].join(' -> '),
       amount: options[:amount].to_f,
       user_id: options[:user_id],
-      operator_id: options[:operator_id]
+      operator_id: options[:operator_id],
+      with_incentive: options[:with_incentive],
+      bought_at: Date.today
     )
 
     upfront = options[:upfronts].to_f
 
-    if upfront != 0
+    if upfront != 0 && !options[:with_incentive]
       Outflow.create!(
         kind: (upfront < 0 ? KIND[:to_favor] : KIND[:upfront]),
         amount: upfront.abs,
@@ -126,10 +128,14 @@ class Outflow < ActiveRecord::Base
   end
 
   def operator_name
-    begin
-      Operator.find(self.operator_id).try(:label)
-    rescue
-      'Unknown'
+    if self.operator_id
+      begin
+        Operator.find(self.operator_id).try(:label)
+      rescue
+        'Unknown'
+      end
+    else
+      ''
     end
   end
 

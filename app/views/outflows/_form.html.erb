@@ -24,14 +24,14 @@
       <div class="span3">
         <%= f.label :operator_id %>
         <%= f.input :auto_operator_name, label: false, input_html: {
-          value: @outflow.operator_id, class: 'autocomplete-field',
+          value: @outflow.try(:operator_name), class: 'autocomplete-field',
           data: {
             'autocomplete-id-target' => '#outflow_operator_id',
             'autocomplete-url' => autocomplete_for_operator_outflows_path(format: :json)
           }
         } %>
         <%= f.input :operator_id, as: :hidden,
-          input_html: { class: 'autocomplete-id' } %>
+          input_html: { class: 'autocomplete-id', value: @outflow.try(:operator_id) } %>
       </div>
       <div class="span3">
         <%= f.input :bought_at, as: :date_picker %>

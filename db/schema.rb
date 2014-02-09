@@ -11,23 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140209212004) do
+ActiveRecord::Schema.define(version: 20140209225935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "outflows", force: true do |t|
-    t.string   "kind",         limit: 1,                                          null: false
+    t.string   "kind",           limit: 1,                                            null: false
     t.text     "comment"
-    t.decimal  "amount",                   precision: 15, scale: 2, default: 0.0, null: false
-    t.integer  "user_id",                                                         null: false
+    t.decimal  "amount",                     precision: 15, scale: 2, default: 0.0,   null: false
+    t.integer  "user_id",                                                             null: false
     t.integer  "operator_id"
-    t.integer  "lock_version",                                      default: 0,   null: false
+    t.integer  "lock_version",                                        default: 0,     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "bill"
-    t.string   "provider",     limit: 200
+    t.string   "provider",       limit: 200
     t.date     "bought_at"
+    t.boolean  "with_incentive",                                      default: false
   end
 
   add_index "outflows", ["operator_id"], name: "index_outflows_on_operator_id", using: :btree

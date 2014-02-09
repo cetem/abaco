@@ -24,9 +24,17 @@ new Rule
         e.preventDefault()
         $(this).parents('tr:first').find('a[data-pay-shifts-button]').click()
 
+    @map.changeIncentive ||= ->
+      value = this.checked
+      botton = $(this).parents('tr:first').find('a[data-pay-shifts-button]')
+      href = botton.attr('href').replace(/&with_incentive=\w{0,5}&?/, '')
+      withIncentive = '&with_incentive=' + value
+      botton.attr('href', href + withIncentive)
 
     $(document).on 'change keyup', '[data-to-pay-total]', @map.changeTotalAmount
     $(document).on 'keydown', '[data-to-pay-total]', @map.sendPay
+    $(document).on 'change click', '[data-with-incentive]', @map.changeIncentive
 
   unload: ->
     $(document).off 'change keyup', '[data-to-pay-total]', @map.changeTotalAmount
+    $(document).off 'change click', '[data-with-incentive]', @map.changeIncentive
