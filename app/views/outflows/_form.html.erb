@@ -5,21 +5,35 @@
   <% end %>
 
   <div class="form-inputs">
-    <%= f.input :kind, collection: kind_selector_for_outflow, prompt: true %>
-    <%= f.input :bill %>
-    <%= f.input :comment, input_html: { rows: 5 } %>
-    <%= f.input :amount, as: :string %>
-    <%= f.label :operator_id %>
-    <%= f.input :auto_operator_name, label: false, input_html: {
-      value: @outflow.operator_id, class: 'autocomplete-field',
-      data: {
-        'autocomplete-id-target' => '#outflow_operator_id',
-        'autocomplete-url' => autocomplete_for_operator_outflows_path(format: :json)
-      }
-    } %>
-    <%= f.input :operator_id, as: :hidden,
-      input_html: { class: 'autocomplete-id' } %>
+    <div class="row-fluid">
+      <div class="span4">
+        <%= f.input :kind, collection: kind_selector_for_outflow, prompt: false,
+          input_html: {class: 'span10'} %>
+      </div>
+      <div class="span3">
+        <%= f.input :bill %>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span4">
+        <%= f.input :amount, as: :string %>
+      </div>
+      <div class="span3">
+        <%= f.label :operator_id %>
+        <%= f.input :auto_operator_name, label: false, input_html: {
+          value: @outflow.operator_id, class: 'autocomplete-field',
+          data: {
+            'autocomplete-id-target' => '#outflow_operator_id',
+            'autocomplete-url' => autocomplete_for_operator_outflows_path(format: :json)
+          }
+        } %>
+        <%= f.input :operator_id, as: :hidden,
+          input_html: { class: 'autocomplete-id' } %>
+      </div>
+    </div>
+    <%= f.input :comment, input_html: { rows: 5, class: 'span10'} %>
   </div>
+
 
   <div class="form-actions">
     <div class="pull-right"><%= yield :form_actions %></div>
