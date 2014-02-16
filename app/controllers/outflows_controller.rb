@@ -7,7 +7,7 @@ class OutflowsController < ApplicationController
   # GET /outflows.json
   def index
     @title = t('view.outflows.index_title')
-    @outflows = Outflow.order('id DESC').page(params[:page])
+    @outflows = Outflow.order(bought_at: :desc).page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

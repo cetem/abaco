@@ -6,7 +6,7 @@
       <table class="table resource-list">
         <thead>
           <tr>
-            <th><%= Outflow.human_attribute_name 'user_id' %></th>
+            <th><%= Outflow.human_attribute_name 'bought_at' %></th>
             <th><%= Outflow.human_attribute_name 'kind' %></th>
             <th><%= Outflow.human_attribute_name 'comment' %></th>
             <th><%= Outflow.human_attribute_name 'amount' %></th>
@@ -18,7 +18,7 @@
         <tbody>
           <% @outflows.each do |outflow| %>
             <tr>
-              <td><%= outflow.user %></td>
+              <td><%= l outflow.bought_at if outflow.bought_at %></td>
               <td><%= show_outflow_kind outflow %></td>
               <td><%= truncate raw(outflow.comment), length: 50 %></td>
               <td><%= number_to_currency outflow.amount %></td>
@@ -43,7 +43,7 @@
 <div class="form-actions">
   <div class="pull-right">
     <%= link_to t('view.outflows.shifts.pay_individual_shifts'),
-      show_pay_pending_shifts_outflows_path, class: 'btn btn-primary' %> | 
+      show_pay_pending_shifts_outflows_path, class: 'btn btn-primary' %> |
     <%= link_to t('view.outflows.shifts.pay_shifts'),
       show_all_pay_pending_shifts_outflows_path, class: 'btn btn-primary' %>
   </div>

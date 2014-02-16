@@ -3,13 +3,17 @@ class Outflow < ActiveRecord::Base
 
   # Constantes
   KIND = {
-    upfront: 'u',
-    to_favor: 'f',
-    refunded: 'r',
-    maintenance: 'm',
-    purchase: 'p',
-    payoff: 'x',
-    other: 'o'
+    upfront:      'u',
+    to_favor:     'f',
+    refunded:     'r',
+    maintenance:  'm',
+    payoff:       'x',
+    other:        'o',
+    cetem_gral:   'c',
+    cca_gral:     'g',
+    library:      'l',
+    paper:        'p',
+    toner:        't'
   }.with_indifferent_access.freeze
 
   # Scopes

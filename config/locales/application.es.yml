@@ -29,7 +29,7 @@
         operator_id: 'Operador'
         user_id: 'Usuario'
         bill: 'Factura'
-        bought_at: 'Comprado el'
+        bought_at: 'Fecha'
         provider: 'Proveedor'
       setting:
         title: 'Título'
@@ -124,9 +124,13 @@
         to_favor: 'A Favor'
         refunded: 'Adelanto devuelto'
         maintenance: 'Mantenimiento'
-        purchase: 'Compras'
         payoff: 'Pago'
         other: 'Otro'
+        cetem_gral: 'General CETEM'
+        cca_gral: 'General CCA'
+        library: 'Librería, tapas y anillos'
+        paper: 'Papel'
+        toner: 'Tóner'
       shifts:
         title: 'Turnos pendientes de pago'
         pay_individual_shifts: 'Pagar sueldos individuales'
