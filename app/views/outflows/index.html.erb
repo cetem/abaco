@@ -3,6 +3,12 @@
 <% else %>
   <div class="row">
     <div class="span12">
+      <% if params[:filter] %>
+        <h2>
+          <%= t('view.outflows.with_filter',
+                filter: t("view.outflows.kind.#{params[:filter]}")) %>
+        </h2>
+      <% end %>
       <table class="table resource-list">
         <thead>
           <tr>
