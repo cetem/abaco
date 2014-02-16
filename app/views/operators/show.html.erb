@@ -6,7 +6,7 @@
     <div class="tabbable">
       <ul class="nav nav-tabs">
         <li class="<%= 'active' unless movements_page %>">
-          <%= link_to t('view.operators.shifts'), '#shifts', 
+          <%= link_to t('view.operators.shifts'), '#shifts',
             data: { toggle: 'tab' } %>
         </li>
         <li class="<%= 'active' if movements_page %>">
@@ -17,7 +17,6 @@
 
       <div class="tab-content">
         <div class="tab-pane <%= 'active' unless movements_page %>" id="shifts">
-
           <table class="table table-striped">
             <thead>
               <tr>
@@ -43,7 +42,6 @@
         </div>
 
         <div class="tab-pane <%= 'active' if movements_page %>" id="movements">
-
           <% if @movements.any? %>
             <table class="table table-striped">
               <thead>
@@ -57,7 +55,7 @@
                 <% @movements.each do |m| %>
                   <tr>
                     <td><%= show_outflow_kind(m)  %></td>
-                    <td><%= l m.created_at, format: :minimal %></td>
+                    <td><%= l (m.bought_at ? m.bought_at : m.created_at), format: :minimal %></td>
                     <td><%= number_to_currency m.amount %></td>
                   </tr>
                 <% end %>
