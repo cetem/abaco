@@ -30,13 +30,18 @@ class Outflow < ActiveRecord::Base
   # Validaciones
   validates :amount, :kind, :user_id, presence: true
   validates :amount, numericality: { allow_nil: true, allow_blank: true,
-    greater_than: 0.00 }
+    greater_than: 0.00 }, if: -> (o) { !o.kind_is_payoff? }
+  validates :amount, numericality: { allow_nil: true, allow_blank: true },
+    if: -> (o) { o.kind_is_payoff? }
   validates :operator_id, presence: true, if: :operator_needed?
   validates :comment, presence: true, if: :kind_is_other?
-  validates :provider, presence: true, if: ->(o) { o.bill.present? }
+  validates :provider, presence: true, if: -> (o) { o.bill.present? }
 
   # Relaciones
   belongs_to :user
+
+  # Callbacks
+  before_save :assign_negative_value, if: -> (o) { o.kind_is_payoff? }
 
   KIND.each do |kind, value|
     define_method("kind_is_#{kind}?") { self.kind == KIND[kind] }
@@ -152,5 +157,19 @@ class Outflow < ActiveRecord::Base
       operator_outflows.to_favor.sum(&:amount) -
       operator_outflows.upfronts.sum(&:amount)
     )
+  end
+
+  def assign_negative_value
+    if self.amount < 0
+      Outflow.create!(
+        kind:         KIND[:upfront],
+        amount:       self.amount.abs,
+        comment:      I18n.t('view.outflows.reajust_of', outflow_id: self.id),
+        user_id:      self.user_id,
+        operator_id:  self.operator_id,
+        bought_at:    Date.today
+      )
+      self.amount = 0
+    end
   end
 end

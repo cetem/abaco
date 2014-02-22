@@ -14,12 +14,12 @@ new Rule
         futureUpfront = (input_val - to_pay).toFixed(2)
         linkHref = payShiftsLink.attr('href')
         updatedUrl = linkHref
-          .replace(/upfronts=-?\d+(\.\d*)?/, "upfronts=#{futureUpfront}")
-          .replace(/total_to_pay=-?\d+(\.\d*)?/, "total_to_pay=#{input_val}")
+          .replace(/upfronts=(-)?\d+(\.\d*)?/, "upfronts=#{futureUpfront}")
+          .replace(/total_to_pay=(-)?\d+(\.\d*)?/, "total_to_pay=#{input_val || 0}")
 
         payShiftsLink.attr('href', updatedUrl)
 
-    @map.sendPay ||= (e,a,b)->
+    @map.sendPay ||= (e)->
       if e.which == 13
         e.preventDefault()
         $(this).parents('tr:first').find('a[data-pay-shifts-button]').click()
