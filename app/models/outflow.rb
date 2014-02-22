@@ -108,7 +108,8 @@ class Outflow < ActiveRecord::Base
         amount: upfront.abs,
         comment: I18n.t('view.outflows.reajust_of', outflow_id: pay.id),
         user_id: options[:user_id],
-        operator_id: options[:operator_id]
+        operator_id: options[:operator_id],
+        bought_at: Date.today
       )
     else
       true

@@ -1,6 +1,6 @@
 <div class="readonly-data">
   <% date = @outflow.bought_at ? l(@outflow.bought_at) : nil %>
-  <h2><%= [show_outflow_kind(@outflow), date].join(' - ') %></h2>
+  <h2><%= raw [show_outflow_kind(@outflow), date].join(' - ') %></h2>
 
   <% if @outflow.with_incentive %>
     <h4><%= I18n.t("view.outflows.with_incentive.true") %></h4>
