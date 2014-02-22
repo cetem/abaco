@@ -117,7 +117,7 @@
       update_outflow: 'Actualizar egreso'
       upfronts: 'Adelantos'
       current_credit: 'Saldo'
-      reajust_of: "Reajuste de <a href='outflows/%{outflow_id}'>%{outflow_id}</a>"
+      reajust_of: "Reajuste de <a href='%{outflow_id}'>%{outflow_id}</a>"
       movement_kind: 'Tipo de movimiento'
       with_filter: "Filtrado por: %{filter}"
       kind:
