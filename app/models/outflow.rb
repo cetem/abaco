@@ -93,7 +93,7 @@ class Outflow < ActiveRecord::Base
         I18n.l(Date.parse(options[:start]), format: :long),
         I18n.l(Date.parse(options[:finish]), format: :long)
       ].join(' -> '),
-      amount: options[:amount].to_f,
+      amount: options[:amount].to_f.abs,
       user_id: options[:user_id],
       operator_id: options[:operator_id],
       with_incentive: options[:with_incentive],
