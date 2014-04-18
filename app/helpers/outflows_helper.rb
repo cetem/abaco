@@ -6,9 +6,14 @@ module OutflowsHelper
     end
   end
 
-  def show_outflow_kind(outflow)
-    link_to t("view.outflows.kind.#{outflow.kind_symbol}"),
-      outflows_path(filter: outflow.kind_symbol)
+  def show_outflow_kind(outflow, link_to_kind = true)
+    _path = if link_to_kind
+              outflows_path(filter: outflow.kind_symbol)
+            else
+              outflow_path(outflow)
+            end
+
+    link_to t("view.outflows.kind.#{outflow.kind_symbol}"), _path
   end
 
   def convert_dates_to_interval(start, finish)

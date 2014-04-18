@@ -54,7 +54,7 @@
               <tbody>
                 <% @movements.each do |m| %>
                   <tr>
-                    <td><%= show_outflow_kind(m)  %></td>
+                    <td><%= show_outflow_kind(m, false)  %></td>
                     <td><%= l(m.bought_at) if m.try(:bought_at) %></td>
                     <td><%= number_to_currency m.amount %></td>
                   </tr>
