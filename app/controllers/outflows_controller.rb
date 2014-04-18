@@ -3,6 +3,8 @@ class OutflowsController < ApplicationController
 
   layout ->(c) { c.request.xhr? ? false : 'application' }
 
+  check_authorization
+  load_and_authorize_resource
   # GET /outflows
   # GET /outflows.json
   def index

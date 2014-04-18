@@ -3,6 +3,7 @@ require 'test_helper'
 class SettingsControllerTest < ActionController::TestCase
   setup do
     @setting = Fabricate(:setting)
+    sign_in Fabricate(:user)
   end
 
   test "should get index" do
@@ -18,7 +19,7 @@ class SettingsControllerTest < ActionController::TestCase
 
   test "should create setting" do
     assert_difference('Setting.count') do
-      post :create, setting: Fabricate.attributes_for(:setting) 
+      post :create, setting: Fabricate.attributes_for(:setting)
     end
 
     assert_redirected_to setting_path(assigns(:setting))
