@@ -1,4 +1,11 @@
 module OutflowsHelper
+  def link_to_operator(outflow)
+    if (id = outflow.operator_id)
+      link_to outflow.operator_name, operator_path(id)
+    else
+      '-'
+    end
+  end
 
   def kind_selector_for_outflow
     Outflow::KIND.except(:refunded).map do |k, v|
@@ -17,11 +24,10 @@ module OutflowsHelper
   end
 
   def convert_dates_to_interval(start, finish)
-    output = l(start.to_date, format: :long)
-    output << ' - '
-    output << l(finish.to_date, format: :long)
-
-    output
+    [
+      l(start.to_date, format: :long),
+      l(finish.to_date, format: :long)
+    ].join(' - ')
   end
 
   def seconds_to_rounded_time(seconds, rounded_in_seconds)
