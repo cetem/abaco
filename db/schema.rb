@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140209225935) do
+ActiveRecord::Schema.define(version: 20140424031230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20140209225935) do
     t.boolean  "with_incentive",                                      default: false
   end
 
+  add_index "outflows", ["bought_at"], name: "index_outflows_on_bought_at", using: :btree
   add_index "outflows", ["operator_id"], name: "index_outflows_on_operator_id", using: :btree
   add_index "outflows", ["user_id"], name: "index_outflows_on_user_id", using: :btree
 
