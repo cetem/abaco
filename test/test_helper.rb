@@ -1,18 +1,19 @@
-ENV["RAILS_ENV"] = "test"
+ENV['RAILS_ENV'] = 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'capybara/rails'
 require 'sidekiq/testing/inline'
-require 'webmock/test_unit'
+require 'webmock'
+require 'webmock/minitest'
 
 class ActiveSupport::TestCase
   include WebMock::API
   # Add more helper methods to be used by all tests here...
-  
+
   setup do
     instance_eval(File.read(Rails.root.join('test/lib/stub_requests.rb')))
   end
-  
+
   def error_message_from_model(model, attribute, message, extra = {})
     ::ActiveModel::Errors.new(model).generate_message(attribute, message, extra)
   end
@@ -20,6 +21,12 @@ end
 
 class ActionController::TestCase
   include Devise::TestHelpers
+  include WebMock::API
+  # Add more helper methods to be used by all tests here...
+
+  setup do
+    instance_eval(File.read(Rails.root.join('test/lib/stub_requests.rb')))
+  end
 end
 
 # Transactional fixtures do not work with Selenium tests, because Capybara
@@ -33,7 +40,7 @@ class ActionDispatch::IntegrationTest
 
   # Stop ActiveRecord from wrapping tests in transactions
   self.use_transactional_fixtures = false
-  
+
   setup do
     WebMock.disable!
     Capybara.default_driver = :selenium
@@ -47,29 +54,29 @@ class ActionDispatch::IntegrationTest
     # Revert Capybara.current_driver to Capybara.default_driver
     Capybara.use_default_driver
   end
-  
+
   def login
     user = Fabricate(:user, password: '123456')
-    
+
     visit new_user_session_path
-    
+
     assert_page_has_no_errors!
-    
+
     fill_in 'user_email', with: user.email
     fill_in 'user_password', with: '123456'
-    
+
     find('.btn-primary.submit').click
-    
+
     assert_equal users_path, current_path
-    
+
     assert_page_has_no_errors!
     assert page.has_css?('.alert.alert-info')
-    
+
     within '.alert.alert-info' do
       assert page.has_content?(I18n.t('devise.sessions.signed_in'))
     end
   end
-  
+
   def assert_page_has_no_errors!
     assert page.has_no_css?('#unexpected_error')
   end

@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.2'
+gem 'rails', '4.1.1'
 
 gem 'pg'
 gem 'will_paginate'
@@ -30,13 +30,13 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'turbolinks'
+gem 'pry-nav'
 
 group :development do
   gem 'thin'
 end
 
 group :test do
-  gem 'turn'
   gem 'selenium-webdriver', require: false
   gem 'capybara', require: false
   gem 'database_cleaner' # For Capybara

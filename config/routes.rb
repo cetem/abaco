@@ -1,4 +1,4 @@
-Abaco::Application.routes.draw do
+Rails.application.routes.draw do
   get 'operators/:id' => 'operators#show', as: 'operator'
   get 'operators' => 'operators#index', as: 'operators'
   get 'operators/:id/new_shift' => 'operators#new_shift',

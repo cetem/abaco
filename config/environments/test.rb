@@ -1,4 +1,4 @@
-Abaco::Application.configure do
+Rails.application.configure do
 
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
@@ -32,4 +32,7 @@ Abaco::Application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+
+  # Raises error for missing translations
+  config.action_view.raise_on_missing_translations = false
 end

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class OperatorsControllerTest < ActionController::TestCase
   setup do
-    sign_in Fabricate(:user)
+    sign_in @user = Fabricate(:user)
   end
 
   test "should get index" do
@@ -18,7 +18,7 @@ class OperatorsControllerTest < ActionController::TestCase
       Fabricate(:outflow, kind: Outflow::KIND[kind], operator_id: 1)
     end
 
-    get :show, id: 1
+    get :show, id: @user.id
     assert_response :success
     assert_not_nil assigns(:operator)
     assert_not_nil assigns(:shifts)

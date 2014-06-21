@@ -1,7 +1,7 @@
 Sidekiq.configure_server do |config|
-  config.redis = { url: 'redis://localhost:6379/10', namespace: 'x0y0' }
+  config.redis = { url: 'redis://localhost:6379/10', namespace: 'abaco' }
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = { url: 'redis://localhost:6379/10', namespace: 'x0y0' }
+  config.redis = { url: 'redis://localhost:6379/10', namespace: 'abaco' }
 end
