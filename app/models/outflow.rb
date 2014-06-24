@@ -111,7 +111,7 @@ class Outflow < ActiveRecord::Base
       Outflow.create!(
         kind: (upfront < 0 ? KIND[:to_favor] : KIND[:upfront]),
         amount: upfront.abs,
-        comment: I18n.t('view.outflows.reajust_of', outflow_id: pay.id),
+        comment: I18n.t('view.outflows.reajust_of', id: pay.id, path: outflow_path(pay)),
         user_id: options[:user_id],
         operator_id: options[:operator_id],
         bought_at: Date.today

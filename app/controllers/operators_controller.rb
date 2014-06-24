@@ -20,7 +20,7 @@ class OperatorsController < ApplicationController
 
     @paginate_size = @shifts.size
 
-    @movements = Outflow.for_operator(@operator.id).order(id: :desc).paginate(
+    @movements = Outflow.for_operator(@operator.id).order(bought_at: :desc).paginate(
       page: params[:movements_page]
     )
   end
