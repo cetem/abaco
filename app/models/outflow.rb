@@ -154,8 +154,8 @@ class Outflow < ActiveRecord::Base
     operator_outflows = Outflow.where(operator_id: operator)
 
     (
-      operator_outflows.to_favor.sum(&:amount) -
-      operator_outflows.upfronts.sum(&:amount)
+      operator_outflows.to_favor.sum(:amount) -
+      operator_outflows.upfronts.sum(:amount)
     )
   end
 
