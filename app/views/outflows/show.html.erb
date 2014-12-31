@@ -46,4 +46,5 @@
 <div class="form-actions">
   <%= link_to t('label.edit'), edit_outflow_path(@outflow) if can? :update, @outflow %> |
   <%= link_to t('label.list'), outflows_path %>
+  <%= link_to_destroy @outflow if can? :destroy, @outflow %>
 </div>

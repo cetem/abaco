@@ -9,7 +9,6 @@ gem 'magick_columns', github: 'kainlite/magick_columns'
 gem 'simple_form'
 gem 'validates_timeliness'
 gem 'activeresource', require: 'active_resource'
-gem 'newrelic_rpm'
 
 # Deploy gems
 gem 'capistrano'
