@@ -12,6 +12,7 @@ class Outflow < ActiveRecord::Base
     cetem_gral:   'c',
     cca_gral:     'g',
     library:      'l',
+    tops_rings:   'q',
     paper:        'p',
     toner:        't'
   }.with_indifferent_access.freeze
@@ -36,6 +37,7 @@ class Outflow < ActiveRecord::Base
   validates :operator_id, presence: true, if: :operator_needed?
   validates :comment, presence: true, if: :kind_is_other?
   validates :provider, presence: true, if: -> (o) { o.bill.present? }
+  validates :bill, presence: true, if: -> (o) { o.billeable? }
 
   # Relaciones
   belongs_to :user
@@ -45,6 +47,11 @@ class Outflow < ActiveRecord::Base
 
   KIND.each do |kind, value|
     define_method("kind_is_#{kind}?") { self.kind == KIND[kind] }
+  end
+
+  def billeable?
+    kind_is_library? || kind_is_tops_rings? || kind_is_paper? || kind_is_toner? ||
+      kind_is_maintenance?
   end
 
   def operator_needed?

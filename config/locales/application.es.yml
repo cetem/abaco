@@ -129,7 +129,8 @@
         other: 'Otro'
         cetem_gral: 'General CETEM'
         cca_gral: 'General CCA'
-        library: 'Librería, tapas y anillos'
+        library: 'Librería'
+        tops_rings: 'Tapas y anillos'
         paper: 'Papel'
         toner: 'Tóner'
       shifts:
