@@ -10,7 +10,7 @@ class OutflowsController < ApplicationController
   def index
     @title = t('view.outflows.index_title')
     @outflows = Outflow.filtered_by(params[:filter]).
-      order(bought_at: :desc, id: :desc).page(params[:page])
+      order(id: :desc, bought_at: :desc).page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -140,7 +140,7 @@ class OutflowsController < ApplicationController
     if params[:interval]
       interval = params[:interval]
       values = parameterize_to_date_format(interval)
-      from, to = values[:from], values[:to]
+      from, to = [values[:from], values[:to]].sort
       @operator_shifts = []
       operators = Operator.get(:current_workers)
 

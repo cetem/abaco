@@ -72,7 +72,7 @@ class Outflow < ActiveRecord::Base
     })
 
     if shifts.size > 0
-      start, finish = shifts.first.created_at, shifts.last.created_at
+      start, finish = shifts.first.start, shifts.last.start
       worked_hours = worked_hours(shifts)
       to_pay = calculate_how_much_money_have_to_pay(
         worked_hours, options[:admin]
