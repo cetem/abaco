@@ -38,6 +38,13 @@
     </p>
   <% end %>
 
+  <% if @outflow.file && @outflow.file.try(:file) %>
+    <p>
+      <strong><%= Outflow.human_attribute_name 'file' %></strong>:
+      <%= link_to_file @outflow.file %>
+    </p>
+  <% end %>
+
   <p>
     <strong><%= Outflow.human_attribute_name 'comment' %></strong>:
     <blockquote><%= simple_format @outflow.comment %></blockquote>

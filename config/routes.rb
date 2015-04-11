@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     as: 'new_operator_shift'
   post 'operators/:id/create_shift' => 'operators#create_shift',
     as: 'create_operator_shift'
+  get 'downloads' => 'application#downloads', as: 'downloads'
 
   resources :settings
 

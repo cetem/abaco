@@ -1,5 +1,6 @@
 class Outflow < ActiveRecord::Base
   has_paper_trail
+  mount_uploader :file, FileUploader
 
   # Constantes
   KIND = {

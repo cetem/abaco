@@ -20,7 +20,7 @@ module ApplicationHelper
       main_action
     else
       out = ''.html_safe
-      
+
       out << render(
         partial: 'shared/button_dropdown', locals: {
           main_action: main_action, extra_actions: extra_actions
@@ -28,7 +28,7 @@ module ApplicationHelper
       )
     end
   end
-  
+
   def pagination_links(objects, param_name = 'page', params = nil)
     pagination_links = will_paginate objects, param_name: param_name,
       inner_window: 1, outer_window: 1, params: params,
@@ -59,7 +59,7 @@ module ApplicationHelper
       content_tag(:a, t('will_paginate.next_label').html_safe),
       class: 'next disabled'
     )
-    
+
     content_tag(
       :div,
       content_tag(:ul, previous_tag + next_tag),
@@ -84,17 +84,17 @@ module ApplicationHelper
 
     iconic_link '&#x270e;'.html_safe, *args, options
   end
-  
+
   def link_to_show(*args)
     options = args.extract_options!
-    
+
     options['class'] ||= 'iconic'
     options['title'] ||= t('label.show')
     options['data-show-tooltip'] = true
-    
+
     link_to '&#xe074;'.html_safe, *args, options
   end
-  
+
   def link_to_destroy(*args)
     options = args.extract_options!
 
@@ -110,8 +110,8 @@ module ApplicationHelper
 
     next_class = "next #{'disabled' if @paginate_size < 10}"
     next_link = content_tag(:li, link_to(
-      raw(t('will_paginate.next_label')), 
-      "#{request.path}?page=#{current_page + 1}", 
+      raw(t('will_paginate.next_label')),
+      "#{request.path}?page=#{current_page + 1}",
       class: next_class
     ), class: next_class)
 
@@ -119,13 +119,17 @@ module ApplicationHelper
     prev_class = "previous_page #{'disabled' if current_page == 1}"
     prev_link = content_tag(:li, link_to(
       raw(t('will_paginate.previous_label')),
-      "#{request.path}?page=#{prev_page}", 
+      "#{request.path}?page=#{prev_page}",
       class: prev_class
     ), class: prev_class)
 
     ul = content_tag(:ul, prev_link + next_link)
     div_pag = content_tag(:div, ul, class: 'pagination pagination-right')
-    
+
     content_tag(:div, div_pag, class: 'pagination-container')
+  end
+
+  def link_to_file(file)
+    link_to file.file.filename, downloads_path(path: file.url)
   end
 end

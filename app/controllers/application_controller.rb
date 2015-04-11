@@ -3,13 +3,25 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
   after_action -> { expires_now if user_signed_in? }
-  
+
   def user_for_paper_trail
     current_user.try(:id)
   end
-  
+
+  def downloads
+    file = if (path = params[:path]).present? && !path.match(/\.\./)
+             (Rails.root.to_s + path).to_s
+           end
+
+    if file && File.exist?(file)
+      send_file file, type: 'application/octet-stream'
+    else
+      head 404
+    end
+  end
+
   private
-  
+
   # Overwriting the sign_out redirect path method
   def after_sign_out_path_for(resource_or_scope)
     new_user_session_path
@@ -23,7 +35,7 @@ class ApplicationController < ActionController::Base
       to = Timeliness::Parser.parse(
         parameters[:to], :date, zone: :local
       ).to_date
-      
+
       { from: from, to: to }
     end
   end
