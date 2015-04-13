@@ -168,11 +168,12 @@ class OutflowsController < ApplicationController
 
   # PUT /outflows/pay_shifts
   def pay_shifts
+    start, finish = [params[:from], params[:to]].sort
     @paid = Outflow.pay_operator_shifts_and_upfronts(
       operator_id: params[:id],
-      start: params[:from],
-      finish: params[:to],
-      amount: params[:total_to_pay],
+      start: start,
+      finish: finish,
+      amount: params[:total_to_pay].to_f,
       upfronts: params[:upfronts].to_f,
       user_id: current_user.id,
       with_incentive: params[:with_incentive].to_s.to_bool

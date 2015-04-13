@@ -102,10 +102,8 @@ class Outflow < ActiveRecord::Base
 
     pay = Outflow.create!(
       kind: KIND[:payoff],
-      comment: [
-        I18n.l(Date.parse(options[:start]), format: :long),
-        I18n.l(Date.parse(options[:finish]), format: :long)
-      ].join(' -> '),
+      start_shift: Date.parse(options[:start]),
+      finish_shift: Date.parse(options[:finish]),
       amount: options[:amount].to_f.abs,
       user_id: options[:user_id],
       operator_id: options[:operator_id],

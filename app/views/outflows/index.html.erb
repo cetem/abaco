@@ -26,7 +26,13 @@
             <tr>
               <td><%= l outflow.bought_at if outflow.bought_at %></td>
               <td><%= show_outflow_kind outflow %></td>
-              <td><%= truncate raw(outflow.comment), length: 50 %></td>
+              <td>
+                <% if outflow.start_shift && outflow.finish_shift %>
+                  <%= show_start_and_finish_paid_shifts(outflow) %>
+                <% else %>
+                  <%= truncate raw(outflow.comment), length: 50 %>
+                <% end %>
+              </td>
               <td><%= number_to_currency outflow.amount %></td>
               <td><%= link_to_operator(outflow) %></td>
               <td><%= link_to_show outflow %></td>

@@ -29,9 +29,8 @@
     <strong><%= Outflow.human_attribute_name 'amount' %></strong>:
     <%= number_to_currency @outflow.amount %>
   </p>
+
   <% if @outflow.operator_id %>
-
-
     <p>
       <strong><%= Outflow.human_attribute_name 'operator_id' %></strong>:
       <%= @outflow.operator_name %>
@@ -42,6 +41,17 @@
     <p>
       <strong><%= Outflow.human_attribute_name 'file' %></strong>:
       <%= link_to_file @outflow.file %>
+    </p>
+  <% end %>
+
+  <% if (start = @outflow.start_shift) || (finish = @outflow.finish_shift) %>
+    <p>
+      <strong><%= Outflow.human_attribute_name 'start_shift' %></strong>:
+      <%= I18n.l(start) if start %>
+    </p>
+    <p>
+      <strong><%= Outflow.human_attribute_name 'finish_shift' %></strong>:
+      <%= I18n.l(finish) if finish %>
     </p>
   <% end %>
 
