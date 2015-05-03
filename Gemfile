@@ -17,12 +17,10 @@ gem 'capistrano'
 gem 'capistrano-rails'
 gem 'capistrano-bundler'
 
-# Auth & Mailing Gems
+# Auth
 gem 'devise'
-gem 'devise-async'
 gem 'cancan'
 gem 'role_model'
-gem 'sidekiq'
 
 # Old assets group
 gem 'sass-rails'

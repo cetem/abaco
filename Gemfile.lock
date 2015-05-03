@@ -68,8 +68,6 @@ GEM
       activesupport (>= 3.2.0)
       json (>= 1.7)
       mime-types (>= 1.16)
-    celluloid (0.15.2)
-      timers (~> 1.1.0)
     childprocess (0.5.3)
       ffi (~> 1.0, >= 1.0.11)
     coderay (1.1.0)
@@ -81,7 +79,6 @@ GEM
       execjs
     coffee-script-source (1.7.0)
     colorize (0.7.3)
-    connection_pool (2.0.0)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     daemons (1.1.9)
@@ -92,8 +89,6 @@ GEM
       railties (>= 3.2.6, < 5)
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
-    devise-async (0.9.0)
-      devise (~> 3.2)
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.2.0)
@@ -159,9 +154,6 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.3.2)
-    redis (3.0.7)
-    redis-namespace (1.4.1)
-      redis (~> 3.0.4)
     role_model (0.8.1)
     rubyzip (1.1.4)
     safe_yaml (1.0.3)
@@ -176,12 +168,6 @@ GEM
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0.4)
-    sidekiq (3.1.4)
-      celluloid (>= 0.15.2)
-      connection_pool (>= 2.0.0)
-      json
-      redis (>= 3.0.6)
-      redis-namespace (>= 1.3.1)
     simple_form (3.0.2)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
@@ -207,7 +193,6 @@ GEM
     thread_safe (0.3.4)
     tilt (1.4.1)
     timeliness (0.3.7)
-    timers (1.1.0)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
@@ -245,7 +230,6 @@ DEPENDENCIES
   coffee-rails
   database_cleaner
   devise
-  devise-async
   fabrication
   faker
   jquery-rails
@@ -258,7 +242,6 @@ DEPENDENCIES
   role_model
   sass-rails
   selenium-webdriver
-  sidekiq
   simple_form
   thin
   turbolinks
