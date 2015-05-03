@@ -16,6 +16,7 @@ gem "bugsnag"
 gem 'capistrano'
 gem 'capistrano-rails'
 gem 'capistrano-bundler'
+gem 'unicorn'
 
 # Auth
 gem 'devise'

@@ -107,6 +107,7 @@ GEM
     jquery-ui-rails (4.2.1)
       railties (>= 3.2.16)
     json (1.8.1)
+    kgio (2.9.2)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -153,6 +154,7 @@ GEM
       activesupport (= 4.1.1)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
+    raindrops (0.13.0)
     rake (10.3.2)
     role_model (0.8.1)
     rubyzip (1.1.4)
@@ -203,6 +205,10 @@ GEM
     uglifier (2.5.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    unicorn (4.8.3)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
     validates_timeliness (3.0.14)
       timeliness (~> 0.3.6)
     warden (1.2.3)
@@ -246,6 +252,7 @@ DEPENDENCIES
   thin
   turbolinks
   uglifier
+  unicorn
   validates_timeliness
   webmock
   will_paginate
