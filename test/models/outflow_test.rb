@@ -135,24 +135,31 @@ class OutflowTest < ActiveSupport::TestCase
     end
   end
 
-  test 'get pay pending shifts between dates' do
-    shifts = Outflow.operator_pay_pending_shifts_between(
-      operator_id: rand(99),
-      start: 1.month.ago.to_date,
-      finish: Time.zone.today,
-      admin: true
-    )
+  test 'pay shifts and upfronts with another upfront' do
+    Outflow.delete_all
 
-    assert_equal 15, shifts[:hours]
-  end
-
-  test 'calculate worked hours' do
-    shifts = []
-    @operator_shifts.each do |shift|
-      shifts << OpenStruct.new(shift)
+    assert_difference 'Outflow.count', 2 do
+      Outflow.pay_operator_shifts_and_upfronts(
+        operator_id: 1,
+        start: 1.month.ago.to_date.to_s,
+        finish: Time.zone.today.to_s,
+        user_id: Fabricate(:user).id,
+        amount: 300,
+        upfronts: 100
+      )
     end
 
-    worked_hours = Outflow.worked_hours(shifts)
-    assert_equal 15, worked_hours
+    operator_outflows = Outflow.for_operator(1)
+    assert_equal 2, operator_outflows.count
+
+    # Payoff
+    payoff = operator_outflows.first
+    assert_equal 300.0, payoff.amount.round(1)
+    assert_equal Outflow::KIND[:payoff], payoff.kind
+
+    # Upfront
+    upfront = operator_outflows.last
+    assert_equal 100, upfront.amount
+    assert_equal Outflow::KIND[:upfront], upfront.kind
   end
 end

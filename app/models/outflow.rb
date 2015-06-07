@@ -24,7 +24,7 @@ class Outflow < ActiveRecord::Base
   scope :credits, -> { where(kind: [KIND[:upfront], KIND[:to_favor]]) }
   scope :of_operators, -> { not(where(operator_id: nil)) }
   scope :for_operator, -> (operator) { where(operator_id: operator) }
-  scope :filtered_by, -> (filter) { filter.present? ? where(kind: KIND[filter]) : all }
+  scope :filtered_by, -> (filter) { where(kind: KIND[filter]) }
 
   # Attributos no persistentes
   attr_accessor :auto_operator_name
@@ -42,9 +42,6 @@ class Outflow < ActiveRecord::Base
 
   # Relaciones
   belongs_to :user
-
-  # Callbacks
-  before_save :assign_negative_value, if: -> (o) { o.kind_is_payoff? }
 
   KIND.each do |kind, value|
     define_method("kind_is_#{kind}?") { self.kind == KIND[kind] }
@@ -103,31 +100,8 @@ class Outflow < ActiveRecord::Base
     end
   end
 
-  def self.operator_pay_pending_shifts_between(options = {})
-    shifts = OperatorShifts.find(:all, params: {
-      user_id: options[:operator_id],
-      pay_pending_shifts_for_user_between: {
-        start: options[:start],
-        finish: options[:finish]
-      }
-    })
+  #def self.operator_pay_pending_shifts_between(options = {})
 
-    if shifts.size > 0
-      start, finish = shifts.first.start, shifts.last.start
-      worked_hours = worked_hours(shifts)
-      to_pay = calculate_how_much_money_have_to_pay(
-        worked_hours, options[:admin]
-      )
-
-      {
-        hours: worked_hours,
-        earns: to_pay,
-        count: shifts.size,
-        start: start,
-        finish: finish
-      }
-    end
-  end
 
   def refund!
     self.update_attributes(kind: KIND[:refunded])
@@ -179,23 +153,6 @@ class Outflow < ActiveRecord::Base
     end
   end
 
-  def self.calculate_how_much_money_have_to_pay(hours, admin)
-    admin = admin.to_bool if admin.kind_of? String
-    operator_type = admin ?
-      'pay_per_administrator_hour' :
-      'pay_per_operator_hour'
-    pay_per_hour = Setting.find_by_var(operator_type).value.to_f
-
-    hours * pay_per_hour
-  end
-
-  def self.worked_hours(shifts)
-    hours = 0
-    shifts.map { |s| hours += s.finish.to_time - s.start.to_time }
-
-    hours / 3600
-  end
-
   def operator_name
     if self.operator_id
       begin
@@ -215,19 +172,5 @@ class Outflow < ActiveRecord::Base
       operator_outflows.to_favor.sum(:amount) -
       operator_outflows.upfronts.sum(:amount)
     )
-  end
-
-  def assign_negative_value
-    if self.amount < 0
-      Outflow.create!(
-        kind:         KIND[:upfront],
-        amount:       self.amount.abs,
-        comment:      I18n.t('view.outflows.reajust_of', outflow_id: self.id),
-        user_id:      self.user_id,
-        operator_id:  self.operator_id,
-        bought_at:    Date.today
-      )
-      self.amount = 0
-    end
   end
 end
