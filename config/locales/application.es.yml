@@ -136,7 +136,6 @@
         toner: 'Tóner'
       shifts:
         title: 'Turnos pendientes de pago'
-        pay_individual_shifts: 'Pagar sueldos individuales'
         pay_shifts: 'Pagar sueldos'
         count: 'Cantidad'
         hours: 'Horas trabajadas'

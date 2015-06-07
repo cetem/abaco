@@ -15,15 +15,18 @@ set :linked_dirs, %w{log private}
 set :keep_releases, 5
 
 namespace :deploy do
+  after :finished, 'deploy:cleanup'
+  after :finished, :restart
+
   desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      execute :touch, release_path.join('tmp/restart.txt')
+  task :restart
+    on roles(:app) do
+      execute '/etc/init.d/unicorn', 'upgrade'
     end
   end
 
-  desc 'Update crontab with whenever'
-  after :finishing, 'deploy:cleanup' do
+  desc 'Clear the temps'
+  task 'deploy:cleanup' do
     on roles(:all) do
       within release_path do
         execute :rake, 'tmp:clear'

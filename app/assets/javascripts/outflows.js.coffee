@@ -1,23 +1,25 @@
+
 new Rule
   condition: $('#shifts-data').length
   load: ->
     @map.changeTotalAmount ||= ->
-      input_val = $(this).val()
       row = $(this).parents('tr:first')
       payShiftsLink = row.find('a[data-pay-shifts-button]')
 
+      input_val = parseFloat row.find('[data-to-pay-total]').val()
+      with_incentive = row.find('[data-with-incentive]').data('with-incentive')
       earn = parseFloat row.find('span[data-earns]').data('earns')
       credit = parseFloat row.find('span[data-upfronts]').data('upfronts')
-      to_pay = earn + credit
+      to_pay = parseFloat (earn + credit).toFixed(2)
 
-      if  to_pay != input_val
-        futureUpfront = (input_val - to_pay).toFixed(2)
-        linkHref = payShiftsLink.attr('href')
-        updatedUrl = linkHref
-          .replace(/upfronts=(-)?\d+(\.\d*)?/, "upfronts=#{futureUpfront}")
-          .replace(/total_to_pay=(-)?\d+(\.\d*)?/, "total_to_pay=#{input_val || 0}")
+      futureUpfront = (input_val - to_pay).toFixed(2)
+      linkHref = payShiftsLink.data('replaceable-link')
+      updatedUrl = linkHref
+        .replace(/UPFRONTS/, futureUpfront)
+        .replace(/AMOUNT/, input_val)
+        .replace(/INCENTIVE/, with_incentive)
 
-        payShiftsLink.attr('href', updatedUrl)
+      payShiftsLink.attr('href', updatedUrl)
 
     @map.sendPay ||= (e)->
       if e.which == 13
@@ -26,10 +28,10 @@ new Rule
 
     @map.changeIncentive ||= ->
       value = this.checked
-      botton = $(this).parents('tr:first').find('a[data-pay-shifts-button]')
-      href = botton.attr('href').replace(/&with_incentive=\w{0,5}&?/, '')
-      withIncentive = '&with_incentive=' + value
-      botton.attr('href', href + withIncentive)
+      row = $(this).parents('tr:first')
+
+      row.find('[data-with-incentive]').data('with-incentive', value)
+      row.find('[data-to-pay-total]').trigger('change')
 
     $(document).on 'change keyup', '[data-to-pay-total]', @map.changeTotalAmount
     $(document).on 'keydown', '[data-to-pay-total]', @map.sendPay

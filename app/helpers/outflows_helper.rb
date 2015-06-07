@@ -62,9 +62,20 @@ module OutflowsHelper
         total_to_pay: amount, upfronts: 0
       )
     ]
-    link_options = { class: 'btn btn-primary',
-      data: { method: :patch, remote: true, pay_shifts_button: true,
-      disable_with: t('view.outflows.shifts.wait_paying') } }
+    replaceable_link = pay_shifts_outflows_path(
+      operator_id: id, from: start.to_date, to: finish.to_date,
+      total_to_pay: 'AMOUNT', upfronts: 'UPFRONTS',
+      with_incentive: 'INCENTIVE'
+    )
+
+    link_options = {
+      class: 'btn btn-primary',
+      data: {
+        method: :patch, remote: true, pay_shifts_button: true,
+        disable_with: t('view.outflows.shifts.wait_paying'),
+        replaceable_link: replaceable_link
+      }
+    }
 
     link_to *(link_args + [link_options])
   end

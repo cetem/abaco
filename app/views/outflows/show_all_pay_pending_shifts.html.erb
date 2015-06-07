@@ -68,7 +68,9 @@
             </td>
             <td><%= text_field_tag :to_pay_total, total_to_pay,
               id: '', data: { to_pay_total: true } %></td>
-            <td><%= check_box_tag :with_incentive, nil, nil,  data: { with_incentive: true } %></td>
+            <td data-with-incentive="false">
+              <%= check_box_tag :with_incentive, nil, nil,  data: { with_incentive: true } %>
+            </td>
             <td>
               <%= show_pay_shifts_button(o.operator.id, interval[:from], interval[:to], total_to_pay) %>
             </td>
