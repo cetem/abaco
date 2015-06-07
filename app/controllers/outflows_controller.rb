@@ -5,6 +5,7 @@ class OutflowsController < ApplicationController
 
   check_authorization
   load_and_authorize_resource
+
   # GET /outflows
   # GET /outflows.json
   def index
@@ -136,28 +137,14 @@ class OutflowsController < ApplicationController
   # GET /outflows/show_all_pay_pending_shifts
   def show_all_pay_pending_shifts
     @title = t('view.outflows.shifts.title')
+    @operators_shifts = []
 
     if params[:interval]
       interval = params[:interval]
-      values = parameterize_to_date_format(interval)
-      from, to = [values[:from], values[:to]].sort
-      @operator_shifts = []
-      operators = Operator.get(:current_workers)
+      start, finish = [interval[:from], interval[:to]].sort
 
-      if from.present? && to.present?
-        operators.each do |o|
-          detail = Outflow.operator_pay_pending_shifts_between(
-            operator_id: o['id'],
-            start: from,
-            finish: to,
-            admin: o['admin']
-          )
-
-          @operator_shifts << {
-            detail: detail, credit: Outflow.credit_for_operator(o['id']),
-            id: o['id'], label: o['label']
-          } if detail
-        end
+      if start.present? && finish.present?
+        @operators_shifts = Outflow.operators_pay_pending_shifts_between(start, finish)
       end
     end
 
@@ -169,8 +156,9 @@ class OutflowsController < ApplicationController
   # PUT /outflows/pay_shifts
   def pay_shifts
     start, finish = [params[:from], params[:to]].sort
+    @operator_id = params[:operator_id]
     @paid = Outflow.pay_operator_shifts_and_upfronts(
-      operator_id: params[:id],
+      operator_id: @operator_id,
       start: start,
       finish: finish,
       amount: params[:total_to_pay].to_f,
@@ -179,16 +167,9 @@ class OutflowsController < ApplicationController
       with_incentive: params[:with_incentive].to_s.to_bool
     )
 
-    if @paid
-      if request.xhr?
-        @operator = Operator.find(params[:id])
-        respond_to { |f| f.js }
-      else
-        redirect_to outflows_path, notice: t('view.outflows.shifts.paid_notice')
-      end
-    else
-      redirect_to :back, notice: t('view.outflows.shifts.can_not_be_paid')
-    end
+    @operator = Operator.find(@operator_id) if @paid
+
+    respond_to { |f| f.js }
   end
 
   private

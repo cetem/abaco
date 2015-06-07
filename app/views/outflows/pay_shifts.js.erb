@@ -1,6 +1,10 @@
-<% tr = "tr[data-operator-id=#{@operator.id}]" %>
-<% p @operator.id %>
-$('<%= tr %>').html(
-    '<td colspan=7><%= I18n.t('view.outflows.shifts.paid_notice_for', name: @operator.label) %></td>'
-);
-$('<%= tr %>').addClass('success');
+<% tr = "tr[data-operator-id=#{@operator_id}]" %>
+<% if @paid %>
+  $('<%= tr %>').html(
+      '<td colspan=7><%= I18n.t('view.outflows.shifts.paid_notice_for', name: @operator.label) %></td>'
+  );
+  $('<%= tr %>').removeClass('error').addClass('success');
+<% else %>
+  $('<%= tr %>').addClass('error');
+<% end %>
+

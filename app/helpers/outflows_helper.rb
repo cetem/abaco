@@ -58,7 +58,7 @@ module OutflowsHelper
     link_args = [
       t('view.outflows.shifts.pay'),
       pay_shifts_outflows_path(
-        id: id, from: start.to_date, to: finish.to_date,
+        operator_id: id, from: start.to_date, to: finish.to_date,
         total_to_pay: amount, upfronts: 0
       )
     ]

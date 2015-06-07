@@ -1,5 +1,5 @@
 class DatetimePickerInput < SimpleForm::Inputs::Base
-  def input
+  def input(wrapper_options)
     if object.respond_to?(attribute_name) && object.send(attribute_name)
       value = I18n.l(
         Time.parse(object.send(attribute_name).to_s), format: :minimal
@@ -8,10 +8,13 @@ class DatetimePickerInput < SimpleForm::Inputs::Base
 
     @builder.text_field(
       attribute_name,
-      input_html_options.reverse_merge(
-        value: value,
-        autocomplete: 'off',
-        data: { 'datetime-picker' => true }
+      merge_wrapper_options(
+        input_html_options.reverse_merge(
+          value: value,
+          autocomplete: 'off',
+          data: { 'datetime-picker' => true }
+        ),
+        wrapper_options
       )
     ).html_safe
   end
