@@ -69,6 +69,7 @@
     operators: 'Operadores'
     users: 'Usuarios'
     outflows: 'Egresos'
+    reports: 'Reportes'
     settings: 'Configuración'
 
   messages:

@@ -4,9 +4,9 @@
       <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
         <span class="iconic">&#xe055;</span>
       </a>
-      
+
       <%= link_to t('app_name'), root_path, class: 'brand' %>
-      
+
       <% if user_signed_in? %>
         <div class="nav-collapse">
           <ul class="nav">
@@ -26,6 +26,10 @@
               :li, link_to(t('menu.operators'), operators_path),
               class: ('active' if controller_name == 'operators')
             ) if can? :read, User %>
+            <%= content_tag(
+              :li, link_to(t('menu.reports'), reports_monthly_info_path),
+              class: ('active' if controller_name == 'reports')
+            ) %>
           </ul>
           <%= render partial: 'shared/nav_search' if @searchable %>
           <ul class="nav pull-right">
