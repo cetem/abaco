@@ -61,10 +61,16 @@ class Outflow < ActiveRecord::Base
 
     individuals.map do |k, v|
       _scope = where(kind: v).at_month(date).map(&:to_info)
-      title = I18n.t('view.outflows.kind.' + k)
 
-      [_scope, [translated_date, title]]
-    end
+      if _scope.count > 0
+        amount = _scope.sum { |r| r[2] }
+
+        _scope << [nil, nil, amount]
+        title = I18n.t('view.outflows.kind.' + k)
+
+        [_scope, [translated_date, title]]
+      end
+    end.compact
   end
 
   def self.operator_headers_for(date, translated_date)
@@ -74,17 +80,22 @@ class Outflow < ActiveRecord::Base
     _scope = where(kind: kinds).at_month(date)
 
     operator_ids = _scope.map(&:operator_id).uniq.compact
+    total = 0.0
 
     data = operator_ids.map do |id|
       operator_scope = _scope.where(operator_id: id)
+      operator_amount = operator_scope.sum(:amount).round(2)
+      total += operator_amount
 
       [
         nil,
         nil,
-        operator_scope.sum(:amount).round(2),
+        operator_amount,
         operator_scope.first.operator_name
       ]
     end
+
+    data << [nil, nil, total]
 
     [data, [translated_date, title]]
   end
