@@ -17,6 +17,8 @@ Rails.application.routes.draw do
     end
   end
 
+  match 'reports/monthly_info' => 'reports#monthly_info', via: [:get, :post]
+
   devise_for :users
 
   resources :users do

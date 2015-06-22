@@ -105,6 +105,9 @@
       roles:
         admin: 'Administrador'
         regular: 'Normal'
+    reports:
+      generate: 'Generar Reporte'
+      date: 'Día del mes a reportar'
     outflows:
       index_title: 'Listado de egresos'
       show_title: 'Detalle de egreso'
@@ -121,6 +124,13 @@
       reajust_of: "Reajuste de <a href='%{path}'>%{id}</a>"
       movement_kind: 'Tipo de movimiento'
       with_filter: "Filtrado por: %{filter}"
+      reports:
+        date: 'Fecha'
+        bill: 'Nº de factura'
+        amount: 'Monto'
+        provider: 'Proveedor'
+        details: 'Detalles'
+      operators: 'Operadores'
       kind:
         upfront: 'Adelanto'
         to_favor: 'A Favor'

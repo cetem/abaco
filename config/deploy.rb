@@ -19,7 +19,7 @@ namespace :deploy do
   after :finished, :restart
 
   desc 'Restart application'
-  task :restart
+  task :restart do
     on roles(:app) do
       execute '/etc/init.d/unicorn', 'upgrade'
     end

@@ -1,0 +1,9 @@
+<%= simple_form_for :reports do |f| %>
+  <div class="form-inputs">
+    <%= f.input :date, as: :date_picker, label: t('view.reports.date') %>
+  </div>
+
+  <nav class="form-actions">
+    <%= f.submit t('view.reports.generate'), class: 'btn btn-primary' %>
+  </nav>
+<% end %>

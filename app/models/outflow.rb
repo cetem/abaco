@@ -22,9 +22,10 @@ class Outflow < ActiveRecord::Base
   scope :upfronts, -> { where(kind: KIND[:upfront]) }
   scope :to_favor, -> { where(kind: KIND[:to_favor]) }
   scope :credits, -> { where(kind: [KIND[:upfront], KIND[:to_favor]]) }
-  scope :of_operators, -> { not(where(operator_id: nil)) }
+  scope :of_operators, -> { where.not(operator_id: nil) }
   scope :for_operator, -> (operator) { where(operator_id: operator) }
   scope :filtered_by, -> (q) { q.present? ? where(kind: KIND[q]) : all }
+  scope :at_month, -> (date) { where(bought_at: date.beginning_of_month..date.end_of_month) }
 
   # Attributos no persistentes
   attr_accessor :auto_operator_name
@@ -45,6 +46,75 @@ class Outflow < ActiveRecord::Base
 
   KIND.each do |kind, value|
     define_method("kind_is_#{kind}?") { self.kind == KIND[kind] }
+  end
+
+  def self.headers_for(date)
+    translated_date = I18n.l(date, format: :to_month).camelize
+
+    header = non_operator_headers_for(date, translated_date)
+    header << operator_headers_for(date, translated_date)
+    header
+  end
+
+  def self.non_operator_headers_for(date, translated_date)
+    individuals = KIND.except(*%w(upfront to_favor refunded payoff))
+
+    individuals.map do |k, v|
+      _scope = where(kind: v).at_month(date).map(&:to_info)
+      title = I18n.t('view.outflows.kind.' + k)
+
+      [_scope, [translated_date, title]]
+    end
+  end
+
+  def self.operator_headers_for(date, translated_date)
+    title =  I18n.t('view.outflows.operators')
+    kinds = %w(upfront to_favor refunded payoff).map {|k| KIND[k]}
+
+    _scope = where(kind: kinds).at_month(date)
+
+    operator_ids = _scope.map(&:operator_id).uniq.compact
+
+    data = operator_ids.map do |id|
+      operator_scope = _scope.where(operator_id: id)
+
+      [
+        nil,
+        nil,
+        operator_scope.sum(:amount).round(2),
+        operator_scope.first.operator_name
+      ]
+    end
+
+    [data, [translated_date, title]]
+  end
+
+  def self.to_monthly_info(date)
+    require 'csv'
+
+    table_header = %w(date bill amount provider details).map do |k|
+      I18n.t('view.outflows.reports.' + k)
+    end
+
+    CSV.generate do |csv|
+      headers_for(date).each do |_scope, head|
+        csv << []
+        csv << head
+        csv << table_header
+        _scope.each { |info| csv << info }
+        csv << []
+      end
+    end
+  end
+
+  def to_info
+    [
+      I18n.l(self.bought_at || self.created_at.to_date),
+      bill,
+      amount.round(2),
+      provider,
+      comment
+    ]
   end
 
   def billeable?

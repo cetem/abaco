@@ -11,6 +11,7 @@ gem 'validates_timeliness'
 gem 'activeresource', require: 'active_resource'
 gem 'carrierwave'
 gem "bugsnag"
+gem 'awesome_print'
 
 # Deploy gems
 gem 'capistrano'
