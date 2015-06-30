@@ -4,12 +4,16 @@
 
     <div class="row-fluid">
       <div class="span4">
-        <%= f.input :start, label: t('view.operators.start'), 
+        <%= f.input :start, label: t('view.operators.start'),
           as: :datetime_picker  %>
       </div>
       <div class="span4">
-        <%= f.input :finish, label: t('view.operators.finish'), 
+        <%= f.input :finish, label: t('view.operators.finish'),
           as: :datetime_picker  %>
+      </div>
+      <div class="span4">
+        <%= f.input :as_admin, label: 'Admin',
+          collection: [['Si', true], ['No', false]]  %>
       </div>
     </div>
   </div>

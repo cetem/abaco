@@ -27,7 +27,7 @@ class OperatorsController < ApplicationController
 
   def new_shift
     @operator = Operator.find(params[:id])
-    @operator_shift = OperatorShifts.new
+    @operator_shift = OperatorShifts.new(as_admin: @operator.admin)
   end
 
   def create_shift
@@ -47,6 +47,6 @@ class OperatorsController < ApplicationController
   private
 
   def operator_shift_params
-    params.require(:operator_shifts).permit(:start, :finish)
+    params.require(:operator_shifts).permit(:start, :finish, :as_admin)
   end
 end
