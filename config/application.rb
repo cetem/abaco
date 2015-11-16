@@ -23,6 +23,8 @@ module Abaco
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :es
 
+    config.active_record.raise_in_transactional_callbacks = true
+
     # Fabrication configuration
     config.generators do |g|
       g.test_framework :test_unit, fixture_replacement: :fabrication

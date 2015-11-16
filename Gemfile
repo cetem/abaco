@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.1.1'
+gem 'rails', '4.2.4'
 
 gem 'pg'
 gem 'will_paginate'
@@ -12,12 +12,8 @@ gem 'activeresource', require: 'active_resource'
 gem 'carrierwave'
 gem "bugsnag"
 gem 'awesome_print'
-
-# Deploy gems
-gem 'capistrano'
-gem 'capistrano-rails'
-gem 'capistrano-bundler'
 gem 'unicorn'
+gem "dotiw"
 
 # Auth
 gem 'devise'
@@ -35,6 +31,12 @@ gem 'pry-nav'
 
 group :development do
   gem 'thin'
+
+  # Deploy gems
+  gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano-bundler'
+  gem 'capistrano-chruby'
 end
 
 group :test do
