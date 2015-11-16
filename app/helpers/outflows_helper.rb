@@ -30,28 +30,10 @@ module OutflowsHelper
     ].join(' - ')
   end
 
-  def seconds_to_rounded_time(seconds, rounded_in_seconds)
-    hours_part = 60 / (rounded_in_seconds.to_f / 60)
-    worked_hours = seconds.to_f / 3600
-    hours = worked_hours.truncate
-    minutes = ((worked_hours - hours) * hours_part).round * rounded_in_seconds
-
-    if minutes == 60
-      hours += 1
-      minutes = 0
-    end
-
-    hours += minutes.to_f / 3600
-
-    hours.round(2).hours
-  end
-
   def hours_in_words(hours)
-    seconds = hours * 3600
-    hours = seconds_to_rounded_time(seconds, 1.minute) / 3600
-    minutes = (hours - hours.to_i) * 60
+    seconds = hours * 3600.0
 
-    t('related_hours', hours: hours.to_i, minutes: minutes.to_i)
+    distance_of_time_in_words(Time.zone.now, seconds.from_now)
   end
 
   def show_pay_shifts_button(id, start, finish, amount)
