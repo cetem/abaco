@@ -33,7 +33,7 @@ module OutflowsHelper
   def hours_in_words(hours)
     seconds = hours * 3600.0
 
-    distance_of_time_in_words(Time.zone.now, seconds.from_now)
+    distance_of_time_in_words(Time.zone.now, seconds.seconds.from_now)
   end
 
   def show_pay_shifts_button(id, start, finish, amount)
