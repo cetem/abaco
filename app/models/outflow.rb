@@ -17,6 +17,7 @@ class Outflow < ActiveRecord::Base
     paper:        'p',
     toner:        't'
   }.with_indifferent_access.freeze
+  NO_OPERATOR_KINDS = KIND.except(*%w(upfront to_favor refunded payoff))
 
   # Scopes
   scope :upfronts, -> { where(kind: KIND[:upfront]) }
@@ -48,6 +49,7 @@ class Outflow < ActiveRecord::Base
     define_method("kind_is_#{kind}?") { self.kind == KIND[kind] }
   end
 
+
   def self.headers_for(date)
     translated_date = I18n.l(date, format: :to_month).camelize
 
@@ -57,9 +59,7 @@ class Outflow < ActiveRecord::Base
   end
 
   def self.non_operator_headers_for(date, translated_date)
-    individuals = KIND.except(*%w(upfront to_favor refunded payoff))
-
-    individuals.map do |k, v|
+    NO_OPERATOR_KINDS.map do |k, v|
       _scope = where(kind: v).at_month(date).map(&:to_info)
 
       if _scope.count > 0
@@ -75,7 +75,7 @@ class Outflow < ActiveRecord::Base
 
   def self.operator_headers_for(date, translated_date)
     title =  I18n.t('view.outflows.operators')
-    kinds = %w(upfront to_favor refunded payoff).map {|k| KIND[k]}
+    kinds =  %w(upfront to_favor refunded payoff).map { |k| KIND[k] }
 
     _scope = where(kind: kinds).at_month(date)
 
@@ -134,7 +134,7 @@ class Outflow < ActiveRecord::Base
   end
 
   def operator_needed?
-    self.kind_is_to_favor? || self.kind_is_upfront? || self.kind_is_payoff?
+    self.kind.present? && !NO_OPERATOR_KINDS.values.include?(self.kind)
   end
 
   def kind_symbol

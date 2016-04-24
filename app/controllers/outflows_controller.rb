@@ -151,7 +151,7 @@ class OutflowsController < ApplicationController
       params.require(:outflow).permit(
         :amount, :comment, :kind, :lock_version, :operator_id, :with_incentive,
         :auto_operator_name, :user_id, :bill, :provider, :bought_at,
-        :file, :file_cache
+        :file, :file_cache, :charged_by
       )
     end
 end

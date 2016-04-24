@@ -57,7 +57,7 @@ class OutflowTest < ActiveSupport::TestCase
     @outflow.user_id = ''
 
     assert @outflow.invalid?
-    assert_equal 3, @outflow.errors.size
+    assert_equal 3, @outflow.errors.size, @outflow.errors.full_messages
     assert_equal [
       error_message_from_model(@outflow, :amount, :blank),
     ].sort, @outflow.errors[:amount].sort

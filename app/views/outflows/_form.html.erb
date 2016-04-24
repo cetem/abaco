@@ -37,8 +37,15 @@
         <%= f.input :bought_at, as: :date_picker %>
       </div>
     </div>
-    <%= f.input :file %>
-    <%= f.input :file_cache, as: :hidden %>
+    <div class="row-fluid">
+      <div class="span4">
+        <%= f.input :file %>
+        <%= f.input :file_cache, as: :hidden %>
+      </div>
+      <div class="span4">
+        <%= f.input :charged_by %>
+      </div>
+    </div>
     <%= f.input :comment, input_html: { rows: 5, class: 'span10'} %>
   </div>
 

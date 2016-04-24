@@ -1,204 +1,195 @@
-'es':
-  app_name: 'Ábaco'
-
-  attributes:
-    created_at: 'Creación'
-    updated_at: 'Actualización'
-
+---
+es:
   activerecord:
-    models:
-      operator_shifts: 'Turno'
-      user:
-        one: 'Usuario'
-        other: 'Usuarios'
-      outflow:
-        one: 'Salida'
-        other: 'Salidas'
-      setting:
-        one: 'Configuración'
-        other: 'Configuraciones'
-
     attributes:
       operator_shifts:
-        start: 'Comienzo'
-        finish: 'Final'
+        finish: "Final"
+        start: "Comienzo"
       outflow:
-        kind: 'Tipo de salida'
-        comment: 'Comentario'
-        amount: 'Cantidad'
-        operator_id: 'Operador'
-        user_id: 'Usuario'
-        bill: 'Factura'
-        bought_at: 'Fecha'
-        provider: 'Proveedor'
-        file: 'Archivo'
+        amount: "Cantidad"
+        bill: "Factura"
+        bought_at: "Fecha"
+        charged_by: "Cargado por"
+        comment: "Comentario"
+        file: "Archivo"
+        kind: "Tipo de salida"
+        operator_id: "Operador"
+        provider: "Proveedor"
+        user_id: "Usuario"
       setting:
-        title: 'Título'
-        value: 'Valor'
+        title: "Título"
+        value: "Valor"
       user:
-        name: 'Nombre'
-        lastname: 'Apellido'
-        email: 'Correo'
-        password: 'Contraseña'
-        password_confirmation: 'Confirmación'
+        email: "Correo"
+        lastname: "Apellido"
+        name: "Nombre"
+        password: "Contraseña"
+        password_confirmation: "Confirmación"
+        remember_me: "Recordarme"
         roles:
-          one: 'Perfil'
-          other: 'Perfiles'
-        remember_me: 'Recordarme'
-
+          one: "Perfil"
+          other: "Perfiles"
+    models:
+      operator_shifts: "Turno"
+      outflow:
+        one: "Salida"
+        other: "Salidas"
+      setting:
+        one: "Configuración"
+        other: "Configuraciones"
+      user:
+        one: "Usuario"
+        other: "Usuarios"
+  app_name: "Ábaco"
+  attributes:
+    created_at: "Creación"
+    updated_at: "Actualización"
   errors:
-    title: 'Error'
-    access_denied: 'No tiene permisos para acceder al contenido'
-
+    access_denied: "No tiene permisos para acceder al contenido"
+    title: "Error"
   label:
-    'yes': 'Si'
-    'no': 'No'
-    close: 'Cerrar'
-    delete: 'Eliminar'
-    edit: 'Editar'
-    list: 'Listado'
-    loading: 'Cargando...'
-    new: 'Nuevo'
-    search: 'Buscar'
-    show: 'Ver'
-    all: 'Todos'
-
+    all: "Todos"
+    close: "Cerrar"
+    delete: "Eliminar"
+    edit: "Editar"
+    list: "Listado"
+    loading: "Cargando..."
+    new: "Nuevo"
+    "no": "No"
+    search: "Buscar"
+    show: "Ver"
+    "yes": "Si"
   menu:
     actions:
-      logout: 'Salir de la aplicación'
-    operators: 'Operadores'
-    users: 'Usuarios'
-    outflows: 'Egresos'
-    reports: 'Reportes'
-    settings: 'Configuración'
-
+      logout: "Salir de la aplicación"
+    operators: "Operadores"
+    outflows: "Egresos"
+    reports: "Reportes"
+    settings: "Configuración"
+    users: "Usuarios"
   messages:
-    confirmation: '¿Está seguro?'
-
-  related_hours: '%{hours} Horas y %{minutes} minutos'
-
+    confirmation: "¿Está seguro?"
+  related_hours: "%{hours} Horas y %{minutes} minutos"
   shared:
-    day: 'Día'
-    quantity: 'Cantidad'
-
+    day: "Día"
+    quantity: "Cantidad"
   view:
     generic:
       empty_index:
-        html: 'No hay ningún elemento por el momento'
+        html: "No hay ningún elemento por el momento"
       empty_search:
         title:
-          html: 'La búsqueda de <span class="label label-inverse">%{search}</span> no obtuvo ningún resultado.'
-    users:
-      index_title: 'Listado de usuarios'
-      show_title: 'Detalle de usuario'
-      new_title: 'Nuevo usuario'
-      edit_title: 'Modificar usuario'
-      correctly_created: 'Usuario agregado correctamente.'
-      correctly_updated: 'Usuario actualizado correctamente.'
-      stale_object_error: 'El usuario no pudo ser actualizado, intente nuevamente.'
-      empty_index:
-        html: 'No se ha creado ningún usuario hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo usuario</span>'
-      new: 'Nuevo usuario'
-      update_profile: 'Actualizar datos'
-      update_password: 'Actualizar contraseña'
-      profile_correctly_updated: 'Actualizaste tus datos correctamente.'
-      edit_profile: 'Editar perfil'
-      roles:
-        admin: 'Administrador'
-        regular: 'Normal'
-    reports:
-      generate: 'Generar Reporte'
-      date: 'Día del mes a reportar'
+          html: "La búsqueda de <span class=\"label label-inverse\">%{search}</span> no obtuvo ningún resultado."
+    operators:
+      administrator: "Encargado"
+      charge: "Cargo"
+      create_shift: "Crear Turno"
+      finish: "Final"
+      full_name: "Nombre y apellido"
+      index_title: "Listado de Operarios"
+      movement_kind: "Tipo Movimiento"
+      movements: "Movimientos"
+      operator: "Operador"
+      paid: "Pagado?"
+      shift_can_not_be_created: "No se pudo crear el turno, revise los campos"
+      shift_created: "Turno creado correctamente."
+      shift_duration: "Duración del turno"
+      shifts: "Turnos"
+      show_title: "Detalle de operario"
+      start: "Comienzo"
+      without_movements: "No se ha registrado ningún movimiento hasta el momento"
+      without_upfronts: "Sin adelantos."
     outflows:
-      index_title: 'Listado de egresos'
-      show_title: 'Detalle de egreso'
-      new_title: 'Nuevo egreso'
-      edit_title: 'Modificar egreso'
-      correctly_created: 'Egreso agregado correctamente.'
-      correctly_updated: 'Egreso actualizado correctamente.'
-      stale_object_error: 'El egreso no pudo ser actualizado, intente nuevamente.'
+      correctly_created: "Egreso agregado correctamente."
+      correctly_updated: "Egreso actualizado correctamente."
+      current_credit: "Saldo"
+      edit_title: "Modificar egreso"
       index:
         html: 'No se ha creado ningún egreso hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo egreso</span>'
-      update_outflow: 'Actualizar egreso'
-      upfronts: 'Adelantos'
-      current_credit: 'Saldo'
-      reajust_of: "Reajuste de <a href='%{path}'>%{id}</a>"
-      movement_kind: 'Tipo de movimiento'
-      with_filter: "Filtrado por: %{filter}"
-      reports:
-        date: 'Fecha'
-        bill: 'Nº de factura'
-        amount: 'Monto'
-        provider: 'Proveedor'
-        details: 'Detalles'
-      operators: 'Operadores'
+      index_title: "Listado de egresos"
       kind:
-        upfront: 'Adelanto'
-        to_favor: 'A Favor'
-        refunded: 'Arreglado'
-        maintenance: 'Mantenimiento'
-        payoff: 'Pago'
-        other: 'Otro'
-        cetem_gral: 'General CETEM'
-        cca_gral: 'General CCA'
-        library: 'Librería'
-        tops_rings: 'Tapas y anillos'
-        paper: 'Papel'
-        toner: 'Tóner'
+        cca_gral: "General CCA"
+        cetem_gral: "General CETEM"
+        library: "Librería"
+        maintenance: "Mantenimiento"
+        other: "Otro"
+        paper: "Papel"
+        payoff: "Pago"
+        refunded: "Arreglado"
+        to_favor: "A Favor"
+        toner: "Tóner"
+        tops_rings: "Tapas y anillos"
+        upfront: "Adelanto"
+      movement_kind: "Tipo de movimiento"
+      new_title: "Nuevo egreso"
+      operators: "Operadores"
+      reajust_of: "Reajuste de <a href=\"%{path}\">%{id}</a>"
+      reports:
+        amount: "Monto"
+        bill: "Nº de factura"
+        date: "Fecha"
+        details: "Detalles"
+        provider: "Proveedor"
       shifts:
-        title: 'Turnos pendientes de pago'
-        pay_shifts: 'Pagar sueldos'
-        count: 'Cantidad'
-        hours: 'Horas trabajadas'
-        earnings: 'Ganancias'
-        total_to_pay: 'Total a pagar'
-        pay: 'Pagar'
-        search: 'Buscar turnos'
-        begin: 'Inicio'
-        finish: 'Fin'
-        confirm: 'El operario quedará debiendo, recuerde agregarlo NUEVAMENTE como adelanto.'
-        shifts_for: 'Turnos de %{operator}'
-        paid_notice: 'Los turnos han sido pagados, y los adelantos cancelados.'
+        begin: "Inicio"
+        can_not_be_paid: "No pudo completarse el pago"
+        confirm: "El operario quedará debiendo, recuerde agregarlo NUEVAMENTE como adelanto."
+        count: "Cantidad"
+        earnings: "Ganancias"
+        finish: "Fin"
+        hours: "Horas trabajadas"
+        paid_notice: "Los turnos han sido pagados, y los adelantos cancelados."
         paid_notice_for: "Los turnos de %{name} han sido pagados, y los adelantos cancelados."
-        can_not_be_paid: 'No pudo completarse el pago'
-        shifts: 'Turnos'
-        wait_paying: 'Pagando...'
+        pay: "Pagar"
+        pay_shifts: "Pagar sueldos"
+        search: "Buscar turnos"
+        shifts: "Turnos"
+        shifts_for: "Turnos de %{operator}"
+        title: "Turnos pendientes de pago"
+        total_to_pay: "Total a pagar"
+        wait_paying: "Pagando..."
+      show_title: "Detalle de egreso"
+      stale_object_error: "El egreso no pudo ser actualizado, intente nuevamente."
+      update_outflow: "Actualizar egreso"
+      upfronts: "Adelantos"
+      with_filter: "Filtrado por: %{filter}"
       with_incentive:
-        to_s: 'Con incentivo?'
-        'true': 'Con incentivo'
-        'false': 'Sin incentivo'
-    operators:
-      index_title: 'Listado de Operarios'
-      show_title: 'Detalle de operario'
-      full_name: 'Nombre y apellido'
-      charge: 'Cargo'
-      operator: 'Operador'
-      administrator: 'Encargado'
-      without_upfronts: 'Sin adelantos.'
-      start: 'Comienzo'
-      finish: 'Final'
-      paid: 'Pagado?'
-      without_movements: 'No se ha registrado ningún movimiento hasta el momento'
-      movement_kind: 'Tipo Movimiento'
-      shifts: 'Turnos'
-      create_shift: 'Crear Turno'
-      movements: 'Movimientos'
-      shift_created: 'Turno creado correctamente.'
-      shift_can_not_be_created: 'No se pudo crear el turno, revise los campos'
-      shift_duration: 'Duración del turno'
+        "false": "Sin incentivo"
+        to_s: "Con incentivo?"
+        "true": "Con incentivo"
+    reports:
+      date: "Día del mes a reportar"
+      generate: "Generar Reporte"
     settings:
-      index_title: 'Listado de Configuraciones'
-      show_title: 'Detalle de Configuración'
-      new_title: 'Nueva Configuración'
-      edit_title: 'Modificar Configuración'
-      correctly_created: 'Configuración agregada correctamente.'
-      correctly_updated: 'Configuración actualizada correctamente.'
-      stale_object_error: 'La configuración no pudo ser actualizada, intente nuevamente.'
+      correctly_created: "Configuración agregada correctamente."
+      correctly_updated: "Configuración actualizada correctamente."
+      edit_title: "Modificar Configuración"
       empty_index:
         html: 'No se ha creado ninguna configuración hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nueva configuración</span>'
-      new: 'Nueva configuración'
-      update_setting: 'Actualizar configuración'
-      setting_correctly_updated: 'Actualizaste la configuración correctamente.'
-      pay_per_administrator_hour: 'Pago por hora de Encargado'
-      pay_per_operator_hour: 'Pago por hora de Operador'
-
+      index_title: "Listado de Configuraciones"
+      new: "Nueva configuración"
+      new_title: "Nueva Configuración"
+      pay_per_administrator_hour: "Pago por hora de Encargado"
+      pay_per_operator_hour: "Pago por hora de Operador"
+      setting_correctly_updated: "Actualizaste la configuración correctamente."
+      show_title: "Detalle de Configuración"
+      stale_object_error: "La configuración no pudo ser actualizada, intente nuevamente."
+      update_setting: "Actualizar configuración"
+    users:
+      correctly_created: "Usuario agregado correctamente."
+      correctly_updated: "Usuario actualizado correctamente."
+      edit_profile: "Editar perfil"
+      edit_title: "Modificar usuario"
+      empty_index:
+        html: 'No se ha creado ningún usuario hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo usuario</span>'
+      index_title: "Listado de usuarios"
+      new: "Nuevo usuario"
+      new_title: "Nuevo usuario"
+      profile_correctly_updated: "Actualizaste tus datos correctamente."
+      roles:
+        admin: "Administrador"
+        regular: "Normal"
+      show_title: "Detalle de usuario"
+      stale_object_error: "El usuario no pudo ser actualizado, intente nuevamente."
+      update_password: "Actualizar contraseña"
+      update_profile: "Actualizar datos"

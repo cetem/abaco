@@ -10,6 +10,10 @@
     <strong><%= Outflow.human_attribute_name 'user_id' %></strong>:
     <%= @outflow.user %>
   </p>
+  <p>
+    <strong><%= Outflow.human_attribute_name 'charged_by' %></strong>:
+    <%= @outflow.charged_by %>
+  </p>
 
   <% if @outflow.bill %>
     <p>
