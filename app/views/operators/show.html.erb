@@ -28,7 +28,7 @@
             </thead>
             <tbody>
               <% @shifts.each do |s| %>
-                <tr>
+                <tr class="<%= 'warning' if suspicious_shift?(s) %>">
                   <td><%= l s.start, format: :minimal %></td>
                   <td><%= l s.finish, format: :minimal if s.finish %></td>
                   <td><%= show_shift_duration s %></td>

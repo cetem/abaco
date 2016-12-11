@@ -48,6 +48,7 @@ es:
     access_denied: "No tiene permisos para acceder al contenido"
     title: "Error"
   label:
+    actions: 'Acciones'
     all: "Todos"
     close: "Cerrar"
     delete: "Eliminar"
@@ -153,9 +154,10 @@ es:
       update_outflow: "Actualizar egreso"
       upfronts: "Adelantos"
       with_filter: "Filtrado por: %{filter}"
+      suspicious_shifts: "Turnos sospechosos con muchas horas"
       with_incentive:
         "false": "Sin incentivo"
-        to_s: "Con incentivo?"
+        to_question: "Con incentivo?"
         "true": "Con incentivo"
     reports:
       date: "Día del mes a reportar"

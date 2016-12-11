@@ -45,15 +45,14 @@
           <th><%= t('view.outflows.shifts.earnings') %></th>
           <th><%= t('view.outflows.current_credit') %></th>
           <th><%= t('view.outflows.shifts.total_to_pay') %></th>
-          <th><%= t('view.outflows.with_incentive.to_s') %></th>
-          <th></th>
+          <th><%= t('view.outflows.with_incentive.to_question') %></th>
+          <th><%= t('label.actions') %></th>
         </tr>
       </thead>
       <tbody>
         <% @operators_shifts.each do |o| %>
           <% total_to_pay = (o.shifts.amount + o.operator.credit).round(2) %>
-
-          <tr data-operator-id=<%= o.operator.id %>>
+          <tr data-operator-id=<%= o.operator.id %> class="<%= 'warning' if o.shifts.suspicious_shifts %>">
             <td><%= o.operator.label %></td>
             <td><%= o.shifts.count %></td>
             <td><%= hours_in_words(o.shifts.hours) %></td>
@@ -73,6 +72,11 @@
             </td>
             <td>
               <%= show_pay_shifts_button(o.operator.id, interval[:from], interval[:to], total_to_pay) %>
+              <% if o.shifts.suspicious_shifts %>
+                <%= iconic_link '&#xe025;'.html_safe, operator_path(o.operator.id),
+                  'title' => t('view.outflows.suspicious_shifts'),
+                  target: '_blank' %>
+              <% end %>
             </td>
           </tr>
         <% end %>

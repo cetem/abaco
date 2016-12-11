@@ -157,7 +157,15 @@ class Outflow < ActiveRecord::Base
       admin_hours * Setting.price_for_admin
     ).round(2)
 
-    OpenStruct.new(hours: hours, amount: amount, count: _count)
+    suspicious_shifts = operator['suspicious_shifts'] if operator
+    if !suspicious_shifts && admin
+      suspicious_shifts = admin['suspicious_shifts']
+    end
+
+    OpenStruct.new(
+      hours: hours, amount: amount, count: _count,
+      suspicious_shifts: suspicious_shifts
+    )
   end
 
   def self.operators_pay_pending_shifts_between(start, finish)
@@ -180,9 +188,6 @@ class Outflow < ActiveRecord::Base
       )
     end
   end
-
-  #def self.operator_pay_pending_shifts_between(options = {})
-
 
   def refund!
     self.update_attributes(kind: KIND[:refunded])
