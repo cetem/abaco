@@ -29,16 +29,25 @@ class ApplicationController < ActionController::Base
 
   def parameterize_to_date_format(parameters = nil)
     if parameters
+      datetime = parameterize_to_datetime_format(parameters)
+
+      { from: datetime[:from].to_date, to: datetime[:to].to_date }
+    end
+  end
+
+  def parameterize_to_datetime_format(parameters = nil)
+    if parameters
       from = Timeliness::Parser.parse(
-        parameters[:from], :date, zone: :local
-      ).to_date
+        parameters[:from], :datetime, zone: :local
+      )
       to = Timeliness::Parser.parse(
-        parameters[:to], :date, zone: :local
-      ).to_date
+        parameters[:to], :datetime, zone: :local
+      )
 
       { from: from, to: to }
     end
   end
+
 
   def after_sign_in_path_for(resource)
     users_path

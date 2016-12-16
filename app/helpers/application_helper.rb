@@ -132,4 +132,10 @@ module ApplicationHelper
   def link_to_file(file)
     link_to file.file.filename, downloads_path(path: file.url)
   end
+
+  def get_operator_label_from_id(id)
+    Operator.find(id).try(:label)
+  rescue
+    'Unknown'
+  end
 end

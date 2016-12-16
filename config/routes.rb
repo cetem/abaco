@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   end
 
   match 'reports/monthly_info' => 'reports#monthly_info', via: [:get, :post]
+  get 'reports/incentives_between' => 'reports#incentives_between'
 
   devise_for :users
 

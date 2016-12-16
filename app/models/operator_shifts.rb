@@ -13,4 +13,13 @@ class OperatorShifts < ActiveResource::Base
       )
     end
   end
+
+  def self.get_best_fortnights_for_users
+    shifts =  find(:all, params: {
+      pay_pending_shifts_for_user_between: {
+        start: 1.month.ago.to_date, finish: Date.today
+      }
+    })
+
+  end
 end

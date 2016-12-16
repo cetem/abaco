@@ -26,9 +26,19 @@
               :li, link_to(t('menu.operators'), operators_path),
               class: ('active' if controller_name == 'operators')
             ) if can? :read, User %>
+
+            <% reports_submenu = content_tag(:li, link_to(t('menu.monthly_info'), reports_monthly_info_path)) %>
+            <% reports_submenu += content_tag(:li, link_to(t('menu.incentives'), reports_incentives_between_path)) %>
+            <% dropdown = link_to(
+              t('menu.reports'),
+              '#', class: 'dropdown-toggle',
+              data: { toggle: 'dropdown' }
+            ) %>
+            <% dropdown += content_tag(:ul, reports_submenu, class: 'dropdown-menu') %>
+
             <%= content_tag(
-              :li, link_to(t('menu.reports'), reports_monthly_info_path),
-              class: ('active' if controller_name == 'reports')
+              :li, dropdown,
+              class: 'dropdown' + (controller_name == 'reports' ? ' active' : '')
             ) %>
           </ul>
           <%= render partial: 'shared/nav_search' if @searchable %>

@@ -1,0 +1,55 @@
+<% interval = params[:reports] %>
+<% unless interval %>
+  <% today = Date.today %>
+  <% interval = {
+    from: I18n.l(today.beginning_of_month.to_date),
+    to: I18n.l(today.end_of_month.to_date)
+  } %>
+<% end %>
+
+<%= simple_form_for :reports, method: :get do |f| %>
+  <div class="form-inputs">
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= t('view.reports.from') %></th>
+          <th><%= t('view.reports.to') %></th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td><%= f.input :from, as: :date_picker, label: false, input_html: {
+            value: interval[:from]
+          } %></td>
+          <td><%= f.input :to, as: :date_picker, label: false, input_html: {
+            value: interval[:to]
+          } %></td>
+          <td><%= f.button :submit, t('view.reports.calc_incentives') %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+
+<% if @incentives.try(:any?) %>
+  <table class="table">
+    <thead>
+      <th><%= t('view.reports.incentives.user') %></th>
+      <th><%= t('view.reports.incentives.worked_from') %></th>
+      <th><%= t('view.reports.incentives.hours') %></th>
+      <th><%= t('view.reports.incentives.to_pay') %></th>
+    </thead>
+    <tbody>
+      <% @incentives.each do |incentive| %>
+        <tr>
+          <td><%= incentive.user %></td>
+          <td><%= l incentive.worked_from %></td>
+          <td><%= raw detailed_inventive_hours incentive %></td>
+          <td><%= number_to_currency incentive.to_pay %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

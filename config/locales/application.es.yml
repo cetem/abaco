@@ -63,6 +63,8 @@ es:
   menu:
     actions:
       logout: "Salir de la aplicación"
+    incentives: 'Incentivos'
+    monthly_info: 'Mensual'
     operators: "Operadores"
     outflows: "Egresos"
     reports: "Reportes"
@@ -162,6 +164,16 @@ es:
     reports:
       date: "Día del mes a reportar"
       generate: "Generar Reporte"
+      monthly_info: 'Mensual'
+      from: 'Desde'
+      to: 'Al'
+      calc_incentives: 'Calcular!'
+      incentives:
+        worked_from: "Quincena del"
+        hours: "Horas (O+E=T)"
+        hours_detail: "Operario+Encargado=Total"
+        to_pay: 'A pagar'
+        user: "Operario"
     settings:
       correctly_created: "Configuración agregada correctamente."
       correctly_updated: "Configuración actualizada correctamente."
