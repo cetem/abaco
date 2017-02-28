@@ -74,10 +74,11 @@ class Outflow < ActiveRecord::Base
   end
 
   def self.operator_headers_for(date, translated_date)
+    date_range = date.to_datetime.beginning_of_month..date.to_datetime.end_of_month
     title =  I18n.t('view.outflows.operators')
     kinds =  %w(upfront to_favor refunded payoff).map { |k| KIND[k] }
 
-    _scope = where(kind: kinds).at_month(date)
+    _scope = where(kind: kinds, created_at: date_range)
 
     operator_ids = _scope.map(&:operator_id).uniq.compact
     total = 0.0

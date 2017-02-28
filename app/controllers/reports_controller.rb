@@ -3,7 +3,7 @@ class ReportsController < ApplicationController
 
   def monthly_info
     if params[:reports] && (date = params[:reports][:date]).present?
-      date = Time.parse(date)
+      date = Date.parse(date)
       csv = Outflow.to_monthly_info(date)
       filename = [
         'Movements-Reports-for-',
