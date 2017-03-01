@@ -85,7 +85,12 @@ class Outflow < ActiveRecord::Base
 
     data = operator_ids.map do |id|
       operator_scope = _scope.where(operator_id: id)
-      operator_amount = operator_scope.sum(:amount).round(2)
+
+      operator_amount = operator_scope.map do |o|
+        if (o.kind_is_refunded? && o.versions.last.reify.kind_is_upfront?) || o.kind_is_payoff?
+          o.amount
+        end
+      end.compact.sum.round(2)
       total += operator_amount
 
       [
