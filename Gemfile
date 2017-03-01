@@ -14,6 +14,7 @@ gem "bugsnag"
 gem 'awesome_print'
 gem 'unicorn'
 gem "dotiw"
+gem 'google_drive', '1.0.6'
 
 # Auth
 gem 'devise'

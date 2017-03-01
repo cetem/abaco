@@ -16,6 +16,8 @@ es:
         operator_id: "Operador"
         provider: "Proveedor"
         user_id: "Usuario"
+        start_shift: "Turnos Desde"
+        finish_shift: "Turnos Hasta"
       setting:
         title: "Título"
         value: "Valor"
@@ -161,6 +163,7 @@ es:
         "false": "Sin incentivo"
         to_question: "Con incentivo?"
         "true": "Con incentivo"
+      monthly_by_year: "Facturas Mensuales - %{year}"
     reports:
       date: "Día del mes a reportar"
       generate: "Generar Reporte"

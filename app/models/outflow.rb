@@ -102,21 +102,21 @@ class Outflow < ActiveRecord::Base
   end
 
   def self.to_monthly_info(date)
-    require 'csv'
+    #require 'csv'
 
     table_header = %w(date bill amount provider details).map do |k|
       I18n.t('view.outflows.reports.' + k)
     end
-
-    CSV.generate do |csv|
-      headers_for(date).each do |_scope, head|
-        csv << []
-        csv << head
-        csv << table_header
-        _scope.each { |info| csv << info }
-        csv << []
-      end
+    csv = []
+    #CSV.generate do |csv|
+    headers_for(date).each do |_scope, head|
+      csv << []
+      csv << head
+      csv << table_header
+      _scope.each { |info| csv << info }
+      csv << []
     end
+    csv
   end
 
   def to_info
@@ -213,7 +213,8 @@ class Outflow < ActiveRecord::Base
           user_id: options[:user_id],
           operator_id: operator_id,
           with_incentive: options[:with_incentive],
-          bought_at: Date.today
+          bought_at: Date.today,
+          charged_by: options[:charged_by]
         )
 
         upfront = options[:upfronts].to_f
@@ -229,7 +230,8 @@ class Outflow < ActiveRecord::Base
             ),
             user_id: options[:user_id],
             operator_id: operator_id,
-            bought_at: Date.today
+            bought_at: Date.today,
+            charged_by: options[:charged_by]
           )
         end
       rescue

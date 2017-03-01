@@ -1,4 +1,4 @@
-ph_data = APP_CONFIG['print_hub_data']
+ph_data = SECRETS['print_hub_data']
 site = "#{ph_data['user']}:#{ph_data['password']}@#{ph_data['site']}"
 date_regexp = '\d{4}\-\d{1,2}\-\d{1,2}'
 datetime_regexp = '\d{4}\-\d{1,2}\-\d{1,2} \d{1,2}:\d{2}:\d{2} -\d{4}'
@@ -16,9 +16,9 @@ id = 1
 
 3.times do
   @operator_shifts << {
-    id: id, 
-    start: days, 
-    finish: days + 5.hours, 
+    id: id,
+    start: days,
+    finish: days + 5.hours,
     created_at: days
   }
   id += 1

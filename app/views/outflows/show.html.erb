@@ -48,7 +48,9 @@
     </p>
   <% end %>
 
-  <% if (start = @outflow.start_shift) || (finish = @outflow.finish_shift) %>
+  <% start = @outflow.start_shift %>
+  <% finish = @outflow.finish_shift %>
+  <% if start || finish %>
     <p>
       <strong><%= Outflow.human_attribute_name 'start_shift' %></strong>:
       <%= I18n.l(start) if start %>

@@ -131,6 +131,7 @@ class OutflowsController < ApplicationController
     start, finish = [params[:from], params[:to]].sort
     @operator_id = params[:operator_id]
     @paid = Outflow.pay_operator_shifts_and_upfronts(
+      charged_by: current_user.to_s,
       operator_id: @operator_id,
       start: start,
       finish: finish,

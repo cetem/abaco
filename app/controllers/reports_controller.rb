@@ -2,16 +2,17 @@ class ReportsController < ApplicationController
   before_action :authenticate_user!
 
   def monthly_info
+    require 'gdrive'
+
     if params[:reports] && (date = params[:reports][:date]).present?
       date = Date.parse(date)
-      csv = Outflow.to_monthly_info(date)
-      filename = [
-        'Movements-Reports-for-',
-        I18n.l(date, format: :to_month),
-        '.csv'
-      ].join
 
-      send_data csv, filename: filename, type: 'text/csv'
+      GDrive.upload_spreadsheet(
+        I18n.t('view.outflows.monthly_by_year', year: date.year),
+        Outflow.to_monthly_info(date),
+        { month: date.month }
+      )
+      render :monthly_info, notice: ':+1:'
     end
   end
 
