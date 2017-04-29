@@ -9,6 +9,7 @@ class OperatorShifts < ActiveResource::Base
       OpenStruct.new(
         start: (s['start'].present? ? Time.parse(s['start']) : ''),
         finish: (s['finish'].present? ? Time.parse(s['finish']) : ''),
+        as_admin: s['as_admin'],
         paid: s['paid']
       )
     end

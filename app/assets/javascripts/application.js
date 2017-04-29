@@ -19,7 +19,7 @@
 //= require autocomplete
 //= require inspector
 //= require turboevents
-//= require turbolinks
+// require turbolinks
 //= require common
 //= require date_pickers
 //= require endless_pagination

@@ -104,6 +104,7 @@ es:
       start: "Comienzo"
       without_movements: "No se ha registrado ningún movimiento hasta el momento"
       without_upfronts: "Sin adelantos."
+      as_admin: "Encargado?"
     outflows:
       correctly_created: "Egreso agregado correctamente."
       correctly_updated: "Egreso actualizado correctamente."

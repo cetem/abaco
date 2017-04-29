@@ -23,6 +23,7 @@
                 <th><%= t('view.operators.start') %></th>
                 <th><%= t('view.operators.finish') %></th>
                 <th><%= t('view.operators.shift_duration') %></th>
+                <th><%= t('view.operators.as_admin') %></th>
                 <th><%= t('view.operators.paid') %></th>
               </tr>
             </thead>
@@ -32,6 +33,7 @@
                   <td><%= l s.start, format: :minimal %></td>
                   <td><%= l s.finish, format: :minimal if s.finish %></td>
                   <td><%= show_shift_duration s %></td>
+                  <td><%= s.as_admin ? t('label.yes') : t('label.no') %></td>
                   <td><%= s.paid ? t('label.yes') : t('label.no') %></td>
                 </tr>
               <% end %>
