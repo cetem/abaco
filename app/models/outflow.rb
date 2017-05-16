@@ -195,6 +195,25 @@ class Outflow < ActiveRecord::Base
     end
   end
 
+  def self.operators_shifts_between(start, finish)
+    data = Operator.get(
+      :shifts_between,
+      start: start, finish: finish
+    )
+
+    data.map do |user_data|
+      user = user_data['user']
+
+      OpenStruct.new(
+        operator: OpenStruct.new(user_data['user']),
+        shifts: OpenStruct.new(
+          operator: OpenStruct.new(user_data['shifts']['operator']),
+          admin: OpenStruct.new(user_data['shifts']['admin'])
+        )
+      )
+    end
+  end
+
   def refund!
     self.update_attributes(kind: KIND[:refunded])
   end

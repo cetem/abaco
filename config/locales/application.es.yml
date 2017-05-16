@@ -12,12 +12,12 @@ es:
         charged_by: "Cargado por"
         comment: "Comentario"
         file: "Archivo"
+        finish_shift: "Turnos Hasta"
         kind: "Tipo de salida"
         operator_id: "Operador"
         provider: "Proveedor"
-        user_id: "Usuario"
         start_shift: "Turnos Desde"
-        finish_shift: "Turnos Hasta"
+        user_id: "Usuario"
       setting:
         title: "Título"
         value: "Valor"
@@ -50,7 +50,7 @@ es:
     access_denied: "No tiene permisos para acceder al contenido"
     title: "Error"
   label:
-    actions: 'Acciones'
+    actions: "Acciones"
     all: "Todos"
     close: "Cerrar"
     delete: "Eliminar"
@@ -65,11 +65,12 @@ es:
   menu:
     actions:
       logout: "Salir de la aplicación"
-    incentives: 'Incentivos'
-    monthly_info: 'Mensual'
+    incentives: "Incentivos"
+    monthly_info: "Mensual"
     operators: "Operadores"
     outflows: "Egresos"
     reports: "Reportes"
+    retroactive: "Retroactivos"
     settings: "Configuración"
     users: "Usuarios"
   messages:
@@ -87,6 +88,7 @@ es:
           html: "La búsqueda de <span class=\"label label-inverse\">%{search}</span> no obtuvo ningún resultado."
     operators:
       administrator: "Encargado"
+      as_admin: "Encargado?"
       charge: "Cargo"
       create_shift: "Crear Turno"
       finish: "Final"
@@ -104,7 +106,6 @@ es:
       start: "Comienzo"
       without_movements: "No se ha registrado ningún movimiento hasta el momento"
       without_upfronts: "Sin adelantos."
-      as_admin: "Encargado?"
     outflows:
       correctly_created: "Egreso agregado correctamente."
       correctly_updated: "Egreso actualizado correctamente."
@@ -126,6 +127,7 @@ es:
         toner: "Tóner"
         tops_rings: "Tapas y anillos"
         upfront: "Adelanto"
+      monthly_by_year: "Facturas Mensuales - %{year}"
       movement_kind: "Tipo de movimiento"
       new_title: "Nuevo egreso"
       operators: "Operadores"
@@ -137,6 +139,7 @@ es:
         details: "Detalles"
         provider: "Proveedor"
       shifts:
+        admin_amount: "Hora de encargado"
         begin: "Inicio"
         can_not_be_paid: "No pudo completarse el pago"
         confirm: "El operario quedará debiendo, recuerde agregarlo NUEVAMENTE como adelanto."
@@ -144,10 +147,12 @@ es:
         earnings: "Ganancias"
         finish: "Fin"
         hours: "Horas trabajadas"
+        operator_amount: "Hora de operario"
         paid_notice: "Los turnos han sido pagados, y los adelantos cancelados."
         paid_notice_for: "Los turnos de %{name} han sido pagados, y los adelantos cancelados."
         pay: "Pagar"
         pay_shifts: "Pagar sueldos"
+        retroactive_title: "Calcular retroactivos"
         search: "Buscar turnos"
         shifts: "Turnos"
         shifts_for: "Turnos de %{operator}"
@@ -156,28 +161,27 @@ es:
         wait_paying: "Pagando..."
       show_title: "Detalle de egreso"
       stale_object_error: "El egreso no pudo ser actualizado, intente nuevamente."
+      suspicious_shifts: "Turnos sospechosos con muchas horas"
       update_outflow: "Actualizar egreso"
       upfronts: "Adelantos"
       with_filter: "Filtrado por: %{filter}"
-      suspicious_shifts: "Turnos sospechosos con muchas horas"
       with_incentive:
         "false": "Sin incentivo"
         to_question: "Con incentivo?"
         "true": "Con incentivo"
-      monthly_by_year: "Facturas Mensuales - %{year}"
     reports:
+      calc_incentives: "Calcular!"
       date: "Día del mes a reportar"
+      from: "Desde"
       generate: "Generar Reporte"
-      monthly_info: 'Mensual'
-      from: 'Desde'
-      to: 'Al'
-      calc_incentives: 'Calcular!'
       incentives:
-        worked_from: "Quincena del"
         hours: "Horas (O+E=T)"
         hours_detail: "Operario+Encargado=Total"
-        to_pay: 'A pagar'
+        to_pay: "A pagar"
         user: "Operario"
+        worked_from: "Quincena del"
+      monthly_info: "Mensual"
+      to: "Al"
     settings:
       correctly_created: "Configuración agregada correctamente."
       correctly_updated: "Configuración actualizada correctamente."

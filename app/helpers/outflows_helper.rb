@@ -31,6 +31,7 @@ module OutflowsHelper
   end
 
   def hours_in_words(hours)
+    return '-' if hours.zero?
     seconds = hours * 3600.0
 
     distance_of_time_in_words(Time.zone.now, seconds.seconds.from_now)
@@ -72,5 +73,14 @@ module OutflowsHelper
       l(outflow.start_shift),
       l(outflow.finish_shift)
     ].join(' => ')
+  end
+
+  def retroactive_amount(shifts, operator_diff, admin_diff)
+    shifts.operator.hours.to_f  * operator_diff.abs +
+      shifts.admin.hours.to_f  * admin_diff.abs
+  end
+
+  def count_with_hours(data)
+    "(#{data.count.to_i}) #{hours_in_words(data.hours.to_f)}"
   end
 end

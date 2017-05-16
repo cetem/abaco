@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
   match 'reports/monthly_info' => 'reports#monthly_info', via: [:get, :post]
   get 'reports/incentives_between' => 'reports#incentives_between'
+  get 'reports/retroactive_between' => 'reports#retroactive_between'
 
   devise_for :users
 

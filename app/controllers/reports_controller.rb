@@ -53,4 +53,24 @@ class ReportsController < ApplicationController
       end
     end
   end
+
+  def retroactive_between
+    @operator_amount = Setting.price_for_operator
+    @admin_amount = Setting.price_for_admin
+
+    if params[:interval]
+      interval = params[:interval]
+      start, finish = [interval[:from], interval[:to]].sort
+
+      if start.present? && finish.present?
+        @new_operator_amount = interval[:operator_amount].to_f
+        @new_admin_amount = interval[:admin_amount].to_f
+        @operators_shifts = Outflow.operators_shifts_between(start, finish)
+      end
+    end
+
+    respond_to do |format|
+      format.html # index.html.erb
+    end
+  end
 end
