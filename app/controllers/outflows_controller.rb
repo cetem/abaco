@@ -113,11 +113,13 @@ class OutflowsController < ApplicationController
     @operators_shifts = []
 
     if params[:interval]
-      interval = params[:interval]
-      start, finish = [interval[:from], interval[:to]].sort
+      interval = parameterize_to_datetime_format(params[:interval])
+      start, finish = [interval[:from], interval[:to]]
 
       if start.present? && finish.present?
-        @operators_shifts = Outflow.operators_pay_pending_shifts_between(start, finish)
+        @operators_shifts = Outflow.operators_pay_pending_shifts_between(
+          start.beginning_of_day, finish.end_of_day
+        )
       end
     end
 
@@ -128,13 +130,14 @@ class OutflowsController < ApplicationController
 
   # PUT /outflows/pay_shifts
   def pay_shifts
-    start, finish = [params[:from], params[:to]].sort
+    interval = parameterize_to_datetime_format(params) # params has direct from and to keys
+    start, finish = [interval[:from], interval[:to]].sort
     @operator_id = params[:operator_id]
     @paid = Outflow.pay_operator_shifts_and_upfronts(
       charged_by: current_user.to_s,
       operator_id: @operator_id,
-      start: start,
-      finish: finish,
+      start: start.beginning_of_day,
+      finish: finish.end_of_day,
       amount: params[:total_to_pay].to_f,
       upfronts: params[:upfronts].to_f,
       user_id: current_user.id,

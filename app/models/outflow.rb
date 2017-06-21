@@ -219,20 +219,22 @@ class Outflow < ActiveRecord::Base
   end
 
   def self.pay_operator_shifts_and_upfronts(options = {})
+
     Outflow.transaction do
       begin
         operator_id = options[:operator_id]
 
-        Operator.find(options[:operator_id]).patch(
+        shifts = Operator.find(options[:operator_id]).patch(
           :pay_shifts_between, start: options[:start], finish: options[:finish]
         )
-
-        raise unless Outflow.credits.where(operator_id: operator_id).all?(&:refund!)
+        credits = Outflow.credits.where(operator_id: operator_id)
+        credit_ids = credits.pluck(:id)
+        raise unless credits.all?(&:refund!)
 
         pay = Outflow.create!(
           kind: KIND[:payoff],
-          start_shift: Date.parse(options[:start]),
-          finish_shift: Date.parse(options[:finish]),
+          start_shift: options[:start].to_date,
+          finish_shift: options[:finish].to_date,
           amount: options[:amount].to_f.abs,
           user_id: options[:user_id],
           operator_id: operator_id,
@@ -243,8 +245,9 @@ class Outflow < ActiveRecord::Base
 
         upfront = options[:upfronts].to_f
 
+        new_upfront = nil
         if upfront != 0 && !options[:with_incentive]
-          Outflow.create!(
+          new_upfront = Outflow.create!(
             kind: (upfront < 0 ? KIND[:to_favor] : KIND[:upfront]),
             amount: upfront.abs,
             comment: I18n.t(
@@ -258,11 +261,11 @@ class Outflow < ActiveRecord::Base
             charged_by: options[:charged_by]
           )
         end
+
+        { shifts: shifts, credits: credit_ids, new_upfront: new_upfront, pay: pay }
       rescue
         raise ActiveRecord::Rollback
       end
-
-      true
     end
   end
 
