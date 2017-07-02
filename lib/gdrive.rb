@@ -7,12 +7,14 @@ module GDrive
       not_assign_permissions = !!s
       s ||= gdrive_session.create_spreadsheet(title)
 
-      if (month = kwargs[:month]).present?
-        page_title = I18n.t('date.month_names')[month]
+      month = kwargs[:month]
+      label = kwargs[:label]
+      if (month || label).present?
+        page_title = label || I18n.t('date.month_names')[month]
 
         ws = s.worksheet_by_title(page_title)
         unless ws
-          ws = s.add_worksheet(page_title, array.size, max_column_size(array))
+          ws = s.add_worksheet(page_title, array.size + 5, array[0].size)
         end
       else
         ws = s.worksheets[0]
@@ -20,16 +22,12 @@ module GDrive
       ws.update_cells(1, 1, array)
       ws.save
 
-      change_permissions(s.key) # unless not_assign_permissions
+      change_permissions(s.key) unless not_assign_permissions
 
       puts "https://docs.google.com/spreadsheets/d/#{s.key}/edit#gid=#{ws.gid}"
     end
 
     private
-
-    def max_column_size(array)
-      array.map {|row| row.size }.compact.max
-    end
 
     def gdrive
       @_gdrive ||= SECRETS[:gdrive]

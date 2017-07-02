@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  require 'sidekiq/web'
+
+  Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_token]
+  Sidekiq::Web.set :sessions, Rails.application.config.session_options
+  mount Sidekiq::Web => '/sidekiq'
+
   get 'operators/:id' => 'operators#show', as: 'operator'
   get 'operators' => 'operators#index', as: 'operators'
   get 'operators/:id/new_shift' => 'operators#new_shift',

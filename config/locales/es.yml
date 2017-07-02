@@ -62,6 +62,7 @@ es:
       short: "%d de %b %H:%M"
       long: "%d de %B de %Y %H:%M"
       minimal: '%d/%m/%Y %H:%M'
+      report: '%d/%m/%Y %H:%M:%S'
       date: "%d/%m/%Y"
       to_month: "%B"
     am: "am"

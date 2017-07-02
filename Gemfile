@@ -16,6 +16,9 @@ gem 'unicorn'
 gem "dotiw"
 gem 'google_drive', '1.0.6'
 
+gem 'sidekiq'
+gem 'sinatra', require: nil
+
 # Auth
 gem 'devise'
 gem 'cancan'
@@ -28,7 +31,7 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'turbolinks'
-gem 'pry-nav'
+gem 'byebug'
 
 group :development do
   gem 'thin'

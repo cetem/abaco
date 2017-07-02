@@ -125,13 +125,22 @@ class Outflow < ActiveRecord::Base
   end
 
   def to_info
-    [
-      I18n.l(self.bought_at || self.created_at.to_date),
-      bill,
-      amount.round(2),
-      provider,
-      comment
-    ]
+    if self.operator_id
+      [
+        id,
+        I18n.t('view.outflows.kind.' + kind_symbol),
+        amount.round(2).to_s,
+        I18n.l(self.start_shift || self.bought_at || self.created_at.to_date)
+      ]
+    else
+      [
+        I18n.l(self.bought_at || self.created_at.to_date),
+        bill,
+        amount.round(2),
+        provider,
+        comment
+      ]
+    end
   end
 
   def billeable?
@@ -219,16 +228,17 @@ class Outflow < ActiveRecord::Base
   end
 
   def self.pay_operator_shifts_and_upfronts(options = {})
-
     Outflow.transaction do
       begin
         operator_id = options[:operator_id]
 
-        shifts = Operator.find(options[:operator_id]).patch(
+        shifts_response = Operator.find(options[:operator_id]).patch(
           :pay_shifts_between, start: options[:start], finish: options[:finish]
         )
+
+        shifts = JSON.load(shifts_response.body)
         credits = Outflow.credits.where(operator_id: operator_id)
-        credit_ids = credits.pluck(:id)
+        credits_info = credits.map(&:to_info)
         raise unless credits.all?(&:refund!)
 
         pay = Outflow.create!(
@@ -262,8 +272,18 @@ class Outflow < ActiveRecord::Base
           )
         end
 
-        { shifts: shifts, credits: credit_ids, new_upfront: new_upfront, pay: pay }
-      rescue
+        DriveWorker.perform_async(
+          pay.operator_name,
+          {
+            shifts: shifts,
+            credits: credits_info,
+            new_upfront: new_upfront.try(:to_info),
+            pay: pay.to_info,
+            range: [options[:start].to_date, options[:finish].to_date].join(' => ')
+          }
+        )
+        true
+      rescue => e
         raise ActiveRecord::Rollback
       end
     end

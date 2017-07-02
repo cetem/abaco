@@ -107,10 +107,13 @@ es:
       without_movements: "No se ha registrado ningún movimiento hasta el momento"
       without_upfronts: "Sin adelantos."
     outflows:
+      pay_detail_between: "Detalle de pagos entre [%{range}]"
       correctly_created: "Egreso agregado correctamente."
       correctly_updated: "Egreso actualizado correctamente."
+      credits_canceled: "Créditos cancelados"
       current_credit: "Saldo"
       edit_title: "Modificar egreso"
+      generated_credit: "Crédito generado"
       index:
         html: 'No se ha creado ningún egreso hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo egreso</span>'
       index_title: "Listado de egresos"
