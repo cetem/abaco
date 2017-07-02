@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.2.4'
+gem 'rails-observers', '0.1.2'
 
 gem 'pg'
 gem 'will_paginate'
@@ -16,7 +17,7 @@ gem 'unicorn'
 gem "dotiw"
 gem 'google_drive', '1.0.6'
 
-gem 'sidekiq'
+gem 'sidekiq', '~> 4.2'
 gem 'sinatra', require: nil
 
 # Auth
