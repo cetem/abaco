@@ -231,6 +231,8 @@ GEM
     raindrops (0.18.0)
     rake (12.0.0)
     redis (3.3.3)
+    redis-namespace (1.5.3)
+      redis (~> 3.0, >= 3.0.4)
     request_store (1.3.2)
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
@@ -335,6 +337,7 @@ DEPENDENCIES
   pg
   rails (= 4.2.4)
   rails-observers (= 0.1.2)
+  redis-namespace
   role_model
   sass-rails
   selenium-webdriver

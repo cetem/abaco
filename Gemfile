@@ -19,6 +19,7 @@ gem 'google_drive', '1.0.6'
 
 gem 'sidekiq', '~> 4.2'
 gem 'sinatra', require: nil
+gem 'redis-namespace'
 
 # Auth
 gem 'devise'
