@@ -17,6 +17,8 @@ set :keep_releases, 5
 namespace :deploy do
   after :finished, 'deploy:cleanup'
   after :finished, :restart
+  after :finished, 'sidekiq:restart'
+  before 'sidekiq:restart', 'chruby:release'
 
   desc 'Restart application'
   task :restart do
