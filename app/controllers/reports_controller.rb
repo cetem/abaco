@@ -7,7 +7,7 @@ class ReportsController < ApplicationController
     if params[:reports] && (date = params[:reports][:date]).present?
       date = Date.parse(date)
 
-      GDrive.upload_spreadsheet(
+      GDrive.upload_spreadsheet_v3(
         I18n.t('view.outflows.monthly_by_year', year: date.year),
         Outflow.to_monthly_info(date),
         { month: date.month }
