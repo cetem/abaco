@@ -2,6 +2,8 @@ class Outflow < ActiveRecord::Base
   has_paper_trail
   mount_uploader :file, FileUploader
 
+  MonthlyReport = 'monthly_report'
+
   # Constantes
   KIND = {
     upfront:      'u',

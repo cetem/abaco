@@ -2,16 +2,10 @@ class ReportsController < ApplicationController
   before_action :authenticate_user!
 
   def monthly_info
-    require 'gdrive'
-
     if params[:reports] && (date = params[:reports][:date]).present?
       date = Date.parse(date)
+      ExportWorker.perform_async(Outflow::MonthlyReport, date: date)
 
-      GDrive.upload_spreadsheet_v3(
-        I18n.t('view.outflows.monthly_by_year', year: date.year),
-        Outflow.to_monthly_info(date),
-        { month: date.month }
-      )
       render :monthly_info, notice: ':+1:'
     end
   end
