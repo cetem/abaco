@@ -15,7 +15,7 @@ gem "bugsnag"
 gem 'awesome_print'
 gem 'unicorn'
 gem "dotiw"
-gem 'google_drive' #, '1.0.6'
+gem 'google_drive', '1.0.6'
 
 gem 'sidekiq', '~> 4.2'
 gem 'sinatra', require: nil
