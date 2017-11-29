@@ -6,14 +6,12 @@ class ReportsController < ApplicationController
       date = Date.parse(date)
       ExportWorker.perform_async(Outflow::MonthlyReport, date: date)
 
-      render :monthly_info, notice: ':+1:'
+      redirect_to reports_monthly_info_path, notice: ':+1:'
     end
   end
 
   def incentives_between
     if (report_dates = params[:reports])
-      start, finish = parameterize_to_date_format(report_dates)
-
       incentives = OperatorShifts.get(
         :best_fortnights_between,
         parameterize_to_date_format(report_dates)
