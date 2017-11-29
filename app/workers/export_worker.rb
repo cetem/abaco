@@ -8,7 +8,7 @@ class ExportWorker
     case task_name
       when Outflow::MonthlyReport
         date = Date.parse(params['date'])
-        GDrive.upload_spreadsheet(
+        GDrive.upload_spreadsheet_v3(
           I18n.t('view.outflows.monthly_by_year', year: date.year),
           Outflow.to_monthly_info(date),
           { month: date.month }
