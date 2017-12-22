@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.4'
-gem 'rails-observers', '0.1.2'
+gem 'rails', '~> 4.2'
+# gem 'rails-observers', '0.1.2'
 
 gem 'pg'
 gem 'will_paginate'
