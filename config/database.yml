@@ -1,23 +1,22 @@
-development:
+defaults: &defaults
   adapter: postgresql
   encoding: utf8
-  database: abaco_development
   pool: 5
   username: abaco
   password: abaco
+  host: localhost
+  port: 5432
+
+development:
+  <<: *defaults
+  database: abaco_development
 
 test:
-  adapter: postgresql
-  encoding: utf8
+  <<: *defaults
   database: abaco_test
-  pool: 5
   username: <%= ENV['TRAVIS'] ? 'postgres' : 'abaco' %>
   password: <%= ENV['TRAVIS'] ? '' : 'abaco' %>
 
 production:
-  adapter: postgresql
-  encoding: utf8
+  <<: *defaults
   database: abaco_production
-  pool: 5
-  username: abaco
-  password: abaco

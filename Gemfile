@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '~> 4.2'
 # gem 'rails-observers', '0.1.2'
 
-gem 'pg'
+gem 'pg', '~> 0.21.0'
 gem 'will_paginate'
 gem 'paper_trail'
 gem 'magick_columns', github: 'kainlite/magick_columns'
@@ -43,6 +43,10 @@ group :development do
   gem 'capistrano-rails'
   gem 'capistrano-bundler'
   gem 'capistrano-chruby'
+
+  # Support for ed25519 ssh keys
+  gem 'ed25519'
+  gem 'bcrypt_pbkdf'
 end
 
 group :test do
