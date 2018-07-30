@@ -214,6 +214,7 @@ es:
       roles:
         admin: "Administrador"
         regular: "Normal"
+        shift_auditor: "Auditor de Turnos"
       show_title: "Detalle de usuario"
       stale_object_error: "El usuario no pudo ser actualizado, intente nuevamente."
       update_password: "Actualizar contraseña"

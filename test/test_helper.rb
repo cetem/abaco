@@ -38,6 +38,7 @@ class ActionDispatch::IntegrationTest
 
   # Stop ActiveRecord from wrapping tests in transactions
   self.use_transactional_fixtures = false
+  Capybara.server = :webrick
 
   setup do
     WebMock.disable!

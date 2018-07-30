@@ -1,6 +1,6 @@
 language: ruby
 rvm:
-  - 2.0.0
+  - 2.4.3
 before_install:
   - sudo apt-get update -qq
 before_script:

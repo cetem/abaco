@@ -4,8 +4,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   after_action -> { expires_now if user_signed_in? }
 
-  def user_for_paper_trail
-    current_user.try(:id)
+  def root_redirector
+    redirect_to root_path_for_current_user
   end
 
   def downloads
@@ -18,6 +18,10 @@ class ApplicationController < ActionController::Base
     else
       head 404
     end
+  end
+
+  def user_for_paper_trail
+    current_user.try(:id)
   end
 
   private
@@ -48,8 +52,17 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
   def after_sign_in_path_for(resource)
-    users_path
+    root_path_for_current_user
+  end
+
+  def root_path_for_current_user
+    if current_user.blank?
+      new_user_session_path
+    elsif current_user.shift_auditor?
+      operators_path
+    else
+      outflows_path
+    end
   end
 end

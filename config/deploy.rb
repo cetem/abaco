@@ -9,7 +9,7 @@ set :deploy_via, :remote_cache
 set :format, :pretty
 set :log_level, :info
 
-set :linked_files, %w(config/app_config.yml config/secrets.yml app/views/layouts/application.html.erb)
+set :linked_files, %w(config/app_config.yml config/secrets.yml)
 set :linked_dirs, %w{log private certs}
 
 set :keep_releases, 5
@@ -23,7 +23,8 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app) do
-      execute '/etc/init.d/unicorn', 'upgrade'
+      # execute '/etc/init.d/unicorn', 'upgrade'
+      execute "kill -USR2 $(ps aux |grep unicorn |grep master |awk '{print $2}' )"
     end
   end
 

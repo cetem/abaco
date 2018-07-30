@@ -1,4 +1,7 @@
 class OperatorsController < ApplicationController
+  before_action :authorize_read, only: [:index, :show]
+  before_action :authorize_write, except: [:index, :show]
+
   def index
     @operators = Operator.get(:current_workers)
 
@@ -20,9 +23,11 @@ class OperatorsController < ApplicationController
 
     @paginate_size = @shifts.size
 
-    @movements = Outflow.for_operator(@operator.id).order(bought_at: :desc).paginate(
-      page: params[:movements_page]
-    )
+    if can? :read, Outflow
+      @movements = Outflow.for_operator(@operator.id).order(bought_at: :desc).paginate(
+        page: params[:movements_page]
+      )
+    end
   end
 
   def new_shift
@@ -48,5 +53,13 @@ class OperatorsController < ApplicationController
 
   def operator_shift_params
     params.require(:operator_shifts).permit(:start, :finish, :as_admin)
+  end
+
+  def authorize_read
+    authorize! :read, Operator
+  end
+
+  def authorize_write
+    authorize! :write, Operator
   end
 end

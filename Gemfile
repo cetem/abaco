@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2'
+gem 'rails', '~> 4.2.10'
 # gem 'rails-observers', '0.1.2'
 
-gem 'pg'
+gem 'pg', '~> 0.21.0'
 gem 'will_paginate'
 gem 'paper_trail'
 gem 'magick_columns', github: 'kainlite/magick_columns'
@@ -15,14 +15,14 @@ gem "bugsnag"
 gem 'awesome_print'
 gem 'unicorn'
 gem "dotiw"
-gem 'google_drive' #, '1.0.6'
+gem 'google_drive', '~> 2.1.7'
 
 gem 'sidekiq', '~> 4.2'
 gem 'sinatra', require: nil
 gem 'redis-namespace'
 
 # Auth
-gem 'devise'
+gem 'devise', '~> 4.3'
 gem 'cancan'
 gem 'role_model'
 
@@ -43,6 +43,10 @@ group :development do
   gem 'capistrano-rails'
   gem 'capistrano-bundler'
   gem 'capistrano-chruby'
+
+  # Support for ed25519 ssh keys
+  gem 'ed25519'
+  gem 'bcrypt_pbkdf'
 end
 
 group :test do

@@ -36,5 +36,5 @@ Rails.application.routes.draw do
     end
   end
 
-  root to: 'outflows#index'
+  root to: 'application#root_redirector'
 end
