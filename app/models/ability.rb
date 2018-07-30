@@ -2,15 +2,13 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    user ? user_rules(user) : default_rules
+    user_rules(user)
   end
 
   def user_rules(user)
     user.roles.each do |role|
       send("#{role}_rules") if respond_to?("#{role}_rules")
     end
-
-    default_rules
   end
 
   def admin_rules
@@ -18,17 +16,23 @@ class Ability
     can :assign_roles, User
     can :edit_profile, User
     can :update_profile, User
+    can :report, :all
+  end
+
+  def shift_auditor_rules
+    can :read, Operator
+    can :write, Operator
   end
 
   def regular_rules
     can :create, :all
     can :update, :all
     can :destroy, :all
+    can :read, :all
     can :edit_profile, User
     can :update_profile, User
-  end
+    can :report, :all
 
-  def default_rules
-    can :read, :all
+    cannot :assign_roles, User
   end
 end

@@ -25,22 +25,24 @@
             <%= content_tag(
               :li, link_to(t('menu.operators'), operators_path),
               class: ('active' if controller_name == 'operators')
-            ) if can? :read, User %>
+            ) if can? :read, Operator %>
 
-            <% reports_submenu = content_tag(:li, link_to(t('menu.monthly_info'), reports_monthly_info_path)) %>
-            <% reports_submenu += content_tag(:li, link_to(t('menu.incentives'), reports_incentives_between_path)) %>
-            <% reports_submenu += content_tag(:li, link_to(t('menu.retroactive'), reports_retroactive_between_path)) %>
-            <% dropdown = link_to(
-              t('menu.reports'),
-              '#', class: 'dropdown-toggle',
-              data: { toggle: 'dropdown' }
-            ) %>
-            <% dropdown += content_tag(:ul, reports_submenu, class: 'dropdown-menu') %>
+            <% if can? :report, :all %>
+              <% reports_submenu = content_tag(:li, link_to(t('menu.monthly_info'), reports_monthly_info_path)) %>
+              <% reports_submenu += content_tag(:li, link_to(t('menu.incentives'), reports_incentives_between_path)) %>
+              <% reports_submenu += content_tag(:li, link_to(t('menu.retroactive'), reports_retroactive_between_path)) %>
+              <% dropdown = link_to(
+                t('menu.reports'),
+                '#', class: 'dropdown-toggle',
+                data: { toggle: 'dropdown' }
+              ) %>
+              <% dropdown += content_tag(:ul, reports_submenu, class: 'dropdown-menu') %>
 
-            <%= content_tag(
-              :li, dropdown,
-              class: 'dropdown' + (controller_name == 'reports' ? ' active' : '')
-            ) %>
+              <%= content_tag(
+                :li, dropdown,
+                class: 'dropdown' + (controller_name == 'reports' ? ' active' : '')
+              ) %>
+            <% end %>
           </ul>
           <%= render partial: 'shared/nav_search' if @searchable %>
           <ul class="nav pull-right">

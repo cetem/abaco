@@ -1,0 +1,20 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= t('view.outflows.movement_kind') %></th>
+      <th><%= t('shared.day') %></th>
+      <th><%= t('shared.quantity') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @movements.each do |m| %>
+      <tr>
+        <td><%= show_outflow_kind(m, false)  %></td>
+        <td><%= l(m.bought_at) if m.try(:bought_at) %></td>
+        <td><%= number_to_currency m.amount %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= pagination_links(@movements, 'movements_page') %>

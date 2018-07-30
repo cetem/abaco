@@ -20,7 +20,7 @@ jQuery ($) ->
     $('#loading_caption').stop(true, true).fadeOut(100)
 
   $(document).on 'submit', 'form', ->
-    $(this).find('input[type="submit"]:not([.no-auto-disable]), input[name="utf8"]').attr 'disabled', true
+    $(this).find('input[type="submit"]:not(.no-auto-disable), input[name="utf8"]').attr 'disabled', true
     $(this).find('a.submit').removeClass('submit').addClass('disabled')
     $(this).find('.dropdown-toggle').addClass('disabled')
 
