@@ -65,6 +65,4 @@ class ApplicationController < ActionController::Base
       outflows_path
     end
   end
-
-
 end
