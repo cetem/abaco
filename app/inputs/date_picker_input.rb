@@ -12,7 +12,7 @@ class DatePickerInput < SimpleForm::Inputs::Base
   private
 
   def default_attributes
-    value = if object && object.send(attribute_name)
+    value = if object && object.send(attribute_name).present?
               object.send(attribute_name)
             else
               Date.today

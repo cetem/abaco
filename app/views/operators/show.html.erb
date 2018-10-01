@@ -27,6 +27,7 @@
                 <th><%= t('view.operators.shift_duration') %></th>
                 <th><%= t('view.operators.as_admin') %></th>
                 <th><%= t('view.operators.paid') %></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -37,6 +38,7 @@
                   <td><%= show_shift_duration s %></td>
                   <td><%= s.as_admin ? t('label.yes') : t('label.no') %></td>
                   <td><%= s.paid ? t('label.yes') : t('label.no') %></td>
+                  <td><%= link_to_edit edit_operator_shift_path(operator_id: @operator.id, id: s.id) %></td>
                 </tr>
               <% end %>
             </tbody>

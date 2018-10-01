@@ -1,4 +1,4 @@
-# old_handler = I18n.config.exception_handler
+old_handler = I18n.config.exception_handler
 
 I18n.exception_handler = lambda do |exception, locale, key, options|
   #I18nWorker.perform_async(locale, key, options)

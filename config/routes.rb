@@ -11,6 +11,10 @@ Rails.application.routes.draw do
     as: 'new_operator_shift'
   post 'operators/:id/create_shift' => 'operators#create_shift',
     as: 'create_operator_shift'
+  get 'operators/:operator_id/shifts/:id/edit' => 'operators#edit_shift',
+    as: 'edit_operator_shift'
+  patch 'operators/:operator_id/shifts/:id' => 'operators#update_shift',
+    as: 'update_operator_shift'
   get 'downloads' => 'application#downloads', as: 'downloads'
 
   resources :settings

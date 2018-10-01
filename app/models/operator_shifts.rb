@@ -5,13 +5,12 @@ class OperatorShifts < ActiveResource::Base
   self.element_name = 'shifts'
 
   def self.convert_hash_in_open_struct(shifts)
-    shifts.map do |s|
-      OpenStruct.new(
-        start: (s['start'].present? ? Time.parse(s['start']) : ''),
-        finish: (s['finish'].present? ? Time.parse(s['finish']) : ''),
-        as_admin: s['as_admin'],
-        paid: s['paid']
-      )
+    shifts.map do |shift|
+      s = OpenStruct.new(shift)
+      s.start = Time.parse(s.start) if s.start.present?
+      s.finish = Time.parse(s.finish) if s.finish.present?
+
+      s
     end
   end
 
