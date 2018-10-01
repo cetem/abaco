@@ -39,7 +39,7 @@ class OperatorsControllerTest < ActionController::TestCase
   end
 
   test 'show create an operator shift' do
-    post :create_shift, id: 1, operator_shifts: {
+    post :create_shift, id: 1, operator_shift: {
       start: 5.hours.ago, finish: 2.hours.ago
     }
 
