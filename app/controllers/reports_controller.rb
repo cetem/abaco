@@ -12,7 +12,7 @@ class ReportsController < ApplicationController
 
   def incentives_between
     if (report_dates = params[:reports])
-      incentives = OperatorShifts.get(
+      incentives = OperatorShift.get(
         :best_fortnights_between,
         parameterize_to_date_format(report_dates)
       )

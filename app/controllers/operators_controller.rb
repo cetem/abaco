@@ -15,11 +15,11 @@ class OperatorsController < ApplicationController
     @operator = Operator.find(params[:id])
     offset = params[:page] ? (params[:page].to_i - 1) * 10 : 0
 
-    @shifts = OperatorShifts.get(:json_paginate,
+    @shifts = OperatorShift.get(:json_paginate,
       user_id: @operator.id, offset: offset, limit: 10
     )
 
-    @shifts = OperatorShifts.convert_hash_in_open_struct(@shifts)
+    @shifts = OperatorShift.convert_hash_in_open_struct(@shifts)
 
     @paginate_size = @shifts.size
 
@@ -32,13 +32,13 @@ class OperatorsController < ApplicationController
 
   def new_shift
     @operator = Operator.find(params[:id])
-    @operator_shift = OperatorShifts.new(as_admin: @operator.admin)
+    @operator_shift = OperatorShift.new(as_admin: @operator.admin)
   end
 
   def create_shift
     @operator = Operator.find(params[:id])
 
-    @operator_shift = OperatorShifts.new(
+    @operator_shift = OperatorShift.new(
       operator_shift_params.merge(user_id: @operator.id)
     )
 
@@ -52,7 +52,7 @@ class OperatorsController < ApplicationController
   private
 
   def operator_shift_params
-    params.require(:operator_shifts).permit(:start, :finish, :as_admin)
+    params.require(:operator_shift).permit(:start, :finish, :as_admin)
   end
 
   def authorize_read
