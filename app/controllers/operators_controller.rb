@@ -35,6 +35,11 @@ class OperatorsController < ApplicationController
     @operator_shift = OperatorShift.new(as_admin: @operator.admin)
   end
 
+  def edit_shift
+    @operator = Operator.find(params[:operator_id])
+    @operator_shift = OperatorShifts.find(params[:id])
+  end
+
   def create_shift
     @operator = Operator.find(params[:id])
 
@@ -46,6 +51,19 @@ class OperatorsController < ApplicationController
       redirect_to operator_path(@operator), notice: t('view.operators.shift_created')
     else
       render 'new_shift', notice: t('view.operators.shift_can_not_be_created')
+    end
+  end
+
+  def update_shift
+    @operator = Operator.find(params[:operator_id])
+
+    @operator_shift = OperatorShifts.find(params[:id])
+    @operator_shift.attributes.merge! operator_shift_params
+
+    if @operator_shift.save
+      redirect_to operator_path(@operator), notice: t('view.operators.shift_updated')
+    else
+      render 'edit_shift', notice: t('view.operators.shift_can_not_be_updated')
     end
   end
 

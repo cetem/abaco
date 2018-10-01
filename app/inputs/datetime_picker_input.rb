@@ -1,6 +1,6 @@
 class DatetimePickerInput < SimpleForm::Inputs::Base
   def input(wrapper_options)
-    if object.respond_to?(attribute_name) && object.send(attribute_name)
+    if object.respond_to?(attribute_name) && object.send(attribute_name).present?
       value = I18n.l(
         Time.parse(object.send(attribute_name).to_s), format: :minimal
       )

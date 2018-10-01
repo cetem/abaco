@@ -1,0 +1,32 @@
+<%
+    method, url = if @operator_shift.id.present?
+                    [:patch, update_operator_shift_path(@operator, @operator_shift)]
+                  else
+                    [:post, create_operator_shift_path(@operator)]
+                  end
+%>
+<%= simple_form_for @operator_shift, url: url, method: method do |f| %>
+  <div class="form-inputs">
+    <h2><%= @operator.label %></h2>
+
+    <div class="row-fluid">
+      <div class="span4">
+        <%= f.input :start, label: t('view.operators.start'),
+          as: :datetime_picker  %>
+      </div>
+      <div class="span4">
+        <%= f.input :finish, label: t('view.operators.finish'),
+          as: :datetime_picker  %>
+      </div>
+      <div class="span4">
+        <%= f.input :as_admin, label: 'Admin',
+          collection: [['Si', true], ['No', false]]  %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, t('view.operators.create_shift'),
+      class: 'btn btn-primary' %>
+  </div>
+<% end %>
