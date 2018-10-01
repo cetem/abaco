@@ -1,8 +1,8 @@
 require 'test_helper'
 
-class OperatorShiftsTest < ActiveSupport::TestCase
+class OperatorShiftTest < ActiveSupport::TestCase
   test 'should get operator shifts between dates' do
-    shifts =  OperatorShifts.find(:all, params: {
+    shifts =  OperatorShift.find(:all, params: {
       user_id: 1,
       pay_pending_shifts_for_user_between: {
         start: 1.month.ago.to_date, finish: Date.today
@@ -13,7 +13,7 @@ class OperatorShiftsTest < ActiveSupport::TestCase
   end
 
   test 'should get operator shifts for paginate' do
-    shifts = OperatorShifts.get(:json_paginate, 
+    shifts = OperatorShift.get(:json_paginate, 
       user_id: 1, offset: 0, limit: 10
     )
 
