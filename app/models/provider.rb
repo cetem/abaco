@@ -3,6 +3,7 @@ class Provider < ActiveRecord::Base
   has_magick_columns name: :string
 
   validates :name, uniqueness: { message: :detailed_taken }
+  validates :name, presence: true
 
   has_many :outflows, dependent: :restrict_with_error
 

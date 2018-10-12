@@ -17,18 +17,18 @@ ActiveRecord::Schema.define(version: 20181011222535) do
   enable_extension "plpgsql"
 
   create_table "outflows", force: :cascade do |t|
-    t.string   "kind",             limit: 1,                                            null: false
+    t.string   "kind",             limit: 1,                                          null: false
     t.text     "comment"
-    t.decimal  "amount",                       precision: 15, scale: 2, default: 0.0,   null: false
-    t.integer  "user_id",                                                               null: false
+    t.decimal  "amount",                     precision: 15, scale: 2, default: 0.0,   null: false
+    t.integer  "user_id",                                                             null: false
     t.integer  "operator_id"
-    t.integer  "lock_version",                                          default: 0,     null: false
+    t.integer  "lock_version",                                        default: 0,     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "bill",             limit: 255
+    t.string   "bill"
     t.date     "bought_at"
-    t.boolean  "with_incentive",                                        default: false
-    t.string   "file",             limit: 255
+    t.boolean  "with_incentive",                                      default: false
+    t.string   "file"
     t.date     "start_shift"
     t.date     "finish_shift"
     t.integer  "shift_closure_id"
@@ -48,10 +48,10 @@ ActiveRecord::Schema.define(version: 20181011222535) do
   end
 
   create_table "settings", force: :cascade do |t|
-    t.string   "title",        limit: 255,             null: false
-    t.string   "var",          limit: 255,             null: false
+    t.string   "title",                    null: false
+    t.string   "var",                      null: false
     t.text     "value"
-    t.integer  "lock_version",             default: 0, null: false
+    t.integer  "lock_version", default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -59,20 +59,20 @@ ActiveRecord::Schema.define(version: 20181011222535) do
   add_index "settings", ["var"], name: "index_settings_on_var", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "name",                   limit: 255,              null: false
-    t.string   "lastname",               limit: 255
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
-    t.string   "reset_password_token",   limit: 255
+    t.string   "name",                                null: false
+    t.string   "lastname"
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                      default: 0
+    t.integer  "sign_in_count",          default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
-    t.integer  "roles_mask",                         default: 0,  null: false
-    t.integer  "lock_version",                       default: 0,  null: false
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.integer  "roles_mask",             default: 0,  null: false
+    t.integer  "lock_version",           default: 0,  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -83,9 +83,9 @@ ActiveRecord::Schema.define(version: 20181011222535) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "versions", force: :cascade do |t|
-    t.string   "item_type",  limit: 255, null: false
-    t.integer  "item_id",                null: false
-    t.string   "event",      limit: 255, null: false
+    t.string   "item_type",  null: false
+    t.integer  "item_id",    null: false
+    t.string   "event",      null: false
     t.integer  "whodunnit"
     t.text     "object"
     t.datetime "created_at"

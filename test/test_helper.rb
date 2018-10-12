@@ -18,7 +18,7 @@ class ActiveSupport::TestCase
 end
 
 class ActionController::TestCase
-  include Devise::TestHelpers
+  include Devise::Test::ControllerHelpers
   include WebMock::API
   # Add more helper methods to be used by all tests here...
 

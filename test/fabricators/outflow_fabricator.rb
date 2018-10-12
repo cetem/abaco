@@ -5,7 +5,7 @@ Fabricator(:outflow) do
   amount          { (100.0 * rand) }
   bill            { rand(999999999999) }
   operator_id     { |attrs| Fabricate(:user).id }
-  provider        { 'Someone' }
+  provider_id     { Fabricate(:provider).id }
   bought_at       { Date.today }
   with_incentive  { [true, false].sample }
 end
