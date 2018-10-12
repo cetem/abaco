@@ -88,7 +88,6 @@ jQuery ($)->
           type: 'POST'
           dataType: 'json'
           success: (result)->
-            debugger
             if result.errors
               swal(
                 text: result.errors
