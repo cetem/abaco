@@ -42,10 +42,18 @@ es:
       user:
         one: "Usuario"
         other: "Usuarios"
+    errors:
+      models:
+        provider:
+          attributes:
+            name:
+              detailed_taken: "de proveedor ya creado, por favor busquelo."
+
   app_name: "Ábaco"
   attributes:
     created_at: "Creación"
     updated_at: "Actualización"
+    name: "Nombre"
   errors:
     access_denied: "No tiene permisos para acceder al contenido"
     title: "Error"
@@ -107,6 +115,7 @@ es:
       without_movements: "No se ha registrado ningún movimiento hasta el momento"
       without_upfronts: "Sin adelantos."
     outflows:
+      remove_provider: "Quitar Proveedor"
       pay_detail_between: "Detalle de pagos entre [%{range}]"
       correctly_created: "Egreso agregado correctamente."
       correctly_updated: "Egreso actualizado correctamente."

@@ -31,7 +31,7 @@ class Outflow < ActiveRecord::Base
   scope :at_month, -> (date) { where(bought_at: date.beginning_of_month..date.end_of_month) }
 
   # Attributos no persistentes
-  attr_accessor :auto_operator_name
+  attr_accessor :auto_operator_name, :auto_provider_name
 
   # Validaciones
   validates :amount, :kind, :user_id, presence: true
@@ -41,7 +41,7 @@ class Outflow < ActiveRecord::Base
     if: -> (o) { o.kind_is_payoff? }
   validates :operator_id, presence: true, if: :operator_needed?
   validates :comment, presence: true, if: :kind_is_other?
-  validates :provider, presence: true, if: -> (o) { o.bill.present? }
+  # validates :provider, presence: true, if: -> (o) { o.bill.present? }
   validates :bill, presence: true, if: -> (o) { o.billeable? }
 
   # Relaciones

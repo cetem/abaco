@@ -107,6 +107,15 @@ class OutflowsController < ApplicationController
     end
   end
 
+  def autocomplete_for_provider
+    @providers = Provider.search(params[:q]).limit(10)
+
+    respond_to do |format|
+      format.json { render json: @providers }
+    end
+  end
+
+
   # GET /outflows/show_all_pay_pending_shifts
   def show_all_pay_pending_shifts
     @title = t('view.outflows.shifts.title')

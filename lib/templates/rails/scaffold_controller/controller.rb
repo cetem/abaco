@@ -1,7 +1,7 @@
 <% module_namespacing do -%>
 class <%= controller_class_name %>Controller < ApplicationController
   before_action :set_<%= singular_table_name %>, only:  [:show, :edit, :update, :destroy]
-  
+
   # GET <%= route_url %>
   def index
     @title = t('view.<%= plural_table_name %>.index_title')
@@ -43,7 +43,7 @@ class <%= controller_class_name %>Controller < ApplicationController
     @title = t('view.<%= plural_table_name %>.edit_title')
 
     respond_to do |format|
-      if @<%= orm_instance.update_attributes("#{singular_table_name}_params") %>
+      if @<%= orm_instance.update("#{singular_table_name}_params") %>
         format.html { redirect_to @<%= singular_table_name %>, notice: t('view.<%= plural_table_name %>.correctly_updated') }
       else
         format.html { render action: 'edit' }

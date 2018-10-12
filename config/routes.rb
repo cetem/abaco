@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :providers
+  resources :providers
   require 'sidekiq/web'
 
   Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_token]
@@ -22,6 +24,7 @@ Rails.application.routes.draw do
   resources :outflows do
     collection do
       get :autocomplete_for_operator
+      get :autocomplete_for_provider
       get :show_all_pay_pending_shifts
       patch :pay_shifts
     end
