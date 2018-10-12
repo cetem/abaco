@@ -4,7 +4,8 @@ class ProvidersController < ApplicationController
   # GET /providers
   def index
     @title = t('view.providers.index_title')
-    @providers = Provider.page(params[:page])
+    @searchable = true
+    @providers = Provider.order(name: :asc).search(params[:q]).page(params[:page])
   end
 
   # GET /providers/1
