@@ -5,6 +5,7 @@ before_install:
   - sudo apt-get update -qq
 before_script:
   - 'sed -e "s/<username>/probe/ig ; s/<password>/probe/ig" config/app_config.example.yml > config/app_config.yml'
+  - 'cp config/secrets.example.yml > config/secrets.yml'
   - "psql -c 'create database abaco_test;' -U postgres"
   - 'bundle exec rake db:migrate'
   - 'export DISPLAY=:99.0'
