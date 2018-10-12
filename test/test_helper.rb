@@ -66,7 +66,7 @@ class ActionDispatch::IntegrationTest
 
     find('.btn-primary.submit').click
 
-    assert_equal users_path, current_path
+    assert_equal outflows_path, current_path
 
     assert_page_has_no_errors!
     assert page.has_css?('.alert.alert-info')

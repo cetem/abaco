@@ -2,6 +2,7 @@ require 'test_helper'
 
 class OperatorsControllerTest < ActionController::TestCase
   setup do
+    skip 'Mock'
     sign_in @user = Fabricate(:user)
   end
 

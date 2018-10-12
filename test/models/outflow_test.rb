@@ -123,6 +123,8 @@ class OutflowTest < ActiveSupport::TestCase
   end
 
   test 'pay shifts and upfronts' do
+    skip 'Mock'
+
     @outflow = Fabricate(:outflow, kind: 'u', operator_id: 1)
 
     assert_difference 'Outflow.count' do
@@ -139,6 +141,8 @@ class OutflowTest < ActiveSupport::TestCase
   end
 
   test 'pay shifts and upfronts with another upfront' do
+    skip 'Mock'
+
     Outflow.delete_all
 
     assert_difference 'Outflow.count', 2 do
