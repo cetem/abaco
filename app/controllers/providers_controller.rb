@@ -56,8 +56,14 @@ class ProvidersController < ApplicationController
 
   # DELETE /providers/1
   def destroy
-    @provider.destroy
-    redirect_to providers_url, notice: t('view.providers.correctly_destroyed')
+    opts = if @provider.destroy
+             { notice: t('view.providers.correctly_destroyed') }
+           else
+
+             { alert: t('view.providers.cannot_be_destroyed', name: @provider.name) }
+           end
+
+    redirect_to providers_url, opts
   end
 
   private

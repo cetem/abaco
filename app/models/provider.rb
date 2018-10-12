@@ -4,6 +4,8 @@ class Provider < ActiveRecord::Base
 
   validates :name, uniqueness: { message: :detailed_taken }
 
+  has_many :outflows, dependent: :restrict_with_error
+
   def to_s
     name
   end

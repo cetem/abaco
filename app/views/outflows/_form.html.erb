@@ -20,6 +20,7 @@
             <%= f.input_field :auto_provider_name,
               value: @outflow.try(:provider),
               class: 'autocomplete-field create-without-autocomplete',
+              readonly: @outflow.try(:provider).present?,
               data: {
                 autocomplete_id_target: '#outflow_provider_id',
                 autocomplete_url: autocomplete_for_provider_outflows_path(format: :json),

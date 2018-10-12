@@ -46,6 +46,7 @@ class Outflow < ActiveRecord::Base
 
   # Relaciones
   belongs_to :user
+  belongs_to :provider #, optional: true
 
   KIND.each do |kind, value|
     define_method("kind_is_#{kind}?") { self.kind == KIND[kind] }

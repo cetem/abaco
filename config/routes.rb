@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get 'downloads' => 'application#downloads', as: 'downloads'
 
   resources :settings
+  resources :providers
 
   resources :outflows do
     collection do

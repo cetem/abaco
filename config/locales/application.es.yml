@@ -31,29 +31,31 @@ es:
         roles:
           one: "Perfil"
           other: "Perfiles"
-    models:
-      operator_shifts: "Turno"
-      outflow:
-        one: "Salida"
-        other: "Salidas"
-      setting:
-        one: "Configuración"
-        other: "Configuraciones"
-      user:
-        one: "Usuario"
-        other: "Usuarios"
     errors:
       models:
         provider:
           attributes:
             name:
               detailed_taken: "de proveedor ya creado, por favor busquelo."
-
+    models:
+      operator_shifts: "Turno"
+      outflow:
+        one: "Salida"
+        other: "Salidas"
+      provider:
+        one: "Proveedor"
+        other: "Proveedores"
+      setting:
+        one: "Configuración"
+        other: "Configuraciones"
+      user:
+        one: "Usuario"
+        other: "Usuarios"
   app_name: "Ábaco"
   attributes:
     created_at: "Creación"
-    updated_at: "Actualización"
     name: "Nombre"
+    updated_at: "Actualización"
   errors:
     access_denied: "No tiene permisos para acceder al contenido"
     title: "Error"
@@ -77,6 +79,7 @@ es:
     monthly_info: "Mensual"
     operators: "Operadores"
     outflows: "Egresos"
+    providers: "Proovedores"
     reports: "Reportes"
     retroactive: "Retroactivos"
     settings: "Configuración"
@@ -115,8 +118,6 @@ es:
       without_movements: "No se ha registrado ningún movimiento hasta el momento"
       without_upfronts: "Sin adelantos."
     outflows:
-      remove_provider: "Quitar Proveedor"
-      pay_detail_between: "Detalle de pagos entre [%{range}]"
       correctly_created: "Egreso agregado correctamente."
       correctly_updated: "Egreso actualizado correctamente."
       credits_canceled: "Créditos cancelados"
@@ -143,7 +144,9 @@ es:
       movement_kind: "Tipo de movimiento"
       new_title: "Nuevo egreso"
       operators: "Operadores"
+      pay_detail_between: "Detalle de pagos entre [%{range}]"
       reajust_of: "Reajuste de <a href=\"%{path}\">%{id}</a>"
+      remove_provider: "Quitar Proveedor"
       reports:
         amount: "Monto"
         bill: "Nº de factura"
@@ -181,6 +184,19 @@ es:
         "false": "Sin incentivo"
         to_question: "Con incentivo?"
         "true": "Con incentivo"
+    providers:
+      cannot_be_destroyed: "Proveedor '%{name}' no puede borrarse, tiene movimientos."
+      correctly_created: "Proveedor agregado correctamente."
+      correctly_destroyed: "Proveedor eliminado correctamente."
+      correctly_updated: "Proveedor actualizado correctamente."
+      edit_title: "Editar proveedor"
+      empty_index:
+        html: 'No se ha creado ningún proveedor hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo proveedor</span>'
+      index_title: "Listado de proveedores"
+      new: "Nuevo proveedor"
+      new_title: "Nuevo proveedor"
+      show_title: "Detalle de proveedor"
+      stale_object_error: "El proveedor no pudo ser actualizado, intente nuevamente."
     reports:
       calc_incentives: "Calcular!"
       date: "Día del mes a reportar"
