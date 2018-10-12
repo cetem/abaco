@@ -107,6 +107,15 @@ class OutflowsController < ApplicationController
     end
   end
 
+  def autocomplete_for_provider
+    @providers = Provider.search(params[:q]).limit(10)
+
+    respond_to do |format|
+      format.json { render json: @providers }
+    end
+  end
+
+
   # GET /outflows/show_all_pay_pending_shifts
   def show_all_pay_pending_shifts
     @title = t('view.outflows.shifts.title')
@@ -154,7 +163,7 @@ class OutflowsController < ApplicationController
     def outflow_params
       params.require(:outflow).permit(
         :amount, :comment, :kind, :lock_version, :operator_id, :with_incentive,
-        :auto_operator_name, :user_id, :bill, :provider, :bought_at,
+        :auto_operator_name, :user_id, :bill, :provider_id, :bought_at,
         :file, :file_cache, :charged_by
       )
     end

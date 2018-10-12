@@ -13,7 +13,10 @@ class OutflowTest < ActiveSupport::TestCase
     assert_difference ['Outflow.count', 'PaperTrail::Version.count'] do
       Outflow.create!(
         Fabricate.attributes_for(
-          :outflow, user_id: @outflow.user_id, operator_id: @outflow.user_id
+          :outflow,
+          user_id:     @outflow.user_id,
+          operator_id: @outflow.user_id,
+          provider_id: @outflow.provider_id
         )
       )
     end
@@ -41,8 +44,8 @@ class OutflowTest < ActiveSupport::TestCase
 
     assert @outflow.invalid?
     assert_equal 1, @outflow.errors.size
-    assert_equal [error_message_from_model(@outflow, :operator_id, :blank)],
-      @outflow.errors[:operator_id]
+    assert_equal [error_message_from_model(@outflow, :auto_operator_name, :blank)],
+      @outflow.errors[:auto_operator_name]
 
     @outflow.kind = 'o'
     @outflow.comment = ''
@@ -72,8 +75,8 @@ class OutflowTest < ActiveSupport::TestCase
 
     assert @outflow.invalid?
     assert_equal 1, @outflow.errors.size
-    assert_equal [error_message_from_model(@outflow, :provider, :blank)],
-      @outflow.errors[:provider]
+    assert_equal [error_message_from_model(@outflow, :auto_provider_name, :blank)],
+      @outflow.errors[:auto_provider_name]
 
     @outflow.reload
     @outflow.bill = nil
@@ -105,8 +108,8 @@ class OutflowTest < ActiveSupport::TestCase
 
     assert @outflow.invalid?
     assert_equal 1, @outflow.errors.size
-    assert_equal [error_message_from_model(@outflow, :operator_id, :blank)],
-      @outflow.errors[:operator_id]
+    assert_equal [error_message_from_model(@outflow, :auto_operator_name, :blank)],
+      @outflow.errors[:auto_operator_name]
   end
 
   test 'other has to have comment' do
@@ -120,32 +123,36 @@ class OutflowTest < ActiveSupport::TestCase
   end
 
   test 'pay shifts and upfronts' do
+    skip 'Mock'
+
     @outflow = Fabricate(:outflow, kind: 'u', operator_id: 1)
 
     assert_difference 'Outflow.count' do
       assert_difference 'Outflow.upfronts.count', -1 do
         Outflow.pay_operator_shifts_and_upfronts(
           operator_id: @outflow.operator_id,
-          start: 1.month.ago.to_date.to_s,
-          finish: Time.zone.today.to_s,
-          user_id: Fabricate(:user).id,
-          amount: 300
+          start:       1.month.ago.to_date.to_s,
+          finish:      Time.zone.today.to_s,
+          user_id:     Fabricate(:user).id,
+          amount:      300
         )
       end
     end
   end
 
   test 'pay shifts and upfronts with another upfront' do
+    skip 'Mock'
+
     Outflow.delete_all
 
     assert_difference 'Outflow.count', 2 do
       Outflow.pay_operator_shifts_and_upfronts(
         operator_id: 1,
-        start: 1.month.ago.to_date.to_s,
-        finish: Time.zone.today.to_s,
-        user_id: Fabricate(:user).id,
-        amount: 300,
-        upfronts: 100
+        start:       1.month.ago.to_date.to_s,
+        finish:      Time.zone.today.to_s,
+        user_id:     Fabricate(:user).id,
+        amount:      300,
+        upfronts:    100
       )
     end
 

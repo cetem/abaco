@@ -26,6 +26,10 @@
               :li, link_to(t('menu.operators'), operators_path),
               class: ('active' if controller_name == 'operators')
             ) if can? :read, Operator %>
+            <%= content_tag(
+              :li, link_to(t('menu.providers'), providers_path),
+              class: ('active' if controller_name == 'providers')
+            ) if can? :read, Provider %>
 
             <% if can? :report, :all %>
               <% reports_submenu = content_tag(:li, link_to(t('menu.monthly_info'), reports_monthly_info_path)) %>

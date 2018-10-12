@@ -67,44 +67,6 @@ module ApplicationHelper
     )
   end
 
-  def iconic_link(icon, *args)
-    options = args.extract_options!
-
-    options['class'] ||= 'iconic'
-    options['title'] ||= 'iconic'
-    options['data-show-tooltip'] ||= true
-
-    link_to icon, *args, options
-  end
-
-  def link_to_edit(*args)
-    options = args.extract_options!
-
-    options['title'] ||= t('label.edit')
-
-    iconic_link '&#x270e;'.html_safe, *args, options
-  end
-
-  def link_to_show(*args)
-    options = args.extract_options!
-
-    options['class'] ||= 'iconic'
-    options['title'] ||= t('label.show')
-    options['data-show-tooltip'] = true
-
-    link_to '&#xe074;'.html_safe, *args, options
-  end
-
-  def link_to_destroy(*args)
-    options = args.extract_options!
-
-    options['title'] ||= t('label.delete')
-    options['method'] ||= :delete
-    options['data-confirm'] ||= t('messages.confirmation')
-
-    iconic_link '&#xe05a;'.html_safe, *args, options
-  end
-
   def prehistoric_pagination_links
     current_page = params[:page].to_i.zero? ? 1 : params[:page].to_i
 

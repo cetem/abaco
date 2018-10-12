@@ -1,4 +1,3 @@
-
 new Rule
   condition: $('#shifts-data').length
   load: ->
@@ -32,6 +31,7 @@ new Rule
 
       row.find('[data-with-incentive]').data('with-incentive', value)
       row.find('[data-to-pay-total]').trigger('change')
+
 
     $(document).on 'change keyup', '[data-to-pay-total]', @map.changeTotalAmount
     $(document).on 'keydown', '[data-to-pay-total]', @map.sendPay

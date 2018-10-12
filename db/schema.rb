@@ -11,35 +11,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160424001028) do
+ActiveRecord::Schema.define(version: 20181011222535) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "outflows", force: :cascade do |t|
-    t.string   "kind",             limit: 1,                                            null: false
+    t.string   "kind",             limit: 1,                                          null: false
     t.text     "comment"
-    t.decimal  "amount",                       precision: 15, scale: 2, default: 0.0,   null: false
-    t.integer  "user_id",                                                               null: false
+    t.decimal  "amount",                     precision: 15, scale: 2, default: 0.0,   null: false
+    t.integer  "user_id",                                                             null: false
     t.integer  "operator_id"
-    t.integer  "lock_version",                                          default: 0,     null: false
+    t.integer  "lock_version",                                        default: 0,     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "bill"
-    t.string   "provider",         limit: 200
     t.date     "bought_at"
-    t.boolean  "with_incentive",                                        default: false
+    t.boolean  "with_incentive",                                      default: false
     t.string   "file"
     t.date     "start_shift"
     t.date     "finish_shift"
     t.integer  "shift_closure_id"
     t.string   "charged_by"
+    t.integer  "provider_id"
   end
 
   add_index "outflows", ["bought_at"], name: "index_outflows_on_bought_at", using: :btree
   add_index "outflows", ["operator_id"], name: "index_outflows_on_operator_id", using: :btree
   add_index "outflows", ["shift_closure_id"], name: "index_outflows_on_shift_closure_id", using: :btree
   add_index "outflows", ["user_id"], name: "index_outflows_on_user_id", using: :btree
+
+  create_table "providers", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "settings", force: :cascade do |t|
     t.string   "title",                    null: false

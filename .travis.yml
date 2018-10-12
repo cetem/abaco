@@ -1,11 +1,18 @@
 language: ruby
+cache: bundler
 rvm:
   - 2.4.3
-before_install:
-  - sudo apt-get update -qq
+  - 2.5.1
+git:
+  depth: 1
+addons:
+  postgresql: 9.6
+
 before_script:
-  - 'sed -e "s/<username>/probe/ig ; s/<password>/probe/ig" config/app_config.example.yml > config/app_config.yml'
+  - 'cp config/app_config.example.yml config/app_config.yml'
+  - 'cp config/secrets.example.yml config/secrets.yml'
   - "psql -c 'create database abaco_test;' -U postgres"
   - 'bundle exec rake db:migrate'
   - 'export DISPLAY=:99.0'
   - 'sh -e /etc/init.d/xvfb start'
+script: "bundle exec rake test:models && bundle exec rake test:controllers"

@@ -13,6 +13,8 @@
  *= require twitter/bootstrap-responsive
  *= require body_padding
  *= require jquery-customs/ui-custom
+ *= require sweetalert2
+
  *= require fonts
  *= require common
  *= require common-responsive
