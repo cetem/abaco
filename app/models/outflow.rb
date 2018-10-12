@@ -39,10 +39,15 @@ class Outflow < ActiveRecord::Base
     greater_than: 0.00 }, if: -> (o) { !o.kind_is_payoff? }
   validates :amount, numericality: { allow_nil: true, allow_blank: true },
     if: -> (o) { o.kind_is_payoff? }
-  validates :operator_id, presence: true, if: :operator_needed?
   validates :comment, presence: true, if: :kind_is_other?
-  # validates :provider, presence: true, if: -> (o) { o.bill.present? }
   validates :bill, presence: true, if: -> (o) { o.billeable? }
+
+  validate :validate_autocompletes
+  def validate_autocompletes
+    errors.add(:auto_provider_name, :blank) if bill.present? && provider_id.blank?
+
+    errors.add(:auto_operator_name, :blank) if operator_needed? && operator_id.blank?
+  end
 
   # Relaciones
   belongs_to :user

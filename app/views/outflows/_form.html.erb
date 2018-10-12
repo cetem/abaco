@@ -1,8 +1,5 @@
 <%= simple_form_for(@outflow) do |f| %>
   <%= f.error_notification %>
-  <% if @outflow.errors[:operator_id].present? %>
-    <% change_operator_field_errors(@outflow) %>
-  <% end %>
 
   <div class="form-inputs">
     <div class="row-fluid">
@@ -14,7 +11,7 @@
         <%= f.input :bill %>
       </div>
       <div class="span3">
-        <%= f.label :provider, for: 'outflow_auto_provider_name' %>
+        <%= f.label :provider_id, for: 'outflow_auto_provider_name' %>
         <%= f.input :auto_provider_name, label: false do %>
           <div class="span10">
             <%= f.input_field :auto_provider_name,
@@ -51,7 +48,7 @@
         <%= f.input :amount, as: :string %>
       </div>
       <div class="span3">
-        <%= f.label :operator_id %>
+        <%= f.label :operator_id, for: 'outflow_auto_operator_name' %>
         <%= f.input :auto_operator_name, label: false, input_html: {
           value: @outflow.try(:operator_name), class: 'autocomplete-field',
           data: {

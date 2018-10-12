@@ -15,7 +15,7 @@ es:
         finish_shift: "Turnos Hasta"
         kind: "Tipo de salida"
         operator_id: "Operador"
-        provider: "Proveedor"
+        provider_id: "Proveedor"
         start_shift: "Turnos Desde"
         user_id: "Usuario"
       setting:

@@ -13,5 +13,7 @@ class AddProviderIdToOutflows < ActiveRecord::Migration
       o.provider_id = provider ? Provider.find_or_create_by(name: provider).id : nil
       o.save
     end
+
+    remove_column :outflows, :old_provider
   end
 end

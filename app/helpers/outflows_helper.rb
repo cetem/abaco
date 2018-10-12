@@ -63,11 +63,6 @@ module OutflowsHelper
     link_to *(link_args + [link_options])
   end
 
-  def change_operator_field_errors(obj)
-    obj.errors.add(:auto_operator_name, obj.errors[:operator_id].join(', '))
-    obj.errors[:operator_id].clear
-  end
-
   def show_start_and_finish_paid_shifts(outflow)
     [
       l(outflow.start_shift),
