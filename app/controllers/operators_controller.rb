@@ -37,7 +37,7 @@ class OperatorsController < ApplicationController
 
   def edit_shift
     @operator = Operator.find(params[:operator_id])
-    @operator_shift = OperatorShifts.find(params[:id])
+    @operator_shift = OperatorShift.find(params[:id])
   end
 
   def create_shift
@@ -57,7 +57,7 @@ class OperatorsController < ApplicationController
   def update_shift
     @operator = Operator.find(params[:operator_id])
 
-    @operator_shift = OperatorShifts.find(params[:id])
+    @operator_shift = OperatorShift.find(params[:id])
     @operator_shift.attributes.merge! operator_shift_params
 
     if @operator_shift.save
