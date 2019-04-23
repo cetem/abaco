@@ -23,8 +23,7 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app) do
-      # execute '/etc/init.d/unicorn', 'upgrade'
-      execute "kill -USR2 $(ps aux |grep unicorn |grep master |awk '{print $2}' )"
+      execute :systemctl, :restart, 'unicorn@abaco'
     end
   end
 
