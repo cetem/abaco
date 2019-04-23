@@ -95,7 +95,13 @@ class Outflow < ActiveRecord::Base
       operator_scope = _scope.where(operator_id: id)
 
       operator_amount = operator_scope.map do |o|
-        if (o.kind_is_refunded? && o.versions.last.reify.kind_is_upfront?) || o.kind_is_payoff?
+        if (
+            o.kind_is_payoff? ||
+            (
+              o.kind_is_refunded? &&
+              o.versions.last.object.scan(/kind: (\w)/).flatten.uniq.sort == %w[r u] # old kinds
+            )
+        )
           o.amount
         end
       end.compact.sum.round(2)
@@ -145,7 +151,7 @@ class Outflow < ActiveRecord::Base
         I18n.l(self.bought_at || self.created_at.to_date),
         bill,
         amount.round(2),
-        provider,
+        provider.to_s,
         comment
       ]
     end
