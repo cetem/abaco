@@ -29,66 +29,46 @@ module ApplicationHelper
     end
   end
 
-  def pagination_links(objects, param_name = 'page', params = nil)
-    pagination_links = will_paginate objects, param_name: param_name,
-      inner_window: 1, outer_window: 1, params: params,
-      renderer: BootstrapPaginationHelper::LinkRenderer,
-      class: 'pagination pagination-right'
-    page_entries = content_tag(
-      :blockquote,
-      content_tag(
-        :small,
-        page_entries_info(objects),
-        class: 'page-entries hidden-desktop pull-right'
-      )
+  def pagination_links(objects, options = {})
+    other_paginations = params.keys.select { |k| k.to_s.match?(/page$/) }
+
+    options.reverse_merge!(
+      params: other_paginations.map { |k| [k, nil] }.to_h,
+      theme: 'twitter-bootstrap'
     )
 
-    pagination_links ||= empty_pagination_links
-
-    content_tag :div, pagination_links + page_entries, class: 'pagination-container'
-  end
-
-  def empty_pagination_links
-    previous_tag = content_tag(
-      :li,
-      content_tag(:a, t('will_paginate.previous_label').html_safe),
-      class: 'previous_page disabled'
-    )
-    next_tag = content_tag(
-      :li,
-      content_tag(:a, t('will_paginate.next_label').html_safe),
-      class: 'next disabled'
-    )
-
-    content_tag(
-      :div,
-      content_tag(:ul, previous_tag + next_tag),
-      class: 'pagination pagination-right'
-    )
+    paginate(objects, options)
   end
 
   def prehistoric_pagination_links
-    current_page = params[:page].to_i.zero? ? 1 : params[:page].to_i
+    fake = OpenStruct.new(
+      first?: false,
+      last?:  false
+    )
+    page = (params[:page] || 1).to_i
 
-    next_class = "next #{'disabled' if @paginate_size < 10}"
-    next_link = content_tag(:li, link_to(
-      raw(t('will_paginate.next_label')),
-      "#{request.path}?page=#{current_page + 1}",
-      class: next_class
-    ), class: next_class)
+    next_url = '?page=' + (page + 1).to_s
+    prev_url = '?page=' + (page - 1).to_s if page > 1
 
-    prev_page = (current_page > 1) ? (current_page - 1) : 1
-    prev_class = "previous_page #{'disabled' if current_page == 1}"
-    prev_link = content_tag(:li, link_to(
-      raw(t('will_paginate.previous_label')),
-      "#{request.path}?page=#{prev_page}",
-      class: prev_class
-    ), class: prev_class)
+    content_tag(:div, class: 'pagination') do
+      content_tag(:ul) do
+        content = []
+        content << render(
+          'kaminari/twitter-bootstrap/prev_page',
+          current_page: fake,
+          url: prev_url,
+          remote: false
+        ) if prev_url
 
-    ul = content_tag(:ul, prev_link + next_link)
-    div_pag = content_tag(:div, ul, class: 'pagination pagination-right')
-
-    content_tag(:div, div_pag, class: 'pagination-container')
+        content << render(
+          'kaminari/twitter-bootstrap/next_page',
+          current_page: fake,
+          url: next_url,
+          remote: false
+        )
+        content.join.html_safe
+      end
+    end
   end
 
   def link_to_file(file)
@@ -96,8 +76,12 @@ module ApplicationHelper
   end
 
   def get_operator_label_from_id(id)
-    Operator.find(id).try(:label)
+    RemoteOperator.find(id).try(:label)
   rescue
     'Unknown'
+  end
+
+  def t_boolean(value)
+    value ? t('label.yes') : t('label.no')
   end
 end

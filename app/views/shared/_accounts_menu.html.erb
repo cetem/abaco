@@ -1,0 +1,16 @@
+<li class="dropdown<%= ' active' if accounts.any? { |m| m.model_name.plural  == controller_name } %>">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    <%= t('menu.accounts')  %>
+    <b class="caret"></b>
+  </a>
+  <ul class="dropdown-menu">
+    <% accounts.each do |model| %>
+      <% name = model.model_name.plural %>
+      <%= content_tag(
+        :li,
+        link_to(t('menu.' + name), [name.to_sym]),
+        class: ('active' if controller_name == name)
+      ) if can? :read, model %>
+    <% end %>
+  </ul>
+</li>

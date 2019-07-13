@@ -2,7 +2,7 @@
     method, url = if @operator_shift.id.present?
                     [:patch, update_operator_shift_path(@operator, @operator_shift)]
                   else
-                    [:post, create_operator_shift_path(@operator)]
+                    [:post, create_shift_operator_path(@operator)]
                   end
 %>
 <%= simple_form_for @operator_shift, url: url, method: method do |f| %>

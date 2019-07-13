@@ -1,0 +1,30 @@
+<h4>Saldo: <%= number_to_currency account.balance || 0.0 %></h4>
+
+<table class="table table-striped">
+  <thead>
+    <th><%= Transaction.human_attribute_name :created_at %></th>
+    <th><%= Movement.human_attribute_name :bought_at %></th>
+    <th><%= Movement.human_attribute_name :kind %></th>
+    <th><%= Transaction.human_attribute_name :credit %></th>
+    <th><%= Transaction.human_attribute_name :debit %></th>
+  </thead>
+  <tbody>
+    <% @transactions.each do |transaction| %>
+      <% m = transaction.movement %>
+      <% modified = modificated_warning_if_needed(transaction) %>
+      <tr class="<%= 'error' if modified %> <%= 'strike' if transaction.revoked? %>">
+        <td>
+          <%= link_to l(transaction.created_at, format: :minimal), m  %>
+          <%= modified %>
+        </td>
+        <td><%= link_to l(m.bought_at), m if m.bought_at %></td>
+        <td><%= show_movement_kind m, false  %></td>
+        <td><%= number_to_currency transaction.amount if transaction.credit?  %></td>
+        <td><%= number_to_currency transaction.amount if transaction.debit?  %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% param_name ||= 'page' %>
+<%= pagination_links @transactions, param_name: param_name %>

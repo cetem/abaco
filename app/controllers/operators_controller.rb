@@ -3,7 +3,12 @@ class OperatorsController < ApplicationController
   before_action :authorize_write, except: [:index, :show]
 
   def index
-    @operators = Operator.get(:current_workers)
+    @remote_operators = RemoteOperator.get(:current_workers)
+    @admin_operators = @remote_operators.map { |o| o['abaco_id'] if o['admin'] }.compact
+
+    @operators = Operator.where(
+      id: @remote_operators.map {|o| o['abaco_id'] }
+    ).order(name: :asc)
 
     respond_to do |format|
       format.html
@@ -21,27 +26,27 @@ class OperatorsController < ApplicationController
 
     @shifts = OperatorShift.convert_hash_in_open_struct(@shifts)
 
+    @transactions = @operator.transactions.preload(:movement).order(created_at: :desc).page(params[:transactions_page])
+
     @paginate_size = @shifts.size
 
-    if can? :read, Outflow
-      @movements = Outflow.for_operator(@operator.id).order(bought_at: :desc).paginate(
-        page: params[:movements_page]
-      )
+    if can? :read, Movement
+      @movements = @operator.movements.order(bought_at: :desc).page(params[:movements_page])
     end
   end
 
   def new_shift
-    @operator = Operator.find(params[:id])
+    @operator = RemoteOperator.find(params[:id])
     @operator_shift = OperatorShift.new(as_admin: @operator.admin)
   end
 
   def edit_shift
-    @operator = Operator.find(params[:operator_id])
+    @operator = RemoteOperator.find(params[:operator_id])
     @operator_shift = OperatorShift.find(params[:id])
   end
 
   def create_shift
-    @operator = Operator.find(params[:id])
+    @operator = RemoteOperator.find(params[:id])
 
     @operator_shift = OperatorShift.new(
       operator_shift_params.merge(user_id: @operator.id)
@@ -55,7 +60,7 @@ class OperatorsController < ApplicationController
   end
 
   def update_shift
-    @operator = Operator.find(params[:operator_id])
+    @operator = RemoteOperator.find(params[:operator_id])
 
     @operator_shift = OperatorShift.find(params[:id])
     @operator_shift.attributes.merge! operator_shift_params
@@ -65,6 +70,14 @@ class OperatorsController < ApplicationController
     else
       render 'edit_shift', notice: t('view.operators.shift_can_not_be_updated')
     end
+  end
+
+  def import
+    imported = ::Operator.import_workers(
+      ::RemoteOperator.get(:current_workers)
+    )
+
+    redirect_to operators_path, notice: t('view.operators.imported_count', count: imported.size)
   end
 
   private

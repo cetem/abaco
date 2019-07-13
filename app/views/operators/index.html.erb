@@ -1,7 +1,6 @@
 <% if @operators.empty? %>
   <%= render 'shared/empty_index' %>
 <% else %>
-
   <div class="readonly-data">
     <table class="table table-striped">
       <thead>
@@ -14,9 +13,8 @@
       <tbody>
         <% @operators.each do |o| %>
           <tr>
-            <td><%= link_to o['label'], operator_path(o['id']) %></td>
-            <td><%= o['admin'] ? t('view.operators.administrator') : 
-              t('view.operators.operator') %></td>
+            <td><%= link_to o, operator_path(o) %></td>
+            <td><%= @admin_operators.include?(o.id) ? t('view.operators.administrator') : t('view.operators.operator') %></td>
           </tr>
         <% end %>
       </tbody>
@@ -25,4 +23,5 @@
 <% end %>
 
 <nav class="form-actions">
+  <%= link_to t('view.operators.re_import'), import_operators_path, method: :patch, class: 'btn btn-primary pull-right' %>
 </nav>

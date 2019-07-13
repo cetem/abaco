@@ -1,0 +1,11 @@
+<% if f&.object&.errors[:base].present? %>
+  <div class="alert alert-danger">
+    <ul>
+      <% f.object.errors[:base].each do |error| %>
+        <li>
+          <%= error %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

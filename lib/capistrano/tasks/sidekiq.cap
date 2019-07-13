@@ -3,7 +3,7 @@ namespace :sidekiq do
   task :stop do
     on roles(:sidekiqers) do
       within current_path do
-        execute :systemctl, :stop, 'unicorn@abaco.service'
+        execute :service, :sidekiq, :stop
       end
     end
   end
@@ -12,7 +12,7 @@ namespace :sidekiq do
   task :start do
     on roles(:sidekiqers) do
       within current_path do
-        execute :systemctl, :start, 'unicorn@abaco.service'
+        execute :service, :sidekiq, :start
       end
     end
   end
@@ -21,7 +21,7 @@ namespace :sidekiq do
   task :restart do
     on roles(:sidekiqers) do
       within current_path do
-        execute :systemctl, :restart, 'unicorn@abaco.service'
+        execute :service, :sidekiq, :restart
       end
     end
   end

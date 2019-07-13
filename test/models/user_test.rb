@@ -104,29 +104,29 @@ class UserTest < ActiveSupport::TestCase
       lastname { "magick_lastname" }
     }
 
-    users = User.magick_search('magick')
+    users = User.filtered_list('magick')
 
     assert_equal 9, users.count
     assert users.all? { |u| u.to_s =~ /magick/ }
 
-    users = User.magick_search('magick_name')
+    users = User.filtered_list('magick_name')
 
     assert_equal 6, users.count
     assert users.all? { |u| u.to_s =~ /magick_name/ }
 
-    users = User.magick_search('magick_name magick_lastname')
+    users = User.filtered_list('magick_name magick_lastname')
 
     assert_equal 1, users.count
     assert users.all? { |u| u.to_s =~ /magick_name magick_lastname/ }
 
-    users = User.magick_search(
+    users = User.filtered_list(
       "magick_name #{I18n.t('magick_columns.or').first} magick_lastname"
     )
 
     assert_equal 9, users.count
     assert users.all? { |u| u.to_s =~ /magick_name|magick_lastname/ }
 
-    users = User.magick_search('nobody')
+    users = User.filtered_list('nobody')
 
     assert users.empty?
   end

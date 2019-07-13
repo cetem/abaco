@@ -1,0 +1,14 @@
+<div class="readonly-data">
+  <h2><%= @box %></h2>
+
+  <p>
+    <strong><%= Provider.human_attribute_name 'name' %></strong>:
+    <%= @box.name %>
+  </p>
+
+  <%= render "shared/current_account", account: @box %>
+</div>
+<div class="form-actions">
+  <%= link_to t('label.edit'), edit_box_path(@box) if can? :update, @box %> |
+  <%= link_to t('label.list'), boxes_path %>
+</div>

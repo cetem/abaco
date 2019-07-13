@@ -16,7 +16,7 @@ class OperatorsControllerTest < ActionController::TestCase
 
   test "should show operator" do
     [:upfront, :to_favor, :refunded, :payoff].each do |kind|
-      Fabricate(:outflow, kind: Outflow::KIND[kind], operator_id: 1)
+      Fabricate(:movement, kind: kind, operator_id: 1)
     end
 
     get :show, id: @user.id

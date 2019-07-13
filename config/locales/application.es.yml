@@ -2,25 +2,30 @@
 es:
   activerecord:
     attributes:
-      operator_shifts:
-        finish: "Final"
-        start: "Comienzo"
-      outflow:
+      box:
+        default_cashbox: "Caja por defecto para pagos"
+      movement:
         amount: "Cantidad"
-        bill: "Factura"
+        bill: "Factura/Comprobante"
         bought_at: "Fecha"
         charged_by: "Cargado por"
         comment: "Comentario"
         file: "Archivo"
         finish_shift: "Turnos Hasta"
-        kind: "Tipo de salida"
+        kind: "Tipo de movimiento"
         operator_id: "Operador"
         provider_id: "Proveedor"
         start_shift: "Turnos Desde"
         user_id: "Usuario"
+      operator_shifts:
+        finish: "Final"
+        start: "Comienzo"
       setting:
         title: "Título"
         value: "Valor"
+      transaction:
+        credit: "Crédito"
+        debit: "Débito"
       user:
         email: "Correo"
         lastname: "Apellido"
@@ -33,15 +38,27 @@ es:
           other: "Perfiles"
     errors:
       models:
+        movement:
+          attributes:
+            base:
+              at_least_one_account_needed: "Se necesita al menos una cuenta de origen o destino"
+              operator_needed: "Se necesita un operario"
+              provider_needed_for_bill: "Se necesita un proveedor para cargar factura"
         provider:
           attributes:
             name:
               detailed_taken: "de proveedor ya creado, por favor busquelo."
     models:
+      box:
+        one: "Caja/Banco"
+        other: "Cajas/Bancos"
+      movement:
+        one: "Movimiento"
+        other: "Movimientos"
+      operator:
+        one: "Operador"
+        other: "Operadores"
       operator_shifts: "Turno"
-      outflow:
-        one: "Salida"
-        other: "Salidas"
       provider:
         one: "Proveedor"
         other: "Proveedores"
@@ -69,16 +86,19 @@ es:
     loading: "Cargando..."
     new: "Nuevo"
     "no": "No"
+    remove: "Quitar"
     search: "Buscar"
     show: "Ver"
     "yes": "Si"
   menu:
+    accounts: "Cuentas"
     actions:
       logout: "Salir de la aplicación"
+    boxes: "Cajas/Bancos"
     incentives: "Incentivos"
     monthly_info: "Mensual"
+    movements: "Movimientos"
     operators: "Operadores"
-    outflows: "Egresos"
     providers: "Proovedores"
     reports: "Reportes"
     retroactive: "Retroactivos"
@@ -91,42 +111,34 @@ es:
     day: "Día"
     quantity: "Cantidad"
   view:
+    boxes:
+      correctly_created: "Caja agregado correctamente."
+      correctly_updated: "Caja actualizado correctamente."
+      edit_title: "Modificar caja"
+      empty_index:
+        html: 'No se ha creado ningún caja hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nueva caja</span>'
+      index_title: "Listado de cajas"
+      new: "Nueva caja"
+      new_title: "Nueva caja"
+      show_title: "Detalles de caja"
+      stale_object_error: "La caja no pudo ser actualizada, intente nuevamente."
     generic:
       empty_index:
         html: "No hay ningún elemento por el momento"
       empty_search:
         title:
           html: "La búsqueda de <span class=\"label label-inverse\">%{search}</span> no obtuvo ningún resultado."
-    operators:
-      administrator: "Encargado"
-      as_admin: "Encargado?"
-      charge: "Cargo"
-      create_shift: "Crear Turno"
-      finish: "Final"
-      full_name: "Nombre y apellido"
-      index_title: "Listado de Operarios"
-      movement_kind: "Tipo Movimiento"
-      movements: "Movimientos"
-      operator: "Operador"
-      paid: "Pagado?"
-      shift_can_not_be_created: "No se pudo crear el turno, revise los campos"
-      shift_created: "Turno creado correctamente."
-      shift_duration: "Duración del turno"
-      shifts: "Turnos"
-      show_title: "Detalle de operario"
-      start: "Comienzo"
-      without_movements: "No se ha registrado ningún movimiento hasta el momento"
-      without_upfronts: "Sin adelantos."
-    outflows:
-      correctly_created: "Egreso agregado correctamente."
-      correctly_updated: "Egreso actualizado correctamente."
+    movements:
+      correctly_created: "Movimiento agregado correctamente."
+      correctly_updated: "Movimiento actualizado correctamente."
       credits_canceled: "Créditos cancelados"
       current_credit: "Saldo"
-      edit_title: "Modificar egreso"
+      edit_title: "Modificar movimiento"
+      from_to_account: "Entre cuentas"
       generated_credit: "Crédito generado"
       index:
-        html: 'No se ha creado ningún egreso hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo egreso</span>'
-      index_title: "Listado de egresos"
+        html: 'No se ha creado ningún movimiento hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo movimiento</span>'
+      index_title: "Listado de movimientos"
       kind:
         cca_gral: "General CCA"
         cetem_gral: "General CETEM"
@@ -136,20 +148,22 @@ es:
         paper: "Papel"
         payoff: "Pago"
         refunded: "Arreglado"
-        to_favor: "A Favor"
+        to_favor: "A Favor (Operario)"
+        to_favor_r: "A favor (arreglado)"
         toner: "Tóner"
         tops_rings: "Tapas y anillos"
-        upfront: "Adelanto"
+        transfer: "Transferencia"
+        upfront: "Adelanto (Operario)"
+        upfront_r: "Adelanto (Arreglado)"
       monthly_by_year: "Facturas Mensuales - %{year}"
       movement_kind: "Tipo de movimiento"
-      new_title: "Nuevo egreso"
+      new_title: "Nuevo movimiento"
       operators: "Operadores"
       pay_detail_between: "Detalle de pagos entre [%{range}]"
       reajust_of: "Reajuste de <a href=\"%{path}\">%{id}</a>"
-      remove_provider: "Quitar Proveedor"
       reports:
         amount: "Monto"
-        bill: "Nº de factura"
+        bill: "Nº de factura/Comprobante"
         date: "Fecha"
         details: "Detalles"
         provider: "Proveedor"
@@ -174,18 +188,43 @@ es:
         title: "Turnos pendientes de pago"
         total_to_pay: "Total a pagar"
         wait_paying: "Pagando..."
-      show_title: "Detalle de egreso"
-      stale_object_error: "El egreso no pudo ser actualizado, intente nuevamente."
+      show_title: "Detalle de movimiento"
+      stale_object_error: "El movimiento no pudo ser actualizado, intente nuevamente."
       suspicious_shifts: "Turnos sospechosos con muchas horas"
-      update_outflow: "Actualizar egreso"
+      update_movement: "Actualizar movimiento"
       upfronts: "Adelantos"
       with_filter: "Filtrado por: %{filter}"
       with_incentive:
         "false": "Sin incentivo"
         to_question: "Con incentivo?"
         "true": "Con incentivo"
+    operators:
+      administrator: "Encargado"
+      as_admin: "Encargado?"
+      charge: "Cargo"
+      create_shift: "Crear Turno"
+      finish: "Final"
+      full_name: "Nombre y apellido"
+      imported_count: "Operarios importados: %{count}"
+      index_title: "Listado de Operarios"
+      movement_kind: "Tipo Movimiento"
+      movements: "Movimientos"
+      operator: "Operador"
+      paid: "Pagado?"
+      re_import: "Actualizar operarios"
+      shift_can_not_be_created: "No se pudo crear el turno, revise los campos"
+      shift_created: "Turno creado correctamente."
+      shift_duration: "Duración del turno"
+      shifts: "Turnos"
+      show_title: "Detalle de operario"
+      start: "Comienzo"
+      transactions: "Cuenta corriente"
+      without_movements: "No se ha registrado ningún movimiento hasta el momento"
+      without_transaction: "Sin transacciones"
+      without_transactions: "Sin transacciones"
+      without_upfronts: "Sin adelantos."
     providers:
-      cannot_be_destroyed: "Proveedor '%{name}' no puede borrarse, tiene movimientos."
+      cannot_be_destroyed: "Proveedor \"%{name}\" no puede borrarse, tiene movimientos."
       correctly_created: "Proveedor agregado correctamente."
       correctly_destroyed: "Proveedor eliminado correctamente."
       correctly_updated: "Proveedor actualizado correctamente."
@@ -244,3 +283,5 @@ es:
       stale_object_error: "El usuario no pudo ser actualizado, intente nuevamente."
       update_password: "Actualizar contraseña"
       update_profile: "Actualizar datos"
+    versions:
+      have_changes: "Tiene modificaciones"

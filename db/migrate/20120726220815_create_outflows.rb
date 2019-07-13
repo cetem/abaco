@@ -10,7 +10,7 @@ class CreateOutflows < ActiveRecord::Migration
 
       t.timestamps
     end
-    
+
     add_index :outflows, :user_id
     add_index :outflows, :operator_id
   end

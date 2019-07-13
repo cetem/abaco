@@ -1,0 +1,20 @@
+<% if can? :report, :all %>
+  <% reports_submenu = content_tag(:li, link_to(t('menu.monthly_info'), reports_monthly_info_path)) %>
+  <% reports_submenu += content_tag(:li, link_to(t('menu.incentives'), reports_incentives_between_path)) %>
+  <% reports_submenu += content_tag(:li, link_to(t('menu.retroactive'), reports_retroactive_between_path)) %>
+  <% dropdown = link_to(
+    '#',
+    class: 'dropdown-toggle',
+    data: { toggle: 'dropdown' }
+  ) do %>
+    <%= t('menu.reports') %>
+    <b class="caret"></b>
+  <% end %>
+
+  <% dropdown += content_tag(:ul, reports_submenu, class: 'dropdown-menu') %>
+
+  <%= content_tag(
+    :li, dropdown,
+    class: 'dropdown' + (controller_name == 'reports' ? ' active' : '')
+  ) %>
+<% end %>

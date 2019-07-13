@@ -1,24 +1,31 @@
 <% movements_page = params[:movements_page] %>
+<% transactions_page = params[:transactions_page] %>
 <div class='readonly-data'>
   <h2><%= @operator.label %></h2>
 
   <div class='row-fluid'>
     <div class="tabbable">
       <ul class="nav nav-tabs">
-        <li class="<%= 'active' unless movements_page %>">
+        <li class="<%= 'active' unless movements_page || transactions_page %>">
           <%= link_to t('view.operators.shifts'), '#shifts',
             data: { toggle: 'tab' } %>
         </li>
-        <% if can? :read, Outflow  %>
+        <% if can? :read, Movement  %>
           <li class="<%= 'active' if movements_page %>">
             <%= link_to(t('view.operators.movements'), '#movements',
+              data: { toggle: 'tab' }) %>
+          </li>
+        <% end %>
+        <% if can? :read, Transaction  %>
+          <li class="<%= 'active' if transactions_page %>">
+            <%= link_to(t('view.operators.transactions'), '#transactions',
               data: { toggle: 'tab' }) %>
           </li>
         <% end %>
       </ul>
 
       <div class="tab-content">
-        <div class="tab-pane <%= 'active' unless movements_page %>" id="shifts">
+        <div class="tab-pane <%= 'active' unless movements_page || transactions_page %>" id="shifts">
           <table class="table table-striped">
             <thead>
               <tr>
@@ -47,7 +54,7 @@
           <%= prehistoric_pagination_links %>
         </div>
 
-        <% if can? :read, Outflow  %>
+        <% if can? :read, Movement %>
           <div class="tab-pane <%= 'active' if movements_page %>" id="movements">
             <% if @movements.try(:any?) %>
               <%= render "movements" %>
@@ -58,13 +65,24 @@
             <% end %>
           </div>
         <% end %>
+        <% if can? :read, Transaction %>
+          <div class="tab-pane <%= 'active' if transactions_page %>" id="transactions">
+            <% if @transactions.try(:any?) %>
+              <%= render "shared/current_account", param_name: :transactions_page, account: @operator %>
+            <% else %>
+              <div class="alert">
+                <%= t('view.operators.without_transactions') %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
 </div>
 
 <div class="form-actions">
-  <%= link_to t('view.operators.create_shift'), new_operator_shift_path(@operator),
+  <%= link_to t('view.operators.create_shift'), new_shift_operator_path(@operator),
     class: 'btn btn-primary' %>
 </div>
 

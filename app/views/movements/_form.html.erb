@@ -1,0 +1,125 @@
+<%= simple_form_for(@movement) do |f| %>
+  <%= f.error_notification %>
+  <%= render 'shared/base_form_errors', f: f %>
+
+  <div class="form-inputs">
+    <div class="row-fluid">
+      <div class="span3">
+        <div class="row-fluid">
+          Tipo de movimiento
+        </div>
+        <div class="row-fluid">
+          <%= f.input :kind, label: false,
+            collection: kind_selector_for_movement, prompt: false %>
+        </div>
+      </div>
+
+      <div class="span4 js-autocomplete-wrapper">
+        <div class="row-fluid">
+          Cuenta Origen
+          <%= link_to_remove '#',
+            title: t('label.remove'),
+            class: 'clean-autocomplete' %>
+        </div>
+        <div class="row-fluid">
+          <div class="span4">
+            <% from_account_present = @movement.try(:from_account).present? %>
+            <%= f.input :from_account_type,
+              label: false,
+              collection: movement_account_types(@movement.from_account_type),
+              prompt: false,
+              include_blank: !from_account_present,
+              readonly: from_account_present,
+              input_html: { class: 'span12' } %>
+          </div>
+          <div class="span8">
+            <%= f.input :from_account_autocomplete,
+              label: false,
+              value: @movement.try(:from_account),
+              input_html:  {
+                class: 'autocomplete-field',
+                readonly: from_account_present,
+                data: {
+                  autocomplete_class_selector: '#movement_from_account_type',
+                  autocomplete_id_target: '#movement_from_account_id',
+                  autocomplete_url: autocomplete_for_association_movements_path(format: :json),
+                  autocomplete_readonly: true
+                }
+              } %>
+
+            <%= f.input :from_account_id, as: :hidden %>
+          </div>
+        </div>
+      </div>
+      <div class="span4 js-autocomplete-wrapper">
+        <div class="row-fluid">
+          Cuenta de destino
+          <%= link_to_remove '#',
+            title: t('label.remove'),
+            class: 'clean-autocomplete' %>
+        </div>
+        <div class="row-fluid">
+          <div class="span4">
+            <% to_account_present = @movement.try(:to_account).present? %>
+            <%= f.input :to_account_type,
+              label: false,
+              collection: movement_account_types(@movement.to_account_type),
+              prompt: false,
+              include_blank: !to_account_present,
+              readonly: to_account_present,
+              input_html: { class: 'span12' } %>
+          </div>
+          <div class="span8">
+            <%= f.input :to_account_autocomplete,
+              label: false,
+              input_html: {
+                value: @movement.try(:to_account),
+                class: 'autocomplete-field',
+                readonly: to_account_present,
+                data: {
+                  autocomplete_class_selector: '#movement_to_account_type',
+                  autocomplete_id_target: '#movement_to_account_id',
+                  autocomplete_url: autocomplete_for_association_movements_path(format: :json),
+                  autocomplete_readonly: true
+                }
+              } %>
+
+            <%= f.input :to_account_id, as: :hidden %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="row-fluid">
+      <div class="span4">
+        <%= f.input :amount, as: :string %>
+      </div>
+      <div class="span3">
+        <%= f.input :bought_at, as: :date_picker %>
+      </div>
+      <div class="span3">
+        <%= f.input :bill %>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span4">
+        <%= f.input :file %>
+        <%= f.input :file_cache, as: :hidden %>
+      </div>
+      <div class="span4">
+        <%= f.input :charged_by %>
+      </div>
+    </div>
+    <%= f.input :comment, input_html: { rows: 5, class: 'span11' } %>
+  </div>
+
+
+  <div class="form-actions">
+    <div class="pull-right"><%= yield :form_actions %></div>
+    <%= f.input :lock_version, as: :hidden %>
+    <%= f.button :submit, class: 'btn btn-primary' %>
+  </div>
+<% end %>

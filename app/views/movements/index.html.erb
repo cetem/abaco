@@ -1,0 +1,63 @@
+<% if @movements.empty? %>
+  <%= render 'shared/empty_index' %>
+<% else %>
+  <div class="row">
+    <div class="span12">
+      <% if params[:filter] %>
+        <h2>
+          <%= t('view.movements.with_filter',
+                filter: t("view.movements.kind.#{params[:filter]}")) %>
+        </h2>
+      <% end %>
+      <table class="table resource-list">
+        <thead>
+          <tr>
+            <th><%= Movement.human_attribute_name 'bought_at' %></th>
+            <th><%= Movement.human_attribute_name 'kind' %></th>
+            <th><%= Movement.human_attribute_name 'amount' %></th>
+            <th><%= t('view.movements.from_to_account') %></th>
+            <th colspan="2"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @movements.each do |movement| %>
+            <tr class="<%= 'strike' if movement.revoked? %>">
+              <td><%= l movement.bought_at if movement.bought_at %></td>
+              <td><%= show_movement_kind movement %></td>
+              <td><%= number_to_currency movement.amount %></td>
+              <td><%= [
+                link_to_account(movement.from_account),
+                link_to_account(movement.to_account)
+              ].join(' => ').html_safe %></td>
+              <td><%= link_to_show movement %></td>
+              <td>
+                <%= link_to_edit(
+                  edit_movement_path(movement)
+                ) if can? :update, movement %>
+              </td>
+              <td>
+                <% if can?(:destroy, movement) && !movement.revoked? %>
+                  <%= link_to_destroy revoke_movement_path(movement.id) %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <%= pagination_links(@movements) %>
+<% end %>
+
+<div class="form-actions">
+  <div class="pull-right">
+    <%= link_to t('view.movements.shifts.pay_shifts'),
+      show_all_pay_pending_shifts_movements_path, class: 'btn btn-primary' %>
+  </div>
+  <%= link_to(
+    t('view.movements.new', default: :'label.new'),
+    new_movement_path, class: 'btn btn-primary'
+  ) if can? :create, Movement %>
+</div>

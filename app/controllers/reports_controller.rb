@@ -4,7 +4,7 @@ class ReportsController < ApplicationController
   def monthly_info
     if params[:reports] && (date = params[:reports][:date]).present?
       date = Date.parse(date)
-      ExportWorker.perform_async(Outflow::MonthlyReport, date: date)
+      ExportWorker.perform_async(Movement::MonthlyReport, date: date)
 
       redirect_to reports_monthly_info_path, notice: ':+1:'
     end
@@ -57,7 +57,7 @@ class ReportsController < ApplicationController
       if start.present? && finish.present?
         @new_operator_amount = interval[:operator_amount].to_f
         @new_admin_amount = interval[:admin_amount].to_f
-        @operators_shifts = Outflow.operators_shifts_between(start, finish)
+        @operators_shifts = Movement.operators_shifts_between(start, finish)
       end
     end
 

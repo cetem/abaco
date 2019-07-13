@@ -11,6 +11,7 @@ class ProvidersController < ApplicationController
   # GET /providers/1
   def show
     @title = t('view.providers.show_title')
+    @transactions = @provider.transactions.preload(:movement).order(id: :desc).page(params[:page])
   end
 
   # GET /providers/new

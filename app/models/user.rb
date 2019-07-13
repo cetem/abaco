@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
-  include Users::MagickColumns
   include Users::Roles
+  include Users::Search
 
   has_paper_trail
 
@@ -16,27 +16,9 @@ class User < ActiveRecord::Base
     allow_blank: true
 
   # Relaciones
-  has_many :outflows
-
-  def initialize(attributes = nil, options = {})
-    super(attributes)
-
-    self.role ||= :regular
-  end
+  has_many :movements
 
   def to_s
     [self.name, self.lastname].compact.join(' ')
-  end
-
-  def role
-    self.roles.first.try(:to_sym)
-  end
-
-  def role=(role)
-    self.roles = [role]
-  end
-
-  def self.filtered_list(query)
-    query.present? ? magick_search(query) : all
   end
 end

@@ -1,0 +1,85 @@
+<div class="readonly-data">
+  <% date = @movement.bought_at ? l(@movement.bought_at) : nil %>
+  <h2 class="<%= 'strike' if @movement.revoked? %>"><%= raw [show_movement_kind(@movement), date].join(' - ') %></h2>
+
+  <table class="table table-compress">
+    <thead>
+      <th>Cuenta de Origen</th>
+      <th>Cuenta de Destino</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <%= show_movement_account(:from, @movement) %>
+        </td>
+        <td>
+          <%= show_movement_account(:to, @movement) %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr />
+
+  <% if @movement.with_incentive %>
+    <h4><%= I18n.t("view.movements.with_incentive.true") %></h4>
+  <% end %>
+
+  <p>
+    <strong><%= Movement.human_attribute_name 'user_id' %></strong>:
+    <%= @movement.user %>
+  </p>
+  <p>
+    <strong><%= Movement.human_attribute_name 'charged_by' %></strong>:
+    <%= @movement.charged_by %>
+  </p>
+
+  <% if @movement.bill %>
+    <p>
+      <strong><%= Movement.human_attribute_name 'bill'  %></strong>:
+      <%= @movement.bill %>
+    </p>
+  <% end %>
+
+  <% if false # @movement.to_provider %>
+    <p>
+      <strong><%= Movement.human_attribute_name 'provider'  %></strong>:
+      <%= @movement.provider %>
+    </p>
+  <% end %>
+
+  <p>
+    <strong><%= Movement.human_attribute_name 'amount' %></strong>:
+    <%= number_to_currency @movement.amount %>
+  </p>
+
+  <% if @movement.file && @movement.file.try(:file) %>
+    <p>
+      <strong><%= Movement.human_attribute_name 'file' %></strong>:
+      <%= link_to_file @movement.file %>
+    </p>
+  <% end %>
+
+  <% start = @movement.start_shift %>
+  <% finish = @movement.finish_shift %>
+  <% if start || finish %>
+    <p>
+      <strong><%= Movement.human_attribute_name 'start_shift' %></strong>:
+      <%= I18n.l(start) if start %>
+    </p>
+    <p>
+      <strong><%= Movement.human_attribute_name 'finish_shift' %></strong>:
+      <%= I18n.l(finish) if finish %>
+    </p>
+  <% end %>
+
+  <p>
+    <strong><%= Movement.human_attribute_name 'comment' %></strong>:
+    <blockquote><%= simple_format @movement.comment %></blockquote>
+  </p>
+</div>
+<div class="form-actions">
+  <%= link_to t('label.edit'), edit_movement_path(@movement) if can? :update, @movement %> |
+  <%= link_to t('label.list'), movements_path %>
+  <%= link_to_destroy @movement if can? :destroy, @movement %>
+</div>

@@ -9,17 +9,17 @@
 
 
 <div class="form-inputs">
-  <h1><%= t('view.outflows.shifts.retroactive_title') %></h1>
+  <h1><%= t('view.movements.shifts.retroactive_title') %></h1>
 
   <%= simple_form_for :interval, html: { method: :get } do |f| %>
 
     <div class="row-fluid">
       <div class="span2">
-        <%= t('view.outflows.shifts.operator_amount') %>
+        <%= t('view.movements.shifts.operator_amount') %>
       </div>
       <div class="span1"> </div>
       <div class="span2">
-        <%= t('view.outflows.shifts.admin_amount') %>
+        <%= t('view.movements.shifts.admin_amount') %>
       </div>
     </div>
     <div class="row-fluid">
@@ -52,8 +52,8 @@
     <table class="table">
       <thead>
         <tr>
-          <th><%= t('view.outflows.shifts.begin') %></th>
-          <th><%= t('view.outflows.shifts.finish') %></th>
+          <th><%= t('view.movements.shifts.begin') %></th>
+          <th><%= t('view.movements.shifts.finish') %></th>
           <th></th>
         </tr>
       </thead>
@@ -66,7 +66,7 @@
           <td><%= f.input :to, as: :date_picker, label: false, input_html: {
             value: interval[:to]
           } %></td>
-          <td><%= f.button :submit, t('view.outflows.shifts.search') %></td>
+          <td><%= f.button :submit, t('view.movements.shifts.search') %></td>
         </tr>
       </tbody>
     </table>
@@ -79,9 +79,9 @@
       <thead>
         <tr>
           <th><%= t('view.operators.operator') %></th>
-          <th><%= t('view.outflows.shifts.operator_amount') %></th>
-          <th><%= t('view.outflows.shifts.admin_amount') %></th>
-          <th><%= t('view.outflows.shifts.earnings') %></th>
+          <th><%= t('view.movements.shifts.operator_amount') %></th>
+          <th><%= t('view.movements.shifts.admin_amount') %></th>
+          <th><%= t('view.movements.shifts.earnings') %></th>
         </tr>
       </thead>
       <tbody>

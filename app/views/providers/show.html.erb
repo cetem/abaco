@@ -5,6 +5,8 @@
     <strong><%= Provider.human_attribute_name 'name' %></strong>:
     <%= @provider.name %>
   </p>
+
+  <%= render "shared/current_account", account: @provider %>
 </div>
 <div class="form-actions">
   <%= link_to t('label.edit'), edit_provider_path(@provider) if can? :update, @provider %> |

@@ -14,22 +14,22 @@ class DriveWorker
 
     _yes = I18n.t('label.yes')
     _no = I18n.t('label.no')
-    outflow_titles = [
-      Outflow.human_attribute_name('id'),
-      Outflow.human_attribute_name('kind'),
-      Outflow.human_attribute_name('amount'),
-      Outflow.human_attribute_name('bought_at')
+    movement_titles = [
+      Movement.human_attribute_name('id'),
+      Movement.human_attribute_name('kind'),
+      Movement.human_attribute_name('amount'),
+      Movement.human_attribute_name('bought_at')
     ]
 
 
     csv = []
-    csv << [I18n.t('view.outflows.shifts.shifts_for', operator: label)]
+    csv << [I18n.t('view.movements.shifts.shifts_for', operator: label)]
     csv << [
-      Outflow.human_attribute_name('id'),
-      Outflow.human_attribute_name('start'),
-      Outflow.human_attribute_name('finish'),
-      Outflow.human_attribute_name('as_admin'),
-      I18n.t('view.outflows.shifts.hours')
+      Movement.human_attribute_name('id'),
+      Movement.human_attribute_name('start'),
+      Movement.human_attribute_name('finish'),
+      Movement.human_attribute_name('as_admin'),
+      I18n.t('view.movements.shifts.hours')
     ]
 
     shifts.each do |s|
@@ -49,25 +49,25 @@ class DriveWorker
 
     csv << []
     if credits
-      csv << [I18n.t('view.outflows.credits_canceled')]
-      csv << outflow_titles
+      csv << [I18n.t('view.movements.credits_canceled')]
+      csv << movement_titles
 
       csv += credits
       csv << []
     end
 
-    csv << outflow_titles
+    csv << movement_titles
     csv << pay
     csv << []
 
     if new_upfront
-      csv << [I18n.t('view.outflows.generated_credit')]
-      csv << outflow_titles
+      csv << [I18n.t('view.movements.generated_credit')]
+      csv << movement_titles
       csv << new_upfront
     end
 
     GDrive.upload_spreadsheet_v3(
-      I18n.t('view.outflows.pay_detail_between', range: params['range']),
+      I18n.t('view.movements.pay_detail_between', range: params['range']),
       csv,
       { label: label }
     )

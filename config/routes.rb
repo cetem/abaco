@@ -1,33 +1,45 @@
 Rails.application.routes.draw do
-  resources :providers
-  resources :providers
   require 'sidekiq/web'
 
   Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_token]
   Sidekiq::Web.set :sessions, Rails.application.config.session_options
   mount Sidekiq::Web => '/sidekiq'
 
-  get 'operators/:id' => 'operators#show', as: 'operator'
-  get 'operators' => 'operators#index', as: 'operators'
-  get 'operators/:id/new_shift' => 'operators#new_shift',
-    as: 'new_operator_shift'
-  post 'operators/:id/create_shift' => 'operators#create_shift',
-    as: 'create_operator_shift'
+  # get 'operators/:id' => 'operators#show', as: 'operator'
+  # get 'operators' => 'operators#index', as: 'operators'
+
+  resources :operators, only: [:index, :show] do
+    patch :import, on: :collection
+    member do
+      get :new_shift
+      post :create_shift
+    end
+    # resources :shifts, only: [:show, :edit]
+  end
+
   get 'operators/:operator_id/shifts/:id/edit' => 'operators#edit_shift',
     as: 'edit_operator_shift'
   patch 'operators/:operator_id/shifts/:id' => 'operators#update_shift',
     as: 'update_operator_shift'
+
   get 'downloads' => 'application#downloads', as: 'downloads'
 
   resources :settings
   resources :providers
+  resources :boxes
 
-  resources :outflows do
+  # Outflow history urls
+  get 'outflows/:id' => 'movements#show'
+
+  resources :movements do
     collection do
-      get :autocomplete_for_operator
+      get :autocomplete_for_association
       get :autocomplete_for_provider
       get :show_all_pay_pending_shifts
       patch :pay_shifts
+    end
+    member do
+      delete :revoke
     end
   end
 

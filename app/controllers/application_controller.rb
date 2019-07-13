@@ -62,7 +62,7 @@ class ApplicationController < ActionController::Base
     elsif current_user.shift_auditor?
       operators_path
     else
-      outflows_path
+      movements_path
     end
   end
 end

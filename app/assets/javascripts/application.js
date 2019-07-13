@@ -25,6 +25,6 @@
 //= require date_pickers
 //= require endless_pagination
 //= require mobile
-//= require outflows
-//= require outflows_total_pay
+//= require movements
+//= require movements_total_pay
 //= require users
