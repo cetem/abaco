@@ -6,6 +6,7 @@ module GDrive
       session = GoogleDrive::Session.from_service_account_key(gdrive[:json])
 
       s = session.spreadsheet_by_title(title)
+      already_created = s.present?
       s ||= session.create_spreadsheet(title)
 
       month = kwargs[:month]
@@ -24,22 +25,17 @@ module GDrive
       ws.update_cells(1, 1, array)
       ws.save
 
-
-      puts "https://docs.google.com/spreadsheets/d/#{s.key}/edit#gid=#{ws.gid}"
-      puts "https://docs.google.com/spreadsheets/d/#{s.key}/edit#gid=#{ws.gid}"
-      puts "https://docs.google.com/spreadsheets/d/#{s.key}/edit#gid=#{ws.gid}"
-      puts "https://docs.google.com/spreadsheets/d/#{s.key}/edit#gid=#{ws.gid}"
-      puts "https://docs.google.com/spreadsheets/d/#{s.key}/edit#gid=#{ws.gid}"
-
       sleep 10
-      gdrive[:roles].each do |role, users|
-        [users].flatten.each do |user|
-          perms =  Google::Apis::DriveV3::Permission.new(
-            email_address: user, type: 'user', role: role
-          )
-          session.drive.create_permission(
-            s.key, perms, transfer_ownership: (role == 'owner')
-          )
+      unless already_created
+        gdrive[:roles].each do |role, users|
+          [users].flatten.each do |user|
+            perms =  Google::Apis::DriveV3::Permission.new(
+              email_address: user, type: 'user', role: role
+            )
+            session.drive.create_permission(
+              s.key, perms, transfer_ownership: (role == 'owner')
+            )
+          end
         end
       end
 

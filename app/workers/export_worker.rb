@@ -5,6 +5,7 @@ class ExportWorker
   sidekiq_options queue: :low
 
   def perform(task_name, params)
+    byebug
     case task_name
       when Movement::MonthlyReport
         date = Date.parse(params['date'])

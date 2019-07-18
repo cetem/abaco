@@ -29,7 +29,11 @@ class Movement < ActiveRecord::Base
     to_favor_r:  'to_favor_r',
     transfer:    'transfer'
   }
-  NO_OPERATOR_KINDS = kinds.except(*%i(upfront to_favor refunded payoff)).keys
+  OPERATOR_KINDS = [
+    :upfront, :to_favor, :refunded, :payoff,
+    :upfront_r, :to_favor_r
+  ].freeze
+  NO_OPERATOR_KINDS = kinds.except(*OPERATOR_KINDS).keys.freeze
 
 
   # Attributos no persistentes

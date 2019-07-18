@@ -2,22 +2,13 @@ module Movements::Reports
   extend ActiveSupport::Concern
 
   def to_info
-    if self.to_operator?
-      [
-        id,
-        I18n.t('view.movements.kind.' + kind),
-        amount.round(2).to_s,
-        I18n.l(self.start_shift || self.bought_at || self.created_at.to_date)
-      ]
-    else
-      [
-        I18n.l(self.bought_at || self.created_at.to_date),
-        bill,
-        amount.round(2),
-        '', # provider,
-        comment
-      ]
-    end
+    [
+      I18n.l(self.bought_at || self.created_at.to_date),
+      bill,
+      amount.round(2),
+      to_account&.name || '',
+      comment
+    ]
   end
 
   class_methods do
@@ -30,7 +21,7 @@ module Movements::Reports
     end
 
     def non_operator_headers_for(date, translated_date)
-      NO_OPERATOR_KINDS.map do |kind|
+      self::NO_OPERATOR_KINDS.map do |kind|
         _scope = where(kind: kind).at_month(date).map(&:to_info)
 
         if _scope.count > 0
@@ -47,18 +38,25 @@ module Movements::Reports
     def operator_headers_for(date, translated_date)
       date_range = date.to_datetime.beginning_of_month..date.to_datetime.end_of_month
       title =  I18n.t('view.movements.operators')
-      kinds =  %i[upfront to_favor refunded payoff]
 
-      _scope = where(kind: kinds, created_at: date_range).to_operators
+      _scope = where(created_at: date_range).to_operators.where(
+        kind: [:payoff, :upfront_r, :refunded]
+      )
 
-      operator_ids = _scope.pluck(:to_account_id).uniq
+      operator_ids =
       total = 0.0
 
-      data = operator_ids.map do |id|
+      operators = Operator.where(
+        id: _scope.pluck(:to_account_id).uniq
+      ).pluck(:id, :name).sort_by { |k| k.last }
+
+      data = operators.map do |id, name|
         operator_scope = _scope.where(to_account_id: id)
 
         operator_amount = operator_scope.map do |o|
-          if (o.refunded? && o.versions.last.reify.upfront?) || o.payoff?
+          if o.refunded?
+            o.amount if o.versions.last&.reify&.upfront? # LEGACY
+          else
             o.amount
           end
         end.compact.sum.round(2)
@@ -68,7 +66,7 @@ module Movements::Reports
           nil,
           nil,
           operator_amount,
-          operator_scope.first.to_s
+          name
         ]
       end
 
@@ -85,7 +83,7 @@ module Movements::Reports
       end
       csv = []
       #CSV.generate do |csv|
-      headers_for(date).each do |_scope, head|
+      not_revoked.headers_for(date).each do |_scope, head|
         csv << []
         csv << head
         csv << table_header
