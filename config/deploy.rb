@@ -12,19 +12,18 @@ set :log_level, :info
 set :linked_files, %w(config/app_config.yml config/secrets.yml)
 set :linked_dirs, %w{log private certs}
 
-set :keep_releases, 5
+set :keep_releases, 2
 
 namespace :deploy do
   after :finished, 'deploy:cleanup'
   after :finished, :restart
-  after :finished, 'sidekiq:restart'
   before 'sidekiq:restart', 'chruby:release'
+  after :finished, 'sidekiq:restart'
 
   desc 'Restart application'
   task :restart do
     on roles(:app) do
-      # execute '/etc/init.d/unicorn', 'upgrade'
-      execute "kill -USR2 $(ps aux |grep unicorn |grep master |awk '{print $2}' )"
+      execute :systemctl, :restart, 'unicorn@abaco.service'
     end
   end
 
