@@ -23,7 +23,7 @@ gem 'sinatra', require: nil
 gem 'redis-namespace'
 
 # Auth
-gem 'devise', '~> 4.3'
+gem 'devise', '~> 4.7'
 gem 'cancan'
 gem 'role_model'
 
