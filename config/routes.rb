@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   # Outflow history urls
   get 'outflows/:id' => 'movements#show'
 
-  resources :movements do
+  resources :movements, except: :destroy do
     collection do
       get :autocomplete_for_association
       get :autocomplete_for_provider

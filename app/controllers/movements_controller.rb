@@ -84,17 +84,6 @@ class MovementsController < ApplicationController
     redirect_to edit_movement_url(@movement), alert: t('view.movements.stale_object_error')
   end
 
-  # DELETE /movements/1
-  # DELETE /movements/1.json
-  def destroy
-    @movement.destroy
-
-    respond_to do |format|
-      format.html { redirect_to movements_url }
-      format.json { head :ok }
-    end
-  end
-
   def revoke
     @movement.revoke!
 

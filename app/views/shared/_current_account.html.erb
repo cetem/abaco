@@ -17,7 +17,7 @@
           <%= link_to l(transaction.created_at, format: :minimal), m  %>
           <%= modified %>
         </td>
-        <td><%= link_to l(m.bought_at), m if m.bought_at %></td>
+        <td><%= link_to l(m.bought_at), m if m&.bought_at %></td>
         <td><%= show_movement_kind m, false  %></td>
         <td><%= number_to_currency transaction.amount if transaction.credit?  %></td>
         <td><%= number_to_currency transaction.amount if transaction.debit?  %></td>

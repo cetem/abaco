@@ -47,16 +47,16 @@ class MovementsControllerTest < ActionController::TestCase
   end
 
   test "should update movement" do
-    put :update, id: @movement, 
+    put :update, id: @movement,
       movement: Fabricate.attributes_for(:movement, amount: 85)
-    
+
     assert_redirected_to movement_url(assigns(:movement))
     assert_equal 85, @movement.reload.amount
   end
 
-  test "should destroy movement" do
-    assert_difference('Movement.count', -1) do
-      delete :destroy, id: @movement
+  test "should revoke movement" do
+    assert_no_difference('Movement.count') do
+      delete :revoke, id: @movement
     end
 
     assert_redirected_to movements_url

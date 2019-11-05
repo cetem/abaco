@@ -81,5 +81,6 @@
 <div class="form-actions">
   <%= link_to t('label.edit'), edit_movement_path(@movement) if can? :update, @movement %> |
   <%= link_to t('label.list'), movements_path %>
-  <%= link_to_destroy @movement if can? :destroy, @movement %>
+
+  <%= link_to_destroy revoke_movement_path(@movement.id) if can?(:destroy, @movement) && !@movement.revoked? %>
 </div>
