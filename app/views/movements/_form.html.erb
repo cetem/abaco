@@ -109,8 +109,11 @@
         <%= f.input :file %>
         <%= f.input :file_cache, as: :hidden %>
       </div>
-      <div class="span4">
+      <div class="span3">
         <%= f.input :charged_by %>
+      </div>
+      <div class="span3">
+        <%= f.input :with_receipt, as: :boolean %>
       </div>
     </div>
     <%= f.input :comment, input_html: { rows: 5, class: 'span11' } %>

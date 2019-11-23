@@ -284,6 +284,8 @@ GEM
     sshkit (1.17.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    test_after_commit (1.2.2)
+      activerecord (>= 3.2, < 5.0)
     thin (1.7.2)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -353,6 +355,7 @@ DEPENDENCIES
   sidekiq (~> 4.2)
   simple_form
   sinatra
+  test_after_commit
   thin
   turbolinks
   uglifier

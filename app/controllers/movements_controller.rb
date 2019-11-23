@@ -164,7 +164,7 @@ class MovementsController < ApplicationController
   def movement_params
     params.require(:movement).permit(
       :amount, :comment, :kind, :lock_version, :with_incentive,
-      :user_id, :bill, :bought_at,
+      :user_id, :bill, :bought_at, :with_receipt,
       :file, :file_cache, :charged_by,
       :from_account_type, :from_account_autocomplete, :from_account_id,
       :to_account_type, :to_account_autocomplete, :to_account_id

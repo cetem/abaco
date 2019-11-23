@@ -17,6 +17,7 @@ es:
         provider_id: "Proveedor"
         start_shift: "Turnos Desde"
         user_id: "Usuario"
+        with_receipt: "Con recibo (débito)"
       operator_shifts:
         finish: "Final"
         start: "Comienzo"
@@ -153,6 +154,7 @@ es:
         toner: "Tóner"
         tops_rings: "Tapas y anillos"
         transfer: "Transferencia"
+        receipt: "Recibo"
         upfront: "Adelanto (Operario)"
         upfront_r: "Adelanto (Arreglado)"
       monthly_by_year: "Facturas Mensuales - %{year}"
@@ -161,6 +163,7 @@ es:
       operators: "Operadores"
       pay_detail_between: "Detalle de pagos entre [%{range}]"
       reajust_of: "Reajuste de <a href=\"%{path}\">%{id}</a>"
+      receipt_of: "Recibo de la factura de %{kind} <a href=\"%{path}\">%{id}</a>"
       reports:
         amount: "Monto"
         bill: "Nº de factura/Comprobante"
