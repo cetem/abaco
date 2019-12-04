@@ -35,7 +35,13 @@ class MovementsController < ApplicationController
   # GET /movements/new.json
   def new
     @title = t('view.movements.new_title')
-    @movement = Movement.new
+    @movement = if params[:withdraw_id].present?
+                  m = Withdraw.build_movement(params[:withdraw_id], current_user.id)
+                  m.valid?
+                  m
+                else
+                  Movement.new
+                end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -165,7 +171,7 @@ class MovementsController < ApplicationController
     params.require(:movement).permit(
       :amount, :comment, :kind, :lock_version, :with_incentive,
       :user_id, :bill, :bought_at, :with_receipt,
-      :file, :file_cache, :charged_by,
+      :file, :file_cache, :charged_by, :withdraw_id,
       :from_account_type, :from_account_autocomplete, :from_account_id,
       :to_account_type, :to_account_autocomplete, :to_account_id
     )

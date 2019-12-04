@@ -19,6 +19,10 @@
               class: ('active' if controller_name == 'movements')
             ) if can? :read, Movement %>
             <%= content_tag(
+              :li, link_to(t('menu.withdraws'), withdraws_path),
+              class: ('active' if controller_name == 'withdraws')
+            ) if can? :read, Movement %>
+            <%= content_tag(
               :li, link_to(t('menu.settings'), settings_path),
               class: ('active' if controller_name == 'settings')
             ) if can? :read, Setting %>

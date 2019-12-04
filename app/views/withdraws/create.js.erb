@@ -1,0 +1,8 @@
++function () {
+  <% if @url %>
+    window.location.href = '<%= @url %>';
+  <% else %>
+    $('#withdraw_<%= @withdraw_id %>').remove()
+  <% end %>
+}()
+

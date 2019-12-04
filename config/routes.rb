@@ -56,5 +56,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :withdraws, only: [:index, :create]
+
   root to: 'application#root_redirector'
 end

@@ -28,7 +28,8 @@ class Movement < ActiveRecord::Base
     upfront_r:   'upfront_r',
     to_favor_r:  'to_favor_r',
     transfer:    'transfer',
-    receipt:     'receipt'
+    receipt:     'receipt',
+    withdraw:    'withdraw'
   }
   OPERATOR_KINDS = [
     :upfront, :to_favor, :refunded, :payoff,
@@ -39,7 +40,7 @@ class Movement < ActiveRecord::Base
 
   # Attributos no persistentes
   attr_accessor :from_account_autocomplete, :to_account_autocomplete,
-    :with_receipt
+    :with_receipt, :withdraw_id
 
   # Relaciones
   belongs_to :user

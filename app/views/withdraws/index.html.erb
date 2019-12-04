@@ -1,0 +1,48 @@
+<h1><%= t('view.withdraws.title') %></h1>
+
+<% if @withdraws.empty? %>
+  <%= render 'shared/empty_index' %>
+<% else %>
+  <div class="row">
+    <div class="span12">
+      <table class="table resource-list table-striped">
+        <thead>
+          <tr>
+            <th><%= Movement.human_attribute_name 'charged_by' %></th>
+            <th><%= Movement.human_attribute_name 'amount' %></th>
+            <th><%= Movement.human_attribute_name 'created_at' %></th>
+            <th colspan="2"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @withdraws.each do |withdraw| %>
+            <tr id="withdraw_<%= withdraw.id %>">
+              <td><%= withdraw.charged_by %></td>
+              <td><%= l withdraw.collected_at %></td>
+              <td><%= number_to_currency withdraw.amount %></td>
+              <td>
+                <%= iconic_link(
+                  '&#xe008;'.html_safe,
+                  withdraws_path(id: withdraw.id),
+                  remote: true,
+                  method: :post,
+                  title:  t('view.withdraws.approve')
+                ) %>
+              </td>
+              <td>
+                <%= link_to_edit new_movement_path(withdraw_id: withdraw.id) %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+<% end %>
+
+<div class="form-actions">
+  <div class="pull-right">
+  </div>
+</div>

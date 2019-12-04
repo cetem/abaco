@@ -1,6 +1,6 @@
 module LinksHelper
   def iconic_link(icon, *args)
-    options = args.extract_options!
+    options = args.extract_options!.with_indifferent_access
 
     options['class'] = options['class'].to_s + ' iconic'
     options['title'] ||= 'iconic'

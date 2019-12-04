@@ -31,5 +31,9 @@ module Movements::Callbacks
         )
       end
     end
+
+    after_commit on: :create, if: ->(m) { m.withdraw_id.present? } do
+      Withdraw.delete_withdraw(withdraw_id)
+    end
   end
 end

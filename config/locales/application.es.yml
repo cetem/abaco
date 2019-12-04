@@ -105,6 +105,7 @@ es:
     retroactive: "Retroactivos"
     settings: "Configuración"
     users: "Usuarios"
+    withdraws: 'Retiros'
   messages:
     confirmation: "¿Está seguro?"
   related_hours: "%{hours} Horas y %{minutes} minutos"
@@ -148,15 +149,16 @@ es:
         other: "Otro"
         paper: "Papel"
         payoff: "Pago"
+        receipt: "Recibo"
         refunded: "Arreglado"
         to_favor: "A Favor (Operario)"
         to_favor_r: "A favor (arreglado)"
         toner: "Tóner"
         tops_rings: "Tapas y anillos"
         transfer: "Transferencia"
-        receipt: "Recibo"
         upfront: "Adelanto (Operario)"
         upfront_r: "Adelanto (Arreglado)"
+        withdraw: 'Retiro CCA'
       monthly_by_year: "Facturas Mensuales - %{year}"
       movement_kind: "Tipo de movimiento"
       new_title: "Nuevo movimiento"
@@ -288,3 +290,7 @@ es:
       update_profile: "Actualizar datos"
     versions:
       have_changes: "Tiene modificaciones"
+    withdraws:
+      title: 'Retiros a aprobar'
+      approve: 'Aprobar'
+      comment_for_movement: "Retiro de las %{time}"
