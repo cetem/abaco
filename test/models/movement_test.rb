@@ -136,13 +136,16 @@ class MovementTest < ActiveSupport::TestCase
   end
 
   test 'pay shifts and upfronts' do
-    Fabricate(:operator, id: @generic_operator[:abaco_id], name: @generic_operator[:label])
+    operator = Fabricate(:operator, id: @generic_operator[:abaco_id], name: @generic_operator[:label])
+    assert operator.persisted?, operator.errors.full_messages
+
     @movement = Fabricate(
       :movement, kind: :upfront,
       to_account_id: @generic_operator[:abaco_id],
       to_account_type: 'Operator',
       bill: nil
     )
+    assert @movement.persisted?, @movement.errors.full_messages
 
     assert_difference 'Movement.count' do
       assert_difference 'Movement.upfront.count', -1 do
@@ -160,7 +163,8 @@ class MovementTest < ActiveSupport::TestCase
   test 'pay shifts and upfronts with another upfront' do
     Movement.delete_all
 
-    Fabricate(:operator, id: @generic_operator[:abaco_id], name: @generic_operator[:label])
+    operator = Fabricate(:operator, id: @generic_operator[:abaco_id], name: @generic_operator[:label])
+    assert operator.persisted?, operator.errors.full_messages
 
     assert_difference 'Movement.count', 2 do
       Movement.pay_operator_shifts_and_upfronts(

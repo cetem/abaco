@@ -133,6 +133,7 @@ module Movements::Shifts
           true
         rescue => e
           ::Bugsnag.notify(e)
+          puts e, e.backtrace if ENV['TRAVIS']
 
           raise ActiveRecord::Rollback
         end

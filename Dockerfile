@@ -26,9 +26,6 @@ RUN bundle config set deployment 'true' && \
 
 ADD . ./
 
-# ENV DEVISE_SECRET_KEY_BASE=123
-# ENV SECRET_KEY_BASE=123
-
 RUN bundle exec rails assets:precompile
 
 EXPOSE 3000
