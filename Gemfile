@@ -53,7 +53,6 @@ end
 group :test do
   gem 'capybara', require: false
   gem 'capybara-screenshot', require: false
-  gem 'chromedriver-helper', require: false
   gem 'database_cleaner' # For Capybara
   gem 'fabrication'
   gem 'faker'
