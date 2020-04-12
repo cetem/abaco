@@ -1,5 +1,5 @@
 class Account < ActiveRecord::Base
-  include PgSearch
+  include PgSearch::Model
 
   has_paper_trail
 

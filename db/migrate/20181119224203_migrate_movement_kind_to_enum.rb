@@ -1,4 +1,4 @@
-class MigrateMovementKindToEnum < ActiveRecord::Migration
+class MigrateMovementKindToEnum < ActiveRecord::Migration[4.2]
   def change
     rename_column :movements, :kind, :old_kind
     add_column :movements, :kind, :string, index: true

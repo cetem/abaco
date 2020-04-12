@@ -23,7 +23,6 @@
 // require turbolinks
 //= require common
 //= require date_pickers
-//= require endless_pagination
 //= require mobile
 //= require movements
 //= require movements_total_pay

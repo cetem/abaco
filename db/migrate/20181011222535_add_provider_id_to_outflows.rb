@@ -1,4 +1,4 @@
-class AddProviderIdToOutflows < ActiveRecord::Migration
+class AddProviderIdToOutflows < ActiveRecord::Migration[4.2]
   def change
     rename_column :outflows, :provider, :old_provider
     add_column :outflows, :provider_id, :integer, index: true

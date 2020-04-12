@@ -1,4 +1,4 @@
-class ReplaceProviderAssociations < ActiveRecord::Migration
+class ReplaceProviderAssociations < ActiveRecord::Migration[4.2]
   def change
     # Replacing association
     Provider.all.find_each do |account|

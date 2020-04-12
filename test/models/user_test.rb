@@ -14,7 +14,7 @@ class UserTest < ActiveSupport::TestCase
   test 'update' do
     assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'User.count' do
-        assert @user.update_attributes(name: 'Updated')
+        assert @user.update(name: 'Updated')
       end
     end
 
@@ -115,13 +115,6 @@ class UserTest < ActiveSupport::TestCase
     assert users.all? { |u| u.to_s =~ /magick_name/ }
 
     users = User.filtered_list('magick_name magick_lastname')
-
-    assert_equal 1, users.count
-    assert users.all? { |u| u.to_s =~ /magick_name magick_lastname/ }
-
-    users = User.filtered_list(
-      "magick_name #{I18n.t('magick_columns.or').first} magick_lastname"
-    )
 
     assert_equal 9, users.count
     assert users.all? { |u| u.to_s =~ /magick_name|magick_lastname/ }

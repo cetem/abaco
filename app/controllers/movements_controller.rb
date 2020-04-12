@@ -78,7 +78,7 @@ class MovementsController < ApplicationController
     @title = t('view.movements.edit_title')
 
     respond_to do |format|
-      if @movement.update_attributes(movement_params)
+      if @movement.update(movement_params)
         format.html { redirect_to @movement, notice: t('view.movements.correctly_updated') }
         format.json { head :ok }
       else

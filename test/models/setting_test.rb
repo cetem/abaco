@@ -14,7 +14,7 @@ class SettingTest < ActiveSupport::TestCase
   test 'update' do
     assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Setting.count' do
-        assert @setting.update_attributes(value: '101')
+        assert @setting.update(value: '101')
       end
     end
 

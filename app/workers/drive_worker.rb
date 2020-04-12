@@ -66,7 +66,7 @@ class DriveWorker
       csv << new_upfront
     end
 
-    GDrive.upload_spreadsheet_v3(
+    Gdrive.upload_spreadsheet_v3(
       I18n.t('view.movements.pay_detail_between', range: params['range']),
       csv,
       { label: label }

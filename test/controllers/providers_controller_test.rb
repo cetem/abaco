@@ -26,14 +26,14 @@ class ProvidersControllerTest < ActionController::TestCase
 
   test "should create provider" do
     assert_difference('Provider.count') do
-      post :create, provider: Fabricate.attributes_for(:provider)
+      post :create, params: { provider: Fabricate.attributes_for(:provider) }
     end
 
     assert_redirected_to provider_url(assigns(:provider))
   end
 
   test "should show provider" do
-    get :show, id: @provider
+    get :show, params: { id: @provider }
     assert_response :success
     assert_not_nil assigns(:provider)
     assert_select '#unexpected_error', false
@@ -41,7 +41,7 @@ class ProvidersControllerTest < ActionController::TestCase
   end
 
   test "should get edit" do
-    get :edit, id: @provider
+    get :edit, params: { id: @provider }
     assert_response :success
     assert_not_nil assigns(:provider)
     assert_select '#unexpected_error', false
@@ -49,14 +49,16 @@ class ProvidersControllerTest < ActionController::TestCase
   end
 
   test "should update provider" do
-    put :update, id: @provider,
+    put :update, params: {
+      id: @provider,
       provider: Fabricate.attributes_for(:provider, name: 'value')
+    }
     assert_redirected_to provider_url(assigns(:provider))
   end
 
   test "should destroy provider" do
     assert_difference('Provider.count', -1) do
-      delete :destroy, id: @provider
+      delete :destroy, params: { id: @provider }
     end
 
     assert_redirected_to providers_path

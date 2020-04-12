@@ -19,24 +19,24 @@ class SettingsControllerTest < ActionController::TestCase
 
   test "should create setting" do
     assert_difference('Setting.count') do
-      post :create, setting: Fabricate.attributes_for(:setting)
+      post :create, params: { setting: Fabricate.attributes_for(:setting) }
     end
 
     assert_redirected_to setting_path(assigns(:setting))
   end
 
   test "should show setting" do
-    get :show, id: @setting
+    get :show, params: { id: @setting }
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @setting
+    get :edit, params: { id: @setting }
     assert_response :success
   end
 
   test "should update setting" do
-    put :update, id: @setting, setting: Fabricate.attributes_for(:setting)
+    put :update, params: { id: @setting, setting: Fabricate.attributes_for(:setting) }
     assert_redirected_to setting_path(assigns(:setting))
   end
 end

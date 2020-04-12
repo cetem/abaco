@@ -1,8 +1,8 @@
 class Transaction < ActiveRecord::Base
   has_paper_trail
 
-  belongs_to :account
-  belongs_to :movement
+  belongs_to :account, optional: true
+  belongs_to :movement, optional: true
 
   scope :not_revoked, -> { where(revoked: false) }
 

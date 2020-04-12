@@ -44,8 +44,8 @@ class Movement < ActiveRecord::Base
 
   # Relaciones
   belongs_to :user
-  belongs_to :from_account, polymorphic: true
-  belongs_to :to_account, polymorphic: true
+  belongs_to :from_account, polymorphic: true, optional: true
+  belongs_to :to_account, polymorphic: true, optional: true
 
   scope :not_revoked, -> { where(revoked: false) }
 

@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2.10'
+gem 'rails', '~> 6.0.2'
 # gem 'rails-observers', '0.1.2'
 
-gem 'pg', '~> 0.21.0'
+gem 'pg' # , '~> 0.21.0'
 gem 'pg_search'
 gem 'kaminari'
 gem 'bootstrap-kaminari-views'
@@ -18,13 +18,13 @@ gem 'unicorn'
 gem "dotiw"
 gem 'google_drive', '~> 2.1.7'
 
-gem 'sidekiq', '~> 4.2'
-gem 'sinatra', require: nil
+gem 'sidekiq' # , '~> 4.2'
+# gem 'sinatra', require: nil
 gem 'redis-namespace'
 
 # Auth
 gem 'devise', '~> 4.3'
-gem 'cancan'
+gem 'cancancan'
 gem 'role_model'
 
 # Old assets group
@@ -51,12 +51,15 @@ group :development do
 end
 
 group :test do
-  gem 'selenium-webdriver', require: false
   gem 'capybara', require: false
+  gem 'capybara-screenshot', require: false
+  gem 'chromedriver-helper', require: false
   gem 'database_cleaner' # For Capybara
   gem 'fabrication'
   gem 'faker'
+  gem 'poltergeist', require: false
+  gem 'selenium-webdriver', require: false
   gem 'webmock'
 
-  gem 'test_after_commit'
+  gem 'rails-controller-testing'
 end

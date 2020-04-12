@@ -7,6 +7,8 @@ class MovementTest < ActiveSupport::TestCase
     ['pay_per_administrator_hour', 'pay_per_operator_hour'].each do |setting|
       Setting.create!(title: setting, var: setting, value: rand(100))
     end
+
+    Fabricate(:box)
   end
 
   test 'create' do
@@ -27,7 +29,7 @@ class MovementTest < ActiveSupport::TestCase
   test 'update' do
     assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Movement.count' do
-        assert @movement.update_attributes(comment: 'Updated')
+        assert @movement.update(comment: 'Updated')
       end
     end
 
@@ -134,9 +136,13 @@ class MovementTest < ActiveSupport::TestCase
   end
 
   test 'pay shifts and upfronts' do
-    skip 'Mock'
-
-    @movement = Fabricate(:movement, kind: :upfront)
+    Fabricate(:operator, id: @generic_operator[:abaco_id], name: @generic_operator[:label])
+    @movement = Fabricate(
+      :movement, kind: :upfront,
+      to_account_id: @generic_operator[:abaco_id],
+      to_account_type: 'Operator',
+      bill: nil
+    )
 
     assert_difference 'Movement.count' do
       assert_difference 'Movement.upfront.count', -1 do
@@ -152,13 +158,13 @@ class MovementTest < ActiveSupport::TestCase
   end
 
   test 'pay shifts and upfronts with another upfront' do
-    skip 'Mock'
-
     Movement.delete_all
+
+    Fabricate(:operator, id: @generic_operator[:abaco_id], name: @generic_operator[:label])
 
     assert_difference 'Movement.count', 2 do
       Movement.pay_operator_shifts_and_upfronts(
-        operator_id: 1,
+        operator_id: @generic_operator[:abaco_id],
         start:       1.month.ago.to_date.to_s,
         finish:      Time.zone.today.to_s,
         user_id:     Fabricate(:user).id,
@@ -167,18 +173,18 @@ class MovementTest < ActiveSupport::TestCase
       )
     end
 
-    operator_movements = Movement.for_operator(1)
+    operator_movements = Movement.for_operator(@generic_operator[:abaco_id])
     assert_equal 2, operator_movements.count
 
     # Payoff
     payoff = operator_movements.first
     assert_equal 300.0, payoff.amount.round(1)
-    assert_equal :payoff, payoff.kind
+    assert_equal :payoff, payoff.kind.to_sym
 
     # Upfront
     upfront = operator_movements.last
     assert_equal 100, upfront.amount
-    assert_equal :upfront, upfront.kind
+    assert_equal :upfront, upfront.kind.to_sym
   end
 
   test 'create transaction for operator' do
@@ -265,8 +271,12 @@ class MovementTest < ActiveSupport::TestCase
   end
 
   test 'update transactions amount' do
-    operator = Fabricate(:operator)
     user     = Fabricate(:user)
+    operator = Fabricate(
+      :operator,
+      id:   @generic_operator[:abaco_id],
+      name: @generic_operator[:label]
+    )
 
     m = Movement.create!(
       amount:          10,

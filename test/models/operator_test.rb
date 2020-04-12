@@ -1,14 +1,10 @@
 require 'test_helper'
 
 class OperatorTest < ActiveSupport::TestCase
-  setup do
-    skip 'Mock'
-  end
-
   test 'should get operator' do
-    operator = RemoteOperator.find(1)
+    operator = RemoteOperator.find(@generic_operator[:abaco_id])
 
-    assert_equal @generic_operator[:id], operator.id
+    assert_equal @generic_operator[:abaco_id], operator.id
     assert_equal @generic_operator[:label], operator.label
   end
 
@@ -19,14 +15,22 @@ class OperatorTest < ActiveSupport::TestCase
   end
 
   test 'should pay shift between dates' do
-    assert RemoteOperator.find(1).patch(
+    assert RemoteOperator.find(@generic_operator[:abaco_id]).patch(
       :pay_shifts_between, start: 1.month.ago.to_date, finish: Date.today
     )
   end
 
   test 'show operator label' do
-    movement = Fabricate(:movement, operator_id: @generic_operator[:id])
+    Fabricate(:operator, id: @generic_operator[:abaco_id], name: @generic_operator[:label])
 
-    assert_equal @generic_operator[:label], movement.operator_name
+    movement = Fabricate(
+      :movement,
+      kind:            :payoff,
+      to_account_type: 'Operator',
+      to_account_id:   @generic_operator[:abaco_id],
+      bill:            nil
+    )
+
+    assert_equal @generic_operator[:label], movement.to_account.name
   end
 end

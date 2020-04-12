@@ -1,6 +1,11 @@
-class AddRemoteOperatorsToOperators < ActiveRecord::Migration
+class AddRemoteOperatorsToOperators < ActiveRecord::Migration[4.2]
   def change
-    return true if ENV['TRAVIS']
+    if ENV['TRAVIS'] ||
+       Operator.columns.find {|e| e.name == 'id' }.type == :integer
+
+      return true
+    end
+
     workers = RemoteOperator.get(:current_workers)
     missing_operator_id = Movement.unscoped.where.not(operator_id: nil).distinct.pluck(:operator_id)
 
@@ -12,7 +17,7 @@ class AddRemoteOperatorsToOperators < ActiveRecord::Migration
     end
 
     workers.each do |user|
-      operator = Operator.create(
+      Operator.create(
         id:   user['abaco_id'],
         name: user['label']
       )

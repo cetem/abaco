@@ -15,7 +15,7 @@ class <%= class_name %>Test < ActiveSupport::TestCase
   test 'update' do
     assert_difference 'PaperTrail::Version.count' do
       assert_no_difference '<%= class_name %>.count' do
-        assert @<%= singular_table_name %>.update_attributes(attr: 'Updated')
+        assert @<%= singular_table_name %>.update(attr: 'Updated')
       end
     end
 

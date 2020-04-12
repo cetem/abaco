@@ -2,7 +2,6 @@ require 'test_helper'
 
 class OperatorsControllerTest < ActionController::TestCase
   setup do
-    skip 'Mock'
     sign_in @user = Fabricate(:user)
   end
 
@@ -15,11 +14,17 @@ class OperatorsControllerTest < ActionController::TestCase
   end
 
   test "should show operator" do
+
+    attrs =  {
+      to_account_type: 'Operator',
+      to_account_id:   Fabricate(:operator).id,
+      bill: nil
+    }
     [:upfront, :to_favor, :refunded, :payoff].each do |kind|
-      Fabricate(:movement, kind: kind, operator_id: 1)
+      Fabricate(:movement, attrs.merge(kind: kind))
     end
 
-    get :show, id: @user.id
+    get :show, params: { id: attrs[:to_account_id] }
     assert_response :success
     assert_not_nil assigns(:operator)
     assert_not_nil assigns(:shifts)
@@ -31,7 +36,7 @@ class OperatorsControllerTest < ActionController::TestCase
   end
 
   test "should get new shift" do
-    get :new_shift, id: 1
+    get :new_shift, params: { id: 1 }
     assert_response :success
     assert_not_nil assigns(:operator)
     assert_not_nil assigns(:operator_shift)
@@ -40,10 +45,13 @@ class OperatorsControllerTest < ActionController::TestCase
   end
 
   test 'show create an operator shift' do
-    post :create_shift, id: 1, operator_shift: {
-      start: 5.hours.ago, finish: 2.hours.ago
+    post :create_shift, params: {
+      id: @generic_operator[:id],
+      operator_shift: {
+        start: 5.hours.ago, finish: 2.hours.ago
+      }
     }
 
-    assert_redirected_to operator_url(1)
+    assert_redirected_to operator_url(@generic_operator[:abaco_id])
   end
 end

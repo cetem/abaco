@@ -1,4 +1,4 @@
-module GDrive
+module Gdrive
   class << self
     def upload_spreadsheet_v3(title, array, kwargs={})
       return if array.blank?

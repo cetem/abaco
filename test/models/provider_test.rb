@@ -14,7 +14,7 @@ class ProviderTest < ActiveSupport::TestCase
   test 'update' do
     assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Provider.count' do
-        assert @provider.update_attributes(name: 'Updated')
+        assert @provider.update(name: 'Updated')
       end
     end
 

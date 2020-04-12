@@ -1,4 +1,4 @@
-class CreateOutflows < ActiveRecord::Migration
+class CreateOutflows < ActiveRecord::Migration[4.2]
   def change
     create_table :outflows do |t|
       t.string :kind, limit: 1, null: false

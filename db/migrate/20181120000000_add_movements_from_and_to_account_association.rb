@@ -1,4 +1,4 @@
-class AddMovementsFromAndToAccountAssociation < ActiveRecord::Migration
+class AddMovementsFromAndToAccountAssociation < ActiveRecord::Migration[4.2]
   def change
     add_column :movements, :from_account_id, :uuid
     add_column :movements, :from_account_type, :string

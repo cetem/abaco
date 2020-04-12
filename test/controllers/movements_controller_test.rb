@@ -24,14 +24,14 @@ class MovementsControllerTest < ActionController::TestCase
 
   test "should create movement" do
     assert_difference('Movement.count') do
-      post :create, movement: Fabricate.attributes_for(:movement)
+      post :create, params: { movement: Fabricate.attributes_for(:movement) }
     end
 
     assert_redirected_to movement_url(assigns(:movement))
   end
 
   test "should show movement" do
-    get :show, id: @movement
+    get :show, params: { id: @movement }
     assert_response :success
     assert_not_nil assigns(:movement)
     assert_select '#unexpected_error', false
@@ -39,7 +39,7 @@ class MovementsControllerTest < ActionController::TestCase
   end
 
   test "should get edit" do
-    get :edit, id: @movement
+    get :edit, params: { id: @movement }
     assert_response :success
     assert_not_nil assigns(:movement)
     assert_select '#unexpected_error', false
@@ -47,16 +47,16 @@ class MovementsControllerTest < ActionController::TestCase
   end
 
   test "should update movement" do
-    put :update, id: @movement,
-      movement: Fabricate.attributes_for(:movement, amount: 85)
-
+    put :update, params: { id: @movement,
+                           movement: Fabricate.attributes_for(:movement, amount: 85)
+    }
     assert_redirected_to movement_url(assigns(:movement))
     assert_equal 85, @movement.reload.amount
   end
 
   test "should revoke movement" do
     assert_no_difference('Movement.count') do
-      delete :revoke, id: @movement
+      delete :revoke, params: { id: @movement }
     end
 
     assert_redirected_to movements_url

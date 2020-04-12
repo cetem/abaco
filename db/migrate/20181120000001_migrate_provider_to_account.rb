@@ -1,4 +1,4 @@
-class MigrateProviderToAccount < ActiveRecord::Migration
+class MigrateProviderToAccount < ActiveRecord::Migration[4.2]
   def change
     enable_extension 'pgcrypto'
 
@@ -9,6 +9,7 @@ class MigrateProviderToAccount < ActiveRecord::Migration
 
     # Add UUID primary key
     execute 'ALTER TABLE accounts DROP CONSTRAINT accounts_pkey;'
+    change_column :accounts, :id, :bigint, default: nil, null: true
     rename_column :accounts, :id, :old_id
     add_column :accounts, :id, :uuid, primary_key: true, default: 'gen_random_uuid()', null: false
   end

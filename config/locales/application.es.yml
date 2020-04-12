@@ -38,6 +38,9 @@ es:
           one: "Perfil"
           other: "Perfiles"
     errors:
+      messages:
+        required: "es necesario"
+
       models:
         movement:
           attributes:

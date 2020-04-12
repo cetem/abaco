@@ -15,7 +15,7 @@ module Users::Profile
     @title = t('view.users.edit_profile')
     
     respond_to do |format|
-      if @user.update_attributes(user_params)
+      if @user.update(user_params)
         format.html { redirect_to(edit_profile_user_url(@user), notice: t('view.users.profile_correctly_updated')) }
       else
         format.html { render action: 'edit_profile' }

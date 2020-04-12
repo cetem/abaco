@@ -1,32 +1,32 @@
 ph_data = SECRETS['print_hub_data']
-site = "#{ph_data['user']}:#{ph_data['password']}@#{ph_data['site']}"
+site = "#{ph_data['site']}"
 date_regexp = '\d{4}\-\d{1,2}\-\d{1,2}'
 datetime_regexp = '\d{4}\-\d{1,2}\-\d{1,2} \d{1,2}:\d{2}:\d{2} -\d{4}'
 
+
 @generic_operator = {
-  id: '1',
-  label: 'Operator Operator',
+  id:       '1',
+  abaco_id: '19ad724d-118e-4908-b8f5-2800a046bb2b',
+  label:    'Operator Operator',
   informal: 'Operator',
-  admin: 'true'
+  admin:    'true'
 }
 
 @operator_shifts = []
 days = 27.days.ago
-id = 1
 
-3.times do
+3.times do |i|
   @operator_shifts << {
-    id: id,
-    start: days,
-    finish: days + 5.hours,
+    id:         i,
+    start:      days,
+    finish:     days + 5.hours,
     created_at: days
   }
-  id += 1
   days += 1.days
 end
 
 stub_request(
-  :get, /#{site}\/users\/\d+.json/
+  :get, /\/users\/(\d+|#{::UUID_REGEX})\.json/
 ).with(
   headers: { 'Accept'=>'application/json' }
 ).to_return(
@@ -34,7 +34,7 @@ stub_request(
 )
 
 stub_request(
-  :get, "#{site}/users/autocomplete_for_user_name.json?q=operator"
+  :get, /\/users\/autocomplete_for_user_name\.json.*/
 ).with(
   headers: { 'Accept'=>'application/json' }
 ).to_return(
@@ -42,8 +42,7 @@ stub_request(
 )
 
 stub_request(
-  :patch, /#{site}\/users\/\d+\/pay_shifts_between.json\?
-    finish=#{date_regexp}&start=#{date_regexp}/x
+  :patch, /.*pay_shifts_between\.json.*/i
 ).with(
   headers: { 'Content-Type'=>'application/json' }
 ).to_return(
@@ -51,10 +50,7 @@ stub_request(
 )
 
 stub_request(
-  :get, /#{site}\/shifts.json\?
-    pay_pending_shifts_for_user_between\[finish\]=#{date_regexp}&
-    pay_pending_shifts_for_user_between\[start\]=#{date_regexp}&
-    user_id=\d+/x
+  :get, /\/shifts\.json\?pay_pending_shifts_for_user_between/
 ).with(
   headers: { 'Accept' => 'application/json' }
 ).to_return(
@@ -62,7 +58,7 @@ stub_request(
 )
 
 stub_request(
-  :get, /#{site}\/shifts\/json_paginate.json/
+  :get, /#{site}\/shifts\/json_paginate\.json/
 ).with(
   headers: { 'Accept' => 'application/json' }
 ).to_return(
@@ -70,7 +66,7 @@ stub_request(
 )
 
 stub_request(
-  :get, /#{site}\/users\/current_workers.json/
+  :get, /\/users\/current_workers\.json/
 ).with(
   headers: { 'Accept' => 'application/json' }
 ).to_return(
@@ -86,9 +82,10 @@ stub_request(
 )
 
 stub_request(
-  :post, "http://#{site}/shifts.json"
-).with { |request| request.body.match(
-  /({\"start\":\"#{datetime_regexp}\",\"finish\":\"#{datetime_regexp}\",\"user_id\":\"1\"})/
+  :post, /\/shifts\.json/
+).with { |request|
+  request.body.match?(
+    /\"start\":\"#{datetime_regexp}\",\"finish\":\"#{datetime_regexp}\"/
 ) }.to_return(
   status: 200
 )
