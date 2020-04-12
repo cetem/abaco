@@ -1,6 +1,7 @@
 language: ruby
 dist: bionic
 cache: bundler
+travis_retry: 3
 rvm:
   - 2.6.6
   - 2.7.1
@@ -24,6 +25,7 @@ install:
 jobs:
   include:
     - stage: build
+      travis_retry: 3
       script: docker build -t abaco .
       install: skip
       before_script:

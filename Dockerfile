@@ -26,7 +26,11 @@ RUN bundle config set deployment 'true' && \
 
 ADD . ./
 
-RUN bundle exec rails assets:precompile
+
+RUN cp config/app_config.example.yml config/app_config.yml && \
+    cp config/secrets.example.yml config/secrets.yml && \
+    bundle exec rails assets:precompile && \
+    rm config/secrets.yml config/app_config.yml
 
 EXPOSE 3000
 
