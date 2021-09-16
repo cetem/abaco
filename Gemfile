@@ -16,7 +16,7 @@ gem "bugsnag"
 gem 'awesome_print'
 gem 'unicorn'
 gem "dotiw"
-gem 'google_drive', '~> 2.1.7'
+gem 'google_drive', '~> 3.0.7'
 
 gem 'sidekiq' # , '~> 4.2'
 # gem 'sinatra', require: nil
@@ -62,3 +62,5 @@ group :test do
 
   gem 'rails-controller-testing'
 end
+
+gem 'mimemagic', '0.3.8'
